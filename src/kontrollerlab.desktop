@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=KontrollerLab
+Exec=kontrollerlab %u
+Icon=kontrollerlab
+Type=Application
+Comment=A KDE AVR Microcontroller IDE
+Comment[sv]=En KDE AVR Mikrokontroller IDE
+Comment[da]=Et KDE AVR IDE program
+Comment[de]=Eine KDE AVR Mikrokontroller IDE
+Comment[it]=Una IDE per AVR microcontrollers per KDE
+MimeType=application/x-kontrollerlab
+Icon=kontrollerlab
+Categories=KDE;Development;IDE;
+

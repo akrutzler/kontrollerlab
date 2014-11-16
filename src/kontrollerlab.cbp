@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="kontrollerlab" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\share\;CMake Files\..\..\..\..\..\usr\share\apps\;CMake Files\..\..\..\..\..\usr\share\apps\cmake\;CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\;CMake Files\..\..\..\..\..\usr\lib64\;CMake Files\..\..\..\..\..\usr\lib64\automoc4\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/andreas/devel/KontrollerLab/src" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/home/andreas/devel/KontrollerLab/src" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="kontrollerlab">
+         <Option output="/home/andreas/devel/KontrollerLab/src/kontrollerlab" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-D_BSD_SOURCE" />
+            <Add option="-DQT3_SUPPORT" />
+            <Add option="-DQT_3SUPPORT_LIB" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/KDE" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/KDE" />
+            <Add directory="/usr/include/qt4/Qt" />
+            <Add directory="/usr/include/qt4/Qt3Support" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtDBus" />
+            <Add directory="/usr/include/qt4/QtDeclarative" />
+            <Add directory="/usr/include/qt4/QtDesigner" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/qt4/QtHelp" />
+            <Add directory="/usr/include/qt4/QtMultimedia" />
+            <Add directory="/usr/include/qt4/QtNetwork" />
+            <Add directory="/usr/include/qt4/QtOpenGL" />
+            <Add directory="/usr/include/qt4/QtScript" />
+            <Add directory="/usr/include/qt4/QtScriptTools" />
+            <Add directory="/usr/include/qt4/QtSql" />
+            <Add directory="/usr/include/qt4/QtSvg" />
+            <Add directory="/usr/include/qt4/QtTest" />
+            <Add directory="/usr/include/qt4/QtUiTools" />
+            <Add directory="/usr/include/qt4/QtWebKit" />
+            <Add directory="/usr/include/qt4/QtXml" />
+            <Add directory="/usr/include/qt4/QtXmlPatterns" />
+            <Add directory="/usr/include/qt4/phonon" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../include/c++/4.9.2" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../include/c++/4.9.2/backward" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../include/c++/4.9.2/x86_64-unknown-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include-fixed" />
+            <Add directory="/usr/local/include" />
+            <Add directory="/usr/share/qt4/mkspecs/default" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 kontrollerlab" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="kontrollerlab/fast">
+         <Option output="/home/andreas/devel/KontrollerLab/src/kontrollerlab" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-D_BSD_SOURCE" />
+            <Add option="-DQT3_SUPPORT" />
+            <Add option="-DQT_3SUPPORT_LIB" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/KDE" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/KDE" />
+            <Add directory="/usr/include/qt4/Qt" />
+            <Add directory="/usr/include/qt4/Qt3Support" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtDBus" />
+            <Add directory="/usr/include/qt4/QtDeclarative" />
+            <Add directory="/usr/include/qt4/QtDesigner" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/qt4/QtHelp" />
+            <Add directory="/usr/include/qt4/QtMultimedia" />
+            <Add directory="/usr/include/qt4/QtNetwork" />
+            <Add directory="/usr/include/qt4/QtOpenGL" />
+            <Add directory="/usr/include/qt4/QtScript" />
+            <Add directory="/usr/include/qt4/QtScriptTools" />
+            <Add directory="/usr/include/qt4/QtSql" />
+            <Add directory="/usr/include/qt4/QtSvg" />
+            <Add directory="/usr/include/qt4/QtTest" />
+            <Add directory="/usr/include/qt4/QtUiTools" />
+            <Add directory="/usr/include/qt4/QtWebKit" />
+            <Add directory="/usr/include/qt4/QtXml" />
+            <Add directory="/usr/include/qt4/QtXmlPatterns" />
+            <Add directory="/usr/include/qt4/phonon" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../include/c++/4.9.2" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../include/c++/4.9.2/backward" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/../../../../include/c++/4.9.2/x86_64-unknown-linux-gnu" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include" />
+            <Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.2/include-fixed" />
+            <Add directory="/usr/local/include" />
+            <Add directory="/usr/share/qt4/mkspecs/default" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 kontrollerlab/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="kontrollerlab_automoc">
+         <Option working_dir="/home/andreas/devel/KontrollerLab/src" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 kontrollerlab_automoc" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/andreas/devel/KontrollerLab/src" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="uninstall">
+         <Option working_dir="/home/andreas/devel/KontrollerLab/src" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 uninstall" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andreas/devel/KontrollerLab/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klasminstruction.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrcpu.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrflash.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrgcccompiler.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrram.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcharvector.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcompilerinterface.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcpufeatures.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcpufuses.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcpuregisterdescription.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldatadisplay.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebugger.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggerbreakpoint.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggerconfigwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggermemmappinglistviewitem.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggermemorymapping.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldocument.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldocumentview.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldotmatrixcharacterwizard.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldotmatrixwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kleditdotswidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kleditorwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klfilenewdialog.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klhistogram.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klmemorycelllistboxitem.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klmemoryviewwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprocess.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprocesshandler.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprocessmanager.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogramfuseswidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammeravrdude.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammerconfigwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammerinterface.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammeruisp.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klproject.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprojectconfigwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprojectmanagerwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klscope.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klserialport.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klserialportlistener.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klserialterminalwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klsevensegmentwidget.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klsourcecodetoasmrelation.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klwizardheadersetting.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klwizardheadersettings.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kontrollerlab.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/main.cpp">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klasminstruction.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrcpu.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrflash.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrgcccompiler.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klavrram.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcharvector.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcompilerinterface.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcpufeatures.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcpufuses.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klcpuregisterdescription.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldatadisplay.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebugger.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggerbreakpoint.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggerconfigwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggermemmappinglistviewitem.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldebuggermemorymapping.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldocument.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldocumentview.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldotmatrixcharacterwizard.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kldotmatrixwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kleditdotswidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kleditorwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klfilenewdialog.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klhistogram.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klmemorycelllistboxitem.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klmemoryviewwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprocess.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprocesshandler.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprocessmanager.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogramfuseswidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammeravrdude.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammerconfigwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammerinterface.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprogrammeruisp.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klproject.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprojectconfigwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klprojectmanagerwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klscope.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klserialport.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klserialportlistener.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klserialterminalwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klsevensegmentwidget.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klsourcecodetoasmrelation.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klwizardheadersetting.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/klwizardheadersettings.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/kontrollerlab.h">
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/FindKDE4Internal.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroEnsureVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/FindQt4.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroPushRequiredVars.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/Qt4Macros.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/Qt4ConfigDependentSettings.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/FindX11.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/FindAutomoc4.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroLibrary.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroOptionalFindPackage.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroOptionalAddSubdirectory.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroAdditionalCleanFiles.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroAddCompileFlags.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroAddLinkFlags.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroAppendIf.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroEnsureOutOfSourceBuild.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroBoolTo01.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroPushRequiredVars.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroLogFeature.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroWriteBasicCMakeVersionFile.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/KDELibsDependencies.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/KDEPlatformProfile.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/KDELibs4ToolsTargets.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/KDELibs4ToolsTargets-release.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/KDELibs4LibraryTargets.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/KDELibs4LibraryTargets-release.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/FindPhonon.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/KDE4Macros.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/kde4_cmake_uninstall.cmake.in">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/FindQt4.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/MacroPushRequiredVars.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/Qt4Macros.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/Qt4ConfigDependentSettings.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/share/apps/cmake/modules/FindX11.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\share\apps\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/lib64/automoc4/Automoc4Config.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\automoc4\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/lib64/automoc4/Automoc4Version.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\automoc4\" />
+      </Unit>
+      <Unit filename="/home/andreas/devel/KontrollerLab/src/../../../../../usr/lib64/automoc4/automoc4.files.in">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\automoc4\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

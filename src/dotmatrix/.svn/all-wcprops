@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/dotmatrix
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/dotmatrix/Makefile.in
+END
+test_lcd.c
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/dotmatrix/test_lcd.c
+END
+dm_lcd.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/dotmatrix/dm_lcd.c
+END
+dm_lcd.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/dotmatrix/dm_lcd.h
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/dotmatrix/Makefile.am
+END

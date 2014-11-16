@@ -1,0 +1,2151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>KLSevenSegmentWidgetBase</class>
+  <widget class="QDialog" name="KLSevenSegmentWidgetBase">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>576</width>
+        <height>594</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Seven segments wizard</string>
+    </property>
+    <property name="modal">
+      <bool>true</bool>
+    </property>
+    <layout class="QGridLayout">
+      <item row="0" column="0" rowspan="1" colspan="2">
+        <widget class="Q3Frame" name="frame4">
+          <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout">
+            <item row="1" column="0">
+              <layout class="QHBoxLayout">
+                <item>
+                  <spacer name="spacer19">
+                    <property name="sizeHint">
+                      <size>
+                        <width>31</width>
+                        <height>21</height>
+                      </size>
+                    </property>
+                    <property name="sizeType">
+                      <enum>QSizePolicy::Minimum</enum>
+                    </property>
+                    <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                    </property>
+                  </spacer>
+                </item>
+                <item>
+                  <widget class="QLabel" name="pmSevenSegments">
+                    <property name="sizePolicy">
+                      <sizepolicy>
+                        <hsizetype>0</hsizetype>
+                        <vsizetype>0</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                      </sizepolicy>
+                    </property>
+                    <property name="pixmap">
+                      <pixmap>image0</pixmap>
+                    </property>
+                    <property name="scaledContents">
+                      <bool>true</bool>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <spacer name="spacer20">
+                    <property name="sizeHint">
+                      <size>
+                        <width>40</width>
+                        <height>21</height>
+                      </size>
+                    </property>
+                    <property name="sizeType">
+                      <enum>QSizePolicy::Minimum</enum>
+                    </property>
+                    <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                    </property>
+                  </spacer>
+                </item>
+              </layout>
+            </item>
+            <item row="0" column="0">
+              <layout class="QHBoxLayout">
+                <item>
+                  <widget class="QLabel" name="tlArrayName">
+                    <property name="sizePolicy">
+                      <sizepolicy>
+                        <hsizetype>0</hsizetype>
+                        <vsizetype>5</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                      </sizepolicy>
+                    </property>
+                    <property name="text">
+                      <string>Array name:</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item>
+                  <widget class="QLineEdit" name="leArrayName">
+                    <property name="sizePolicy">
+                      <sizepolicy>
+                        <hsizetype>0</hsizetype>
+                        <vsizetype>0</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                      </sizepolicy>
+                    </property>
+                    <property name="text">
+                      <string>segments</string>
+                    </property>
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item row="0" column="2" rowspan="2" colspan="1">
+              <layout class="QGridLayout">
+                <item row="3" column="8">
+                  <widget class="QRadioButton" name="rbB7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="7">
+                  <widget class="QRadioButton" name="rbD6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="7">
+                  <widget class="QRadioButton" name="rbC6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="5">
+                  <widget class="QRadioButton" name="rbD4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="3">
+                  <widget class="QRadioButton" name="rbD2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="8">
+                  <widget class="QRadioButton" name="rbC7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="5">
+                  <widget class="QRadioButton" name="rbF4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="5">
+                  <widget class="QRadioButton" name="rbG4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="4">
+                  <widget class="QRadioButton" name="rbC3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="3">
+                  <widget class="QRadioButton" name="rbB2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="4">
+                  <widget class="QLabel" name="tl3">
+                    <property name="text">
+                      <string>3</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="6">
+                  <widget class="QRadioButton" name="rbA5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="3">
+                  <widget class="QRadioButton" name="rbG2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="1">
+                  <widget class="QRadioButton" name="rbF0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="8">
+                  <widget class="QLabel" name="tl7">
+                    <property name="text">
+                      <string>7</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="8">
+                  <widget class="QRadioButton" name="rbE7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="6">
+                  <widget class="QRadioButton" name="rbE5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="6">
+                  <widget class="QRadioButton" name="rbG5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="2">
+                  <widget class="QRadioButton" name="rbF1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="2">
+                  <widget class="QRadioButton" name="rbG1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="0" column="0">
+                  <widget class="QLabel" name="textLabel1_6">
+                    <property name="text">
+                      <string>Segment</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="5">
+                  <widget class="QRadioButton" name="rbA4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="2">
+                  <widget class="QRadioButton" name="rbDP1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="1">
+                  <widget class="QRadioButton" name="rbE0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="1">
+                  <widget class="QRadioButton" name="rbDP0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="1">
+                  <widget class="QRadioButton" name="rbA0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="6">
+                  <widget class="QRadioButton" name="rbF5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="5">
+                  <widget class="QRadioButton" name="rbC4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="4">
+                  <widget class="QRadioButton" name="rbE3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="3">
+                  <widget class="QRadioButton" name="rbC2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="3">
+                  <widget class="QRadioButton" name="rbE2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="1">
+                  <widget class="QRadioButton" name="rbD0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="1">
+                  <widget class="QRadioButton" name="rbG0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="0">
+                  <widget class="QLabel" name="tlF">
+                    <property name="text">
+                      <string>F</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="7">
+                  <widget class="QLabel" name="tl6">
+                    <property name="text">
+                      <string>6</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="6">
+                  <widget class="QRadioButton" name="rbB5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="5">
+                  <widget class="QRadioButton" name="rbB4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="0">
+                  <widget class="QLabel" name="tlB">
+                    <property name="text">
+                      <string>B</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="0">
+                  <widget class="QLabel" name="tlG">
+                    <property name="text">
+                      <string>G</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="6">
+                  <widget class="QLabel" name="tl5">
+                    <property name="text">
+                      <string>5</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="7">
+                  <widget class="QRadioButton" name="rbA6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="6">
+                  <widget class="QRadioButton" name="rbDP5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="6">
+                  <widget class="QRadioButton" name="rbD5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="2">
+                  <widget class="QRadioButton" name="rbA1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="2">
+                  <widget class="QRadioButton" name="rbC1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="7">
+                  <widget class="QRadioButton" name="rbB6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="3">
+                  <widget class="QRadioButton" name="rbDP2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="0">
+                  <widget class="QLabel" name="tlA">
+                    <property name="text">
+                      <string>A</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="8">
+                  <widget class="QRadioButton" name="rbG7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="4">
+                  <widget class="QRadioButton" name="rbB3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="5">
+                  <widget class="QLabel" name="tl4">
+                    <property name="text">
+                      <string>4</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="5">
+                  <widget class="QRadioButton" name="rbE4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="4">
+                  <widget class="QRadioButton" name="rbF3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="4">
+                  <widget class="QRadioButton" name="rbD3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="0">
+                  <widget class="QLabel" name="tlD">
+                    <property name="text">
+                      <string>D</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="1">
+                  <widget class="QLabel" name="tl0">
+                    <property name="text">
+                      <string>0</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="7">
+                  <widget class="QRadioButton" name="rbDP6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="4">
+                  <widget class="QRadioButton" name="rbDP3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="4">
+                  <widget class="QRadioButton" name="rbG3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="3">
+                  <widget class="QRadioButton" name="rbA2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="0">
+                  <widget class="QLabel" name="tlE">
+                    <property name="text">
+                      <string>E</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="8">
+                  <widget class="QRadioButton" name="rbD7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="5">
+                  <widget class="QRadioButton" name="rbDP4">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="2">
+                  <widget class="QRadioButton" name="rbB1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="2">
+                  <widget class="QRadioButton" name="rbE1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="8" column="7">
+                  <widget class="QRadioButton" name="rbG6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="6">
+                  <widget class="QRadioButton" name="rbC5">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="5" column="2">
+                  <widget class="QRadioButton" name="rbD1">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="3" column="1">
+                  <widget class="QRadioButton" name="rbB0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="1">
+                  <widget class="QRadioButton" name="rbC0">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="0">
+                  <widget class="QLabel" name="tlDP">
+                    <property name="text">
+                      <string>DP</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="3">
+                  <widget class="QLabel" name="tl2">
+                    <property name="text">
+                      <string>2</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="8">
+                  <widget class="QRadioButton" name="rbA7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="9" column="8">
+                  <widget class="QRadioButton" name="rbDP7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                    <property name="checked">
+                      <bool>true</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="6" column="7">
+                  <widget class="QRadioButton" name="rbE6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="8">
+                  <widget class="QRadioButton" name="rbF7">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="7">
+                  <widget class="QRadioButton" name="rbF6">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="7" column="3">
+                  <widget class="QRadioButton" name="rbF2">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="0" column="1" rowspan="1" colspan="8">
+                  <widget class="QLabel" name="textLabel2_3">
+                    <property name="text">
+                      <string>Bit</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="1" column="2">
+                  <widget class="QLabel" name="tl1">
+                    <property name="text">
+                      <string>1</string>
+                    </property>
+                    <property name="alignment">
+                      <set>Qt::AlignVCenter</set>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+                <item row="2" column="4">
+                  <widget class="QRadioButton" name="rbA3">
+                    <property name="text">
+                      <string/>
+                    </property>
+                    <property name="shortcut">
+                      <string/>
+                    </property>
+                  </widget>
+                </item>
+                <item row="4" column="0">
+                  <widget class="QLabel" name="tlC">
+                    <property name="text">
+                      <string>C</string>
+                    </property>
+                    <property name="wordWrap">
+                      <bool>false</bool>
+                    </property>
+                  </widget>
+                </item>
+              </layout>
+            </item>
+            <item row="0" column="1" rowspan="2" colspan="1">
+              <widget class="Line" name="line2">
+                <property name="frameShape">
+                  <enum>QFrame::VLine</enum>
+                </property>
+                <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                </property>
+              </widget>
+            </item>
+          </layout>
+        </widget>
+      </item>
+      <item row="1" column="0">
+        <widget class="Q3Frame" name="frame3">
+          <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout">
+            <item row="0" column="0">
+              <layout class="QHBoxLayout">
+                <property name="spacing">
+                  <number>0</number>
+                </property>
+                <item>
+                  <layout class="QGridLayout">
+                    <item row="4" column="1" rowspan="1" colspan="2">
+                      <widget class="QToolButton" name="tbD">
+                        <property name="text">
+                          <string>D</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="1" column="0">
+                      <widget class="QToolButton" name="tbF">
+                        <property name="text">
+                          <string>F</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="3" column="2">
+                      <spacer name="spacer11">
+                        <property name="sizeHint">
+                          <size>
+                            <width>31</width>
+                            <height>20</height>
+                          </size>
+                        </property>
+                        <property name="sizeType">
+                          <enum>QSizePolicy::Expanding</enum>
+                        </property>
+                        <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                        </property>
+                      </spacer>
+                    </item>
+                    <item row="1" column="2">
+                      <spacer name="spacer9">
+                        <property name="sizeHint">
+                          <size>
+                            <width>31</width>
+                            <height>20</height>
+                          </size>
+                        </property>
+                        <property name="sizeType">
+                          <enum>QSizePolicy::Expanding</enum>
+                        </property>
+                        <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                        </property>
+                      </spacer>
+                    </item>
+                    <item row="3" column="3">
+                      <widget class="QToolButton" name="tbC">
+                        <property name="text">
+                          <string>C</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="3" column="0">
+                      <widget class="QToolButton" name="tbE">
+                        <property name="text">
+                          <string>E</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="3" column="1">
+                      <spacer name="spacer10">
+                        <property name="sizeHint">
+                          <size>
+                            <width>21</width>
+                            <height>41</height>
+                          </size>
+                        </property>
+                        <property name="sizeType">
+                          <enum>QSizePolicy::Expanding</enum>
+                        </property>
+                        <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                        </property>
+                      </spacer>
+                    </item>
+                    <item row="2" column="1" rowspan="1" colspan="2">
+                      <widget class="QToolButton" name="tbG">
+                        <property name="text">
+                          <string>G</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="0" column="1" rowspan="1" colspan="2">
+                      <widget class="QToolButton" name="tbA">
+                        <property name="text">
+                          <string>A</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                    <item row="1" column="1">
+                      <spacer name="spacer8">
+                        <property name="sizeHint">
+                          <size>
+                            <width>21</width>
+                            <height>41</height>
+                          </size>
+                        </property>
+                        <property name="sizeType">
+                          <enum>QSizePolicy::Expanding</enum>
+                        </property>
+                        <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                        </property>
+                      </spacer>
+                    </item>
+                    <item row="1" column="3">
+                      <widget class="QToolButton" name="tbB">
+                        <property name="text">
+                          <string>B</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+                <item>
+                  <layout class="QVBoxLayout">
+                    <item>
+                      <spacer name="spacer12">
+                        <property name="sizeHint">
+                          <size>
+                            <width>20</width>
+                            <height>131</height>
+                          </size>
+                        </property>
+                        <property name="sizeType">
+                          <enum>QSizePolicy::Expanding</enum>
+                        </property>
+                        <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                        </property>
+                      </spacer>
+                    </item>
+                    <item>
+                      <widget class="QToolButton" name="tbDP">
+                        <property name="text">
+                          <string>DP</string>
+                        </property>
+                        <property name="checkable">
+                          <bool>true</bool>
+                        </property>
+                      </widget>
+                    </item>
+                  </layout>
+                </item>
+              </layout>
+            </item>
+          </layout>
+        </widget>
+      </item>
+      <item row="1" column="1">
+        <layout class="QGridLayout">
+          <item row="3" column="1">
+            <widget class="QPushButton" name="pbDown">
+              <property name="text">
+                <string>Do&amp;wn</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+W</string>
+              </property>
+            </widget>
+          </item>
+          <item row="0" column="1">
+            <widget class="QPushButton" name="pbAdd">
+              <property name="text">
+                <string>&amp;Add</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+A</string>
+              </property>
+            </widget>
+          </item>
+          <item row="1" column="1">
+            <widget class="QPushButton" name="pbRemove">
+              <property name="text">
+                <string>&amp;Remove</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+R</string>
+              </property>
+            </widget>
+          </item>
+          <item row="2" column="1">
+            <widget class="QPushButton" name="pbUp">
+              <property name="text">
+                <string>&amp;Up</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+U</string>
+              </property>
+            </widget>
+          </item>
+          <item row="0" column="0" rowspan="5" colspan="1">
+            <widget class="Q3ListView" name="lvSegments">
+              <column>
+                <property name="text">
+                  <string>Item</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>A</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>B</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>C</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>D</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>E</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>F</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>G</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <column>
+                <property name="text">
+                  <string>DP</string>
+                </property>
+                <property name="clickable">
+                  <bool>false</bool>
+                </property>
+                <property name="resizable">
+                  <bool>true</bool>
+                </property>
+              </column>
+              <item>
+                <property name="text">
+                  <string>0x00</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x01</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x02</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x03</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x04</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x05</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x06</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x07</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x08</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+              <item>
+                <property name="text">
+                  <string>0x09</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>1</string>
+                </property>
+                <property name="text">
+                  <string>0</string>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+                <property name="pixmap">
+                  <pixmap/>
+                </property>
+              </item>
+            </widget>
+          </item>
+          <item row="4" column="1">
+            <spacer name="spacer13">
+              <property name="sizeHint">
+                <size>
+                  <width>20</width>
+                  <height>51</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Vertical</enum>
+              </property>
+            </spacer>
+          </item>
+        </layout>
+      </item>
+      <item row="2" column="0" rowspan="1" colspan="2">
+        <widget class="QLabel" name="tlImportant">
+          <property name="text">
+            <string>&lt;b&gt;Important:&lt;/b&gt; If you want to edit your settings later, go to the line where your array is defined, and open the wizard. Do not edit the comment line above, otherwise the wizard will not be able to read the array correctly.</string>
+          </property>
+          <property name="alignment">
+            <set>Qt::AlignVCenter</set>
+          </property>
+          <property name="wordWrap">
+            <bool>true</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="3" column="0" rowspan="1" colspan="2">
+        <layout class="QHBoxLayout">
+          <item>
+            <widget class="QPushButton" name="pbOK">
+              <property name="text">
+                <string>&amp;OK</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+O</string>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <spacer name="spacer9_2">
+              <property name="sizeHint">
+                <size>
+                  <width>371</width>
+                  <height>31</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="pbCancel">
+              <property name="text">
+                <string>Ca&amp;ncel</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+N</string>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <tabstops>
+    <tabstop>leArrayName</tabstop>
+    <tabstop>rbA0</tabstop>
+    <tabstop>rbA1</tabstop>
+    <tabstop>rbA2</tabstop>
+    <tabstop>rbA3</tabstop>
+    <tabstop>rbA4</tabstop>
+    <tabstop>rbA5</tabstop>
+    <tabstop>rbA6</tabstop>
+    <tabstop>rbA7</tabstop>
+    <tabstop>rbB0</tabstop>
+    <tabstop>rbB1</tabstop>
+    <tabstop>rbB2</tabstop>
+    <tabstop>rbB3</tabstop>
+    <tabstop>rbB4</tabstop>
+    <tabstop>rbB5</tabstop>
+    <tabstop>rbB6</tabstop>
+    <tabstop>rbB7</tabstop>
+    <tabstop>rbC0</tabstop>
+    <tabstop>rbC1</tabstop>
+    <tabstop>rbC2</tabstop>
+    <tabstop>rbC3</tabstop>
+    <tabstop>rbC4</tabstop>
+    <tabstop>rbC5</tabstop>
+    <tabstop>rbC6</tabstop>
+    <tabstop>rbC7</tabstop>
+    <tabstop>rbD0</tabstop>
+    <tabstop>rbD1</tabstop>
+    <tabstop>rbD2</tabstop>
+    <tabstop>rbD3</tabstop>
+    <tabstop>rbD4</tabstop>
+    <tabstop>rbD5</tabstop>
+    <tabstop>rbD6</tabstop>
+    <tabstop>rbD7</tabstop>
+    <tabstop>rbE0</tabstop>
+    <tabstop>rbE1</tabstop>
+    <tabstop>rbE2</tabstop>
+    <tabstop>rbE3</tabstop>
+    <tabstop>rbE4</tabstop>
+    <tabstop>rbE5</tabstop>
+    <tabstop>rbE6</tabstop>
+    <tabstop>rbE7</tabstop>
+    <tabstop>rbF0</tabstop>
+    <tabstop>rbF1</tabstop>
+    <tabstop>rbF2</tabstop>
+    <tabstop>rbF3</tabstop>
+    <tabstop>rbF4</tabstop>
+    <tabstop>rbF5</tabstop>
+    <tabstop>rbF6</tabstop>
+    <tabstop>rbF7</tabstop>
+    <tabstop>rbG0</tabstop>
+    <tabstop>rbG1</tabstop>
+    <tabstop>rbG2</tabstop>
+    <tabstop>rbG3</tabstop>
+    <tabstop>rbG4</tabstop>
+    <tabstop>rbG5</tabstop>
+    <tabstop>rbG6</tabstop>
+    <tabstop>rbG7</tabstop>
+    <tabstop>rbDP0</tabstop>
+    <tabstop>rbDP1</tabstop>
+    <tabstop>rbDP2</tabstop>
+    <tabstop>rbDP3</tabstop>
+    <tabstop>rbDP4</tabstop>
+    <tabstop>rbDP5</tabstop>
+    <tabstop>rbDP6</tabstop>
+    <tabstop>rbDP7</tabstop>
+    <tabstop>lvSegments</tabstop>
+    <tabstop>pbAdd</tabstop>
+    <tabstop>pbRemove</tabstop>
+    <tabstop>pbUp</tabstop>
+    <tabstop>pbDown</tabstop>
+    <tabstop>pbOK</tabstop>
+    <tabstop>pbCancel</tabstop>
+  </tabstops>
+  <images>
+    <image name="image0">
+      <data format="PNG" length="11090">89504e470d0a1a0a0000000d4948445200000075000000960806000000e0d4c7900000200049444154789ced7d6d8c25d959de33bba767df32d5f639a61baa9c19d3656661cbd8c677dd36d363aff08cbd162c6631ebf14ad6b699841d8244363ff227412102228410093f22e1440981a028245220722288227e44591403bb81657b3fecb9b39ecede36d3deba78daaec3f6f5d4eb9db3b3f9714ed5adbab7eadebaddb73f4ce648a3a377eeadeeea7aeb39ef73deaf03dc1977c69d7167dc1977c69d7167dc1977c69d71677ccb8e13477d0393c6cffc839fbb1cdd17be59415e65f026815eb9fcd3eb83a3beafe33e8ead523b67d7befbc2f90b5f88cfc4c486414486996f1051c2cccf11d19798f97922ea31f3979ef8e9cb6f1cf53d1f97218efa069a06f9f470104456a120a4ac85820c993924d0fd29331408cc6c0874f3b3ffe637af92a02e1bfe3312d463c3cf90a06f5c7e7cfde651ff2d873d8e25523bab9dbbd6de7fe1f3ef7c6f7c8e04c12115ccb3cc12ccfaaf88e80a335f93245fd446bf4882becc86fb4f3c7e998ffaef3ca8714c95baf68e0b0f5ee8c62bf1c9141a0a120c875838843ab932e72fc0e4f99b24e8afd8f07512f41c1bbe42829e67c32f3ff1d39793a3fedbe7318ee5f22ba55a8f57e2930c86225941a06a87d0429624a173d93024c97bb4d16f27926f67a33f2849421bfd8624f9cdcffed66ffeb514f2796df43529e4736e7e411b7df389c72f7ff3a89f4bdb71ec90da59ed9c88dfddf962e7ecfdf19c11da6e068320c1d0f9cfbf4d905f61e82e81ba0cbe2a21ff8f86fe2a4126971fbf78fba89fd9e8387e4a3dbbf6ae0be72fbc189f89f7684b2720d668909060a3218595679e1df225c96f68d65f91247b9af5b392e49734eb2b92e4b5f5c72ea647f90c8f9d52d73ebcf64f1ffff4dffbf92142ab36f5c0905afbf32b88858484862efebf46beada13329e40d6df4f352c86bdae8e7a4905fd4465f9542de5abf74f1f5837e86c74aa996f5aebdf0cef7deff7d078650928522b561484139f2ecdc1ea933cc0c49f49a66fd254972930d3f4f82ae69c3cf49415f65c35fbb7c697d6ecbf83153eada7b2f3c78e1cfe29578a115eb9d1189b58a2a214ec2bd008d089d8cd83d2ee95a0ab9ad8dde74a4ec8a14f2aa867ee9894b7bdb761d2ba59effe843bff8d8a71ef90506e683d01c290d086b7a016a11bb77840e7f9fbbdffce78eae18a5fb302468c086fb24e8cfd9f0a6db7ebd44825e66c3af4f42f6b1516a67b5b310bfbbf34ce7ecfdef3910d65b42585b64b5b5a9fb44eae495a3981912040d7d73258c9ef47c5affc8b90feaba6779d7612baf71088ac320fc3e259c42c93e48e566aa9b8d43a8e1f23e745cce975e941e5c19c186c765e114e7ee47d2f03aceaf1f9d27fdbccaf5b9cce3b218de6f752e4cc89b20e84724c9df6a7a94c746a9d2a7478253d1dd255faf450873f32cc82eb96228eb3a19543c60788cc0295e0ab754a2b4e4b2b6e4c994ae83736020ff7ebd5cb9be4e2eaea3caefadc8a5df6b67aec86c18ca2768d677373dcb63a1d4ce6ae7aef8defbd73d8112426533422b489d8058f73d5284471ebc804e1c215c0a0105446108b94c58391d010a58590e00c1908b43e454105e83d031c49ac9889d88509a8a503b2f4a3000027db9e9791e0ba54250472dd177d721346d44e8e83c8e50292c3991be42af9fa0af35524ea184426a5278c2039b14a1546001846108f2adc26911580903b0c7085415d9cd089d8cd88908e5c908cde59c4b24037da5e9711e0ba54aa92e462b712d426b6dea148406a1c443e7d740cb80f425b6aef700b6ab80f243a4268322359c398322cfcd0a99c9a07c0500889642904f884e879021213e1d8114102c076062048b25c43621b4a54d9d8850278732040c4006af343dcf23576a67b5737714ad7c2a352d105a8b545db0dcf8de08e71e88f0ce9508cf6e76a184023c404262e35a170040024e812994703395e70c9e93bd5c76dff38487d46408971420185118023e109d8e0a6463c122bb60b3eefedad8d42a32eb119b81013034a75f687aa647ae54085a0d8370a515421b582f29c2430fac219012bd6dc6b35b5db7c466087d0528400a89eeb51e8808200c11592055217388cdca8825aff85e21573eb773284340005110817c208e62d0b24536161db29dcdde8f4d557e8074a007046af42f1fb952a5543f2e97c2bb5b21b486f542009d3311ae6cf5d0dfd1480749613395f0909a14a1afc060c000ddad9e65c102f07c5541ea448416b29d339315c8ad7ecfce99fbb9192cb28980e8b4b5d97b61bdbad8776b78a05774a6b3a6677aa44aedac76ee89ef8d3f5165bd13105a6353e3d31198191e3ca748672b73c5929d7392815d60a3db453600324e11ca089224a2a508104028c3668496e65cb14a54654fd8ef7bf9f7dc0a90cfa11f82146667bd1e5953421229a7af5c7e6cbd31be7bb4417241ef5192be2767bd0ab26253d514d61b2c07201fd03b6c155720b434730a302ab68d04612be98140d8421f12b2581a215228190260847e086d34145481e08c8708552388b5728ed4ac406c794e4d8a3088d04dbbd5fd71be1f365c20b722671a2b61e410ee5d9bf4588f14a9a1549f8c56e2137b61bd92a45dd604150ae432421d624928f4533d81650e9df5fdb40f4e81eeb52e92eb2936ba5da4fd0cbd7e02cf78204308a563c34b21481094ef905c87d092ac7c05e94b28a1d0dbea0e5d972d59aff42400020989fe207d79d2733d32a476563b2238bdf2486a5a20b406a9f0187249a2bbd5ad47a89b7b379221bb2c2135f7ed566d5949766cb59ff64190e8a6bd8a8f171e43fa2120dcf647005284d0aca1fc12b24d062543a43a010f807eda871412b44c0885424f27205346663d623963a815423ae8836e616bd2b33d32a592a00f87a7c27b67cf41b2737c2a465ff76b1539dc7fa6f681d5797cf61b37bd25b19558d2b575bd07e95694605122159675b3607846a17bad5bb8f83af7c688562c53ee6ef6102d85e82589555cee732e456d0ad9b3b3077aa30ffee2a4677b744af5e9621444ed103af2791006f6ce0770ec558ddbd4065b3ace32c7113bbbaf77386fddb048dc48ba9517258c143a6722248314bded04e96088e4caef6db2a960842491ecf46e12646d74261f4762533bab1d8ae3fb1f6ebd2f2d7d2e4942490f84aa42eb6c6a3fd5763f3b91658e4463e6eceb8da3080f3d18233a15e14faf26e8f719e9202df6c51ebc5254a89ef532188154d69324bcaf31f4f6a4e77b4444891e504b3268e3eb1d95e1b17532ec24052269645faa84422f49dc75933c3635081db1a9fbf1f54651049284eea6c695cd2bf0c0960597f6c33d9d4cdea766793c178000fa69b273f9b1f589252647a2d430509f8c4e45ad586f45168c7825060fb8b20fe59a6dcc18bbac456a1342a7c44fa720541bbb3d923edc8b99166c588dec5be9d628db1d67bd0c46e84ba4030db9201bdd83f93874a576563b7e707ae58767f2f5bacf03171ed3cc438496a22e3962b10be8c10842b919a175acb716a18d481d8f9f926fb71fc94e52dda716fbdd1430981a9de16c98b9e101d0b7f4f569cff8d0954a827e200cc2b7cfe4eb7524215ab2118adc96b219b7a904429ff53842a919a1f3cf7060c4a722f040d7ec5b55e13baeec9f1b6c2a79042c384fd220052dc897a63de3c357ea921a63bdd3104a206011201fe8ed248d0855c2b3e4a811a1f366bdf5190e2bcaa6a3b241bd67893c2403b7dd9a169dc934a4af724fd21b9ce9bf9cf68c0f55a99dd5cec9388a3f3133eb158c7825425f6b87c85184da397f50f6faa363bd6a2904466ca93712d501a39defd79360102449f407e9ebe4c9892e42e0b0912ae807dbb2deb20769258cc086874bef18eb75b6341bdaa80361bd2d6c2a2f30c22542a2935a84a69cda6dcc6ebbe80c670c2509c940836ee1d6faa31f6f0c8ee7e350952aa55a8f4e4598c5d72b7d0925a9624beb582fc12d51136de93e596f0b9b1a9f8a900cf458b4a6cc7ad341899d4f61bde4110086b2ff3f75e9050e51a99dd5ceb745a7571e9a35c3811601e9db37bf09a14a28f46ff4ea113a07d64b6d592f59d60b4609a1d918ebe5dde9ac5767ee39dcb2a624d10908d49897541e8787544117c295f0db6765bdf14a0cad9389fbd26490026840e81c58efb41ca45c96cb64a3462517e028ebf5488de5234ff42429979304eff821554af5c968293a314b0e527c3a021b8d94bd4684e6fbd2c9086dcb7adb7a92ea596f1444e8ebfe783c954aac7727998cd0314f52663d49831404eab679d687a2d4ce6ae72df7c79d8fb546a8b3a5524ac0a060bb639ea3b233bc5801f6c37af7ee495a0923780276e96dd8976626b37fcf24848ed854e58760f7e2b0e1a98e07e090944a441f924b14cec27a491188805e3fa94568860ca154d8bad1af20f3a858af27eddf92e72cd5b15eb05720b00deb25e4d98304bdab41a08921b77c1c8a52c330bc180633b05e30a220b4fbd2118486becd38003c6c74bb360e5987d0b6ac770e9e242c025110227141863ad66b3d4849c3ca51ef4962617dbed980411e7d83c113436ef93870a576563bf70441f0a3b3fa7a7bfd04d297c890959019a2b793a0d74bb0d5eb4d46685bd66b2621b11deb8d8270b82f35f5acb7f020b5c91a7436552eda9f0f3038e31e81bed1e6991fb85289e8c1f054341beb350cbec14876129bdd27ac0766a3db05ef72811c08208e229022ac84016811b644a20deb2ddb50316a53b9b51ca860b88da9cd5172d118cb5ea722b49293245cd6e1200579f2a5f54b17cdb150aa92ea274219b64668b916a67f9db1d1ed425f676c25fde2732924c27b151e7ae01c48c2d5c2b892041f4569c44a18d8f8ab2a2db9a6067965f66bf4e45a9711997c54b7310d5984fd72ae54adcdaff124399f2f40e04c3fdbf6991fa8523bab9d6f8fefedfcd02cfbd26ad6a0fd83aca7c87ede89635c78e07e489278f6ea15f00045867dbe8fcdb3f7184098d7c244ae16261a51f862506f839b6cf40862a35311b4d6632cb7eceb4d07997d51eb103fc19394c1be309c699047cfb47dee078b54413f2403b938abafb7a99aad13c7a0254277ab875ebf57d8aca226460cb3f8f2a2a76249e41279712512611082241045a12b7a92c0820d7073edfeb68ab495d0e607338f67345458af8b9b4e5c016a3c498a2452ad41a0d774c613d342cbe340951a06e1a7c2a5b03deb2dd5c69c7f600df1bd118265597860babd1e30002050ad5a2b2334af6df1d518fb1c7e5ef7fd1020570b236d2d8c5c26ac84ae166631b009df259b0a41f05ce9c7684643210be7bc9f60a3eb3c497251baa74860c37f25bde67ad4d1d1588dbcdfd159ed2cbffbfbe25fa3a5456f113e8a0a71c358041572795e391de1deef5dc6f7bced34b65fe9c1bc76027c9b2140d03735c46d81feab3b88fed6699b2e797b01e96b4305792787c8dce55d78a4b0eb10b3cbbbf04e3af9644bf94d0ac6ec42bd7911b8cb60f92d0a6601587a8b82bea96134c32cbc8e602980bea9b120160b84eef22e3ce121d129c46b02fa350dff2e1ffa350de966bf3cdf66f80eb13e7c184f20940adb5fed41dc16cfae7ffae26fb77df607865422fa581884aa4d0f0752c0dafb3b080382de613cbbd9058c5720901601e90a7fc9d8e557fad256aff9616dbcb21e9133ca9c56119857d1214314da1528e9a7d07d8d602900c0d5ef232be2bbd57d700d62477392a42ac8131b6e6d4f8103526a6775ed845a0a2f864bd110a113d86ebc1243b346b2e3d22747a3316433e07356cc29a3b76df7a910960c413094b4cef2c2b68edada72c644adec55fe7f6823d5b8cd3419825042ef6af4aedb2af54006c5fd4a1f08fd10fdac6c43477dcce36cb8f024190601b9076a6ab2d9812b15e0b7c4f7c61f6dc37a57429b4c8601aa190da3f1d291ec40de05babd1e92edc456b16920dd49416eff1a05b69aadb0e9fe1089431b3c2ab744acb39980ed15a1c148fb2998d956cf11c00c74b7bad65131c67a9b114bcea68632403a60d082bccd5332f247c78164e813d1437249fa39eb6daa959182e02d79609e9069efe4ada437ac352957896576cef7815b37369cebb0e7aad8ecfe95611fb8668d5084d0035d94660c91398ed0a9884506295c7155c6c002805b18ee83ebf6c593e64c23580ca059c303d0cff46b6d7dbef93810a4866189f5e636558c23961421f06591b15e9b694f0a5a27f64d16756cb1fa869765bdab2d627a3d24db299edad840b29da2b7dd83639508650849345cc27d85cc5015b13c8e58e5aba28744d1d3c130700ba51e0ff5089dd8b5a5e4494aac27e98beb972eced4ce6eee4aedac76968220fe48eeeb4d0bd6abc76c69b412a13fd0b660b821d33ee50cb855f2b43444338afddd1459ef6a5baed8eb22e9a5d878b18bde7682ee56cfd5e63042dfb610086508768a4e8d452683112e85483945b29d62a3bbd1caf3548df6547dc795ef67baf0241100cef44c28050e60f925410f87a7e4a272d55aca556fe5725eb5b6723ab2170c50a9f82e23d4160fc1bed99eb40af2aca2c6659a511e5eaf7735c8235baa21087d93803c098021a54286b4e88aa25963a33bac6293246dcf89336bb8b2d5030d02f4f37de96886043b99ebe5bcca2d034389007ab7379327291f7357aa0ac24f85322ced4b9d4d2d75325342c2f301ce33ed49556c6a11be125e515f5a64aad7cd4d9f637cd6194356645dd47f56a2369945ce56666df956626db5c6300ebb124678e7190929436c5ced5a24735a2074265b5ab2c1911fd93a547bbf5767d5c15c97dfce6a278cef8d3f58b1a16336d5e6f2c8922d1d65bd192ccb4c740a5aa0a1cd340d36540c3fafcc189fe5983cf2f31aa327431b1e9d0ef1c88317109d914807c09f7ee1590054d8de46963b35b3df922418820702838df46863563dcc15a944f4c372c9f97a47115a92a320861ed883256a119ad79a641876017508d4999e28b742741d4273d98c20b6542f6a911900009eddbc328c9b967cbdbdde301ab317a45a1305f4765210e8cb9cf1eeac7a981b52cf9f3d7f6222eb75f24a18810503ecb9caf16a8a4aeeb901bc0af226b1dc317914b135c86dbcbe21be199f8e110501926d8d2b9b3d7bbfa3bedea668cc3484966519ba17c9031b7ee9f2a5e62e2c07ae546df45210c41f4e47586a5996ce96c2ed4b735b4ab942f3f82386f1c70a224790d6284f40ec382b1ef93975f14d412069578dd17e4be57d2b374563a664219665b817abbf9b80043db7175dcc4da944f4a3e129494d082541a06520902e319914d82dbd4035a7c75677d138f24a889a363721762f36951421f46d59e2c4684c3abaef9c01a16e9faaa404060cb920c18667b6a77355aa5a0a1f1d65bd95280cd8e5c5e615de2988a8e8e699db261b7f6cb6894536deadc9731b9b5a2b8fee830dbb1c24dd88508f6c346634dedab42f6d96edef633074a65f27d08b47a6d4ce6ae73b3b71e78149ac3776fbd26c609731cb7a31e273cd00e315fbc63a9b5acc0b53e63ac4eec1a606cb36ce8abc2c7114a16e2ef279f7c27af3acc4721daa27bfcae0af1c995289e8115aa23795115af124099bcbc3860b369bf704ccd96e5e0dd64febf7a505425b22b516b198dda67ad295f80f1a7cbf9c0e5fc41184ce6c53659e93e48133bd7df9d2dece8addb752cf9f3d7f223c1d7d26779ae7085525c4ca5042fad6962a574ba27c3516ffacb3a543848ed8d469482d23b66293dbdb5478b041801ddd18adf1f27cde3a5fef2cac976ca68324091ea47bf224cd4da9dae833c1a9a833446875b6b6d4e6eb5a8f92db9756ba745a16ccbb9880509e09a195b9d6a63620b66453a35321524ec098c07a07495111be1fd6ab5943f9d2f6aab845d019b7aa703b10a54a5f7e3c0c86ac7774b6454e0ccf78852dcd908d2035c5e8beb491f5b645a89b694136d8d406c4ba1526580c6c7605536d57955c0637c74b5bb35ea35d9890dc3e57bf213d6a9d123a57a57656d7ee56cbea62e88745b66019a99224e003287cbc65b63b7cf39550e827137cbcad91296b6caade934d25e9c1231499f7b5f15478e8eff65b476326c90cdb35dcd5a1bec619b7aa709bbb52013e1dafc41fc87dbaa348a5651b2f4d745a640bd6e5c5263aa92269cf08d5e3481dfb792d6caa60444180de4ebf319eea91ad8badafc599dda6067e9e93e4810d7fe5f2a5f53d9fecb82fa512d18f5320451e7d29cf0cb6cd147792226f77a8d06a5fa13a5b3aebbeb42dfb9d86586db8482a83f37c8d67400c7dd37508dd8b4d653817a36d1df017fbd1cbbe941a86d1a305ebcd91eae63872f1524685ede689d5e57d69bde767044133da5259b6a56d6c6a29ef9624810c59dbdfc07af3fb9e07ebd546db786d9ec0be474fd2be95da59ed44c1a9e87da3084d5dc0977c02b3765187a12badec39f2849aba2f9dcda696e6bae84d0bd64b0484be446fa757935538e402f97dcf83f5e62f14807cbfbb67e6bb2fa512d18f85a7e44219a12986f15212646da9504043bd66aa937a1fef7e59ef44163d99f5c6a76264aef7613947a9cc7ad381ab609f07eb25092e7292747e3f87bffc7656d7ee0ac3f0d315d6cb1a0a64b3f78210bd7ecf2d25a5a616c5393036dc56d8d249ac77569b3a29be3a85f5064a8269d8fbb089f5829b6a636647a8668d60719893a4337d83405f3f74a5021cc7673a9d51843218d1699b8669b302cbb6d4b15de91a2c3b1ff054d63b2352f71c4f153647b8ec20a9cdfb15de300709f3b1a92c322b5b4fd273eb972ede3c74a54a5f3e4c4bb45046686e4b6143829578a9273c000c4f78e85eeb41275cf4109c2b429b7e5ecdcf1d95b10090a4a2bb4a7da6beedae328ed07d7a926458ced0df973ddd9352cf9f3d2f54183e12cad0a6a8b82c3845eeb0803cca200870272b6520a43b197ad71d297208b1272bd9c3f282e59ae8caac08cdaf6fe1991a95a353912d9b34349ea95f66bd797fde39b15e4912040cc9a147cf1fba52b5d1df1d9f8aeecfb30253d62eeaa2c12990686d4b1d042c327b3de8eb893b35c2c5274f8738b71ae3dc7b63782ebf16e44afd97dca9889497fa5bf2d084cc5ae4cdc27a33b62e3ab25d502a081db1a995febcf364bd44486c1dea1b9cf19eb21df6a554f2e52314c8bbca082d23562736039e6f30bad75db30dc70a49010f9d3f87e09444aad9e6c93ad7a12205b08bafc2163d295f213a154149cf95fc93ed00b680d9729426b15e8fec515d348c2235d5d2e4fd79e7c57a6d076f9b58e08ee84ec9a356bd92e6aad430549f0a29ac20b48cd844f7c1a9ed8c9db3c195e5089df747b8ff5d319eddbc827e5f577a0de6352da03cbbd0220622b7cd56f1a1540065884e8516d1a7ed617905a227d8e8269bcab75c89ffa03f8ed0924d4d264563f6c87a6d4e92f52425830404facafaa317770e55a99dd5cef7c62b9df7a4d01584a6a38805db0887021e5a5bc33bcf04d03b1699791a6839133f4768ea5c89b9cc53e4ccd85a184516d154f4742004ca95fa4fc9428cc20830000c35d7ab364663dadad4e659e5e7a15ad3b4e7c8cc9e954a449fa025ba5b4116d56c16a9e388d546235eb16d527bfdbecd1c28d78b96cf8f19452895103a411efd7ebeff8d96dcb9a6aed43f3aed6cf4b22da5287bac20ac27a716a1a55316fb695d34a6ad4d6d9e8bf3502d1798daa079ae4a75190e9f0a658802a92388cd6d6cbeefeb6d274544bf92e19023d4ec0da1a3f2e8f5c92019cbf8cfc958144490216145056030529d81c1a5d318c76d6aa2d339ed4bab33a3728ac51b6cf84f0e55a9dae80fc4a7a2f756112ac7109ac753356b70cae86e5bcf1246aac89879cf086d44aca876ee1e9e3d5e2dbef28402c86e23fa691f7ac776872bce681b41ec78346636d64b4d4855d2e52411b4ad43fdbf87aa546959efdd93105af62ce5ac905346f79aad0fed6ef500b6ddc1a494f6a0d8a5082408a1abf32c23b8905b2274583d876a73cad16695e55e1242dafdb32875593179a5b83d9775d67ad3f133c947919aff9c4a4ed2cefaa58bfb66bead95da595d3ba996d5c339eb1d456ac18261e3a6051b2cf700dcd54006f4aef7d0bb9ed8bad0ad041b9b5de881b6dff7ada2a5b481eabcecb1b54d2d108adabec0de882d57be2aa2331b9b5de7b2e3a2c829d3197a49af19a1ad59efc8ecae0ff3ec410370c62fcc43a1ad950af07be2fb3af7e548cc913a44a81e4368f146d765ce3b5967f6b0835e9220ed67d8e876d1db4cb1b1d90506040c00b914585b5887e802b125848ed6b93621d6d9da200f886740afaf0b8f58da4fad2bb3a603dabe58af183e1f02953d497b4adcae1badaadea49417e5921a63b975737ee345667ecb6ab55ccee7deae8bf25cb7bd1b7a2641281532018472b86db25978ca1d1546e3ecbac1a696d9b25c24f47719b89e60ebba1eab431d22727f73debd347f3ef009a9eee7cf69cf29a1a3632a52cf9f3d8f300c2f2abf9ad93036fbd5377a5af46596da189d5922d3bb9180772ca2932d8b681e6068a37db288268be8693635357609269f9aeb51c57484ca9070bed3b1bd0f5db34bb9388e502edb60d72acf1bfac2f7edf3cdc754a46aa33f706ee54234a9ded4466b2c528a3733737f485d46431d421be2a28ddfdf1d41b4cbfcc7024a88b64b7548a56e2c8392827d8554a7e01ba8ad479d86d0603940b41282603b881787cffb0aa948216f55b945a50e5500242492410f041ae86c6f251675632a52a52f1f9181baabb19aade67cd3ba684933421ba23193aad94665c320f7fb006ba3f58e6bd2b195a27bd535e918b8e08163b9bdad04fa069790c4e3886d60bd810a109fb2de28abd0614b03cb9e6df4a99625836de73403b87ce717a547fb8aa196c744a47656d716c2d3e127949884d0529f24317cc3db23b421076904a9d32bc89ba233966df632d767e97ad5e60f6de70842a72095a40710906c8f74e42e146b57829e6bb15ee7492201685b877a75fdd18b13cf449d654c412abf2f3ed3393319a155397fc3a7e61c4d8b97b644e8f4f8694d74a6fc791342a7b0de504a1b502fa7bd563a727bc5e9166584ca1207719e24ccda7b705f4a95527e9aa477778ed072d65d53ffde4a7fa349190d6db304a7548cef3927a994e75bbeefbabebec5bed48cc8428e9d14352a4360b86fcdaf5bb42f9687a2f7e0dcb63313957afeec792f0cc38f17ac77d4a6d228622723b5d1a6b6ac33adbdbe09a12d73929a10dab8cf2c9d7a01761e28bf6a4bcbbdf353aeef0191670fda3a54bac9e0dea1289505bf4f2e45ef487482cc60ac56a6aec376d98334b73cde59321c66c8c41fad18aff7e596d86b69264874af3b3de40da5474e8c82e16ad6616925289d870acef81502f50f45a9e7de7fe1e3100cde61f4b6bad0fd14bded2e30401ed0ad2094882ae7bc4cebb130537de9049b4a7588ad7cbf01b139821c699ae819aa3bfb4d10365eec020c904f9609130eb5050d00000b0d494441548619893aab661d965602c022b53f48f2ecc156a758b41d8decb77b6de3abe4113411a494480de009a0d7ef4141e2596cc01304228224bb2f0bfd70b80f2b77432923769f3531ed592f4fee6cb617cf500d6237ae758ba22a02a187a4387fc62ee555566dd366f3f350096cf65edd36b352b39dec3f2626f939087a2bf24a67f2102e4b684a112e85c8f28381063d2821d1ed6f807c8904f63c9954688432286caabe65d9de9ee63cf9ccb32928b9a7893ca7b891b9b117a1a061942447243b244ee91d387116253947b47136db0c7fbf5cb4d11925087dbb82fcf9bc957a62d2879dd5b55f06f81f17c9bc2333b9a88a5a54205f42fab6bdaa27800cb0d11c682822c0b9ee32c108fd6048baccc80c2e96f6da79f4fb7573e9fbf93eb4900b041df00c87d091df8f45205e89d1ebf7c029dfd286bfff894beb7345eb14a576de26857c411bfded100498213bac9501846403d072392802e30083c839fd4b0801d95307215c8ffc5b5c209316685ccea623b471ae79012ac187b2cc8e235410db5eaefc9e91fbb0c97212a9eea39f245f238fbe73fdd18baf1f9a529d627f1da027ea90da76269220df2edd4404ca110d7beae010d136c33f3f4ea4080e4c43e671426839bc56fefd6efb2443855006d8d8ec826ee18fd71fbbf8c03c150ab409bd09fa5518fe2929e43d8d089d22dbcc77a0bb93384477adef938060394042f6140976e4a3a7bb2092e81977aa85803df40036dc568780719b2a2b08add8d099655d2f73d3e743563d6ae343190c03e9999e5b60bc3ca62215003aab6bbf01f04fed15a9ad6601482278be07a92ca26d921bc313f6f487b28bd2b63a57456bf2261b5cf876cbf1d1c3b2a9232b895c9450a7943d86e55a1704fabbeb972efedbf9a9d38e964aed7420e8cf6058cc82d07dcb18966404b98d76990f36d545db73530ddb5391911fe68771dbd662d6a6aa88fdcac53eda710008203e1323e96b689d80335ebd7c697d5fb5a8fb50eada5d00ff67802e1e18526741b4afe0f96411ed13425205a261b8484121dfa68b94113d86dca6799fb654e78e98928283d3113c9f90698d7e92bc4620b5dfb2c5bad14aa90070feecf9f76ba33f0f41f71c38426790f32cc0d00f6d159db48856f9f19e54420e18811f8245561c6bb21744b79add7ebacce26949215c92e86e760143cf71a6572f5f5a9f2bf39d49a99dd5ce0980fe10e08f1d2952dbcc8240b0e48a16c9a5ba281784d0ee7b2e7ae2c8170410520826aedd67ce2a8fb17630e27b3b6030d2ed047a57ffdee54beb8fceaab036a3f5017efd57fa08dfb6bc2d85fc09be3d380141c06dc7f26e0f70ac643380b94b6030d0c000d87a650bdbaf24b8be7d0de655e15c8d1e0686b1fc261f7a3000dd06b6bfde076e32fa3b3b10b74f60e7e60da8930a83db03c8933ef836c317f94c1365f2ac2cef91f67a4f62e1cd1ea4206c255ba07be8df7feef77ef74f0f42a9ad919a8fce6ae7f3007de85820721e881639a2a543b457b0ec7c10c81e749423dab79506933c47e530258100cf91a49d3e7492421bfe91272eadff8f599f7f9b31fbc10882fe190c7fe8b8d8d4fdca0c42d24f207732f44cd79588d8ed142dc215505bf2a5b586244257dbc4efc424eedc1a40c952f42873acb7e4bb8ea4cd67f240e8835f93de6c477dcd32f682d493003d0d70e7c891769888262a6c7420253cf28a1495fcdb12124cf93eda434801b428799296024b92327c990dc7972fad67b33eff3663e64371fbaff45f0fdfb6ac21e893b8cd278e850d3d0c1b7d1b18e81d401b6cfee526927e82ebfdebc03705f4cd01164f2e82c1f04ffae081068c407f670be235839daf6bbce374049c045833063cf8f3cb97d65b1f723beb9819a900d0595d7b13c01b007dcfb140d231990b4f970a41925ce53b41820049b8f0c005eb4932f4abeb972efeec5e9e7d9bb1a7e3abfbaf6cdf8adf1e677c7bf0f0b142d411cb83d7066003e8aff7617618dd97bb48b6afe3face0e7897b1707201feb72d81cde05ffdfe7ffbdc4c07ddce32f6845400e8ac763c80ba007fd75123e45b65ee74d670ee43e75e27d007d62f5d9c4b2b80bab1e7de841bcf6c6400ff6b296cc9bdf5d5da37365f8a6c7aa4fc2f00ff07d843bedce7b02cf3d0e4f1fb3b0a99a407f2e44dc6fc5358ca63cf480580ced9b5b7c27097047d071b2eb60b950c06c39d8d67369e5b39b3f2394f783f0ed807ce0220a2d761c024f06d43171b4002c3eb91bfe77b94f39f57babf623e64a45ef8e187109f89bf70f9d2fabbf7f3dca78d7df5fbdd78faa9af93a01f61837f2885fc7d009b24c814f41eb84e82ae028012eab761f00600eb936580777406c31f63e08214f2e719f8ef24b0c9c06d777d75bbb0175938b98260278bc345b42409f2e8e9fd3cf33663dfa7323ef5f453cf007806c03f5f3bbb760f1b7e2b049dd3467748d0e0a9a79f6200484dfa879ef07a99c9dee1b9938c3de1f9e9203db7f5dcd6af017812003aab9d7b4850a00d9f2581f730f3df06d1dbb4e10271797a671991fb925dd82cf7d542d84c096088e879c8ca57d0d96c87c6ef65ec6bf99d75c467e27f42827ec93e38d8fe4182fef7c6d58d1f6cbaa6735fe767d9f0af4020b7d1cec343af32b0284127aa0e00c2dce5d20bb59f68d2239f790ce1727061fdd18b4f1ee4733e9083e61b87c06753937e0602bf9699ec4f20f0b5d4a4c9a44b5293fe0104dec88b8d9241021e30b4d69f20e09c36fcf709f84f6cf80b0464b636c6211a40213b455511db422e29b440b0d8036205a048dee68ce7565cdc34e67e7cf5a4d1bddad5007e07c0ef74eeeb800dbfd513dec478a227bc6b30f89212ea7bd9d8f6b20ee1ef7aeae9a77e1dc0d3003e7bfeecf9bb35f83b48e0fb19b85f0af9a036fce1c2a662dca5d74a2ed9648d9c049664502b04877e0408f448d0ab07f888011cf2f2bbd711df17ffcbcc643f53adffc4bfdbdaec3ede74cdca9995c813de4b99c9163c520000b21ce926093ac906a26ca3cb2c79220baff9be555c49ae61bf7249e1f1cffce41fac3f76f1e1037e5c87bcfcee7518fca227bc1f83c12f2ba13e0f836d4f606bd2255b9b5b3d18682514c00c18066b06987e9681f791c0df61e05f48219f61e0eb65445658f328ab1efdbc60d525b98655476100c67c7a0f4e1b87bafcee757437bb3700fcbefb87f8bed8cf4c363d0d44e0f9d4a41f2d239c8d7e5bf7e9ee0b005e0080ceea1a4860890d7f1704bd4f1b3e0fe0230c5e86a892249a51ce6d70b12fc77c7a0f4effb3bf0547f76ab7dd1194062f78c2fb080c4ee43dfd21f08ef257369e790a0076dcbfbf00f01bf199f8d749d0130ced729c0049d268f0eb24704fd5c68edadc7a1b1cfae1eb0c7e6a9ecfa1697c6b2cbf7b1d02bf9499eca310f805c7a2b732934d4fc914783535f654ae74908299d1d7fd3f21e09d6cf81100bfa20dff4f0212367c1b28b16cc3a89341b841905f3b883f73fcf6ff060fc7b6ff97fb87f84c4c4aa8bbb6269b63c06090b3ec1ce1c1a9e09e27ffe8c99701bc0ce0bf0240e7ecda9ba590a106af91c00719785c0a79a20eb1d2972faf3ff6f1bf3ec8bf371f7fa3953a3aba9b5d6ef545811b99c9def08477223f45d2236f6ca7b0f1f453af027815c04b9dd5ce5310f493dae813a39e2912043dd0fbee8ddf76fc7fa5d4d6c3e077955057d9f0039ef0de05831fc00013eb48a5902735f8c4d83e5658c743b014ceb559c7a47147a935a3bbd97d15c01fbb7f88ef8bc595fe156fd235dae87bea106a59b17c0302fb3a946f96f1379b28cd6974af76cdd6e6d6eea4ef90a06b6cf81f91a1db283928a49080e16f44a7570e653b037c8b7894be55467c5f7c7766b2554f78efcd4cb6e691f77e12748f94f28f9efca3272f1ff5fddd19731af17db13cea7bb833ee8c3be3ceb833ee8c3be3ceb833ee8c3be3cef8161aff0f1e751185a218a4aa0000000049454e44ae426082</data>
+    </image>
+  </images>
+  <connections>
+    <connection>
+      <sender>tbA</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotA()</slot>
+    </connection>
+    <connection>
+      <sender>tbB</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotB()</slot>
+    </connection>
+    <connection>
+      <sender>tbC</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotC()</slot>
+    </connection>
+    <connection>
+      <sender>tbD</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotD()</slot>
+    </connection>
+    <connection>
+      <sender>tbE</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotE()</slot>
+    </connection>
+    <connection>
+      <sender>tbF</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotF()</slot>
+    </connection>
+    <connection>
+      <sender>tbG</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotG()</slot>
+    </connection>
+    <connection>
+      <sender>tbDP</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotDP()</slot>
+    </connection>
+    <connection>
+      <sender>pbAdd</sender>
+      <signal>clicked()</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotAdd()</slot>
+    </connection>
+    <connection>
+      <sender>pbRemove</sender>
+      <signal>clicked()</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotRemove()</slot>
+    </connection>
+    <connection>
+      <sender>pbUp</sender>
+      <signal>clicked()</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotUp()</slot>
+    </connection>
+    <connection>
+      <sender>pbDown</sender>
+      <signal>clicked()</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotDown()</slot>
+    </connection>
+    <connection>
+      <sender>pbOK</sender>
+      <signal>clicked()</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotOK()</slot>
+    </connection>
+    <connection>
+      <sender>pbCancel</sender>
+      <signal>clicked()</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotCancel()</slot>
+    </connection>
+    <connection>
+      <sender>lvSegments</sender>
+      <signal>currentChanged(Q3ListViewItem*)</signal>
+      <receiver>KLSevenSegmentWidgetBase</receiver>
+      <slot>slotCurrentItemChanged(Q3ListViewItem*)</slot>
+    </connection>
+  </connections>
+</ui>

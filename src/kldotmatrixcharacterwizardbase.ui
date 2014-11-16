@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>KLDotMatrixCharacterWizardBase</class>
+  <widget class="QDialog" name="KLDotMatrixCharacterWizardBase">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>485</width>
+        <height>318</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Dot matrix character wizard</string>
+    </property>
+    <property name="modal">
+      <bool>true</bool>
+    </property>
+    <layout class="QGridLayout">
+      <item row="2" column="2" rowspan="1" colspan="4">
+        <widget class="Q3ButtonGroup" name="buttonGroup1">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>5</hsizetype>
+              <vsizetype>4</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="title">
+            <string>Size</string>
+          </property>
+          <layout class="QGridLayout">
+            <item row="0" column="0">
+              <widget class="QRadioButton" name="rb5x8">
+                <property name="text">
+                  <string>5x&amp;8</string>
+                </property>
+                <property name="shortcut">
+                  <string>Alt+8</string>
+                </property>
+                <property name="checked">
+                  <bool>true</bool>
+                </property>
+              </widget>
+            </item>
+            <item row="0" column="1">
+              <widget class="QRadioButton" name="rb5x10">
+                <property name="text">
+                  <string>5x1&amp;0</string>
+                </property>
+                <property name="shortcut">
+                  <string>Alt+0</string>
+                </property>
+              </widget>
+            </item>
+          </layout>
+        </widget>
+      </item>
+      <item row="4" column="4" rowspan="1" colspan="2">
+        <widget class="QPushButton" name="pbRemove">
+          <property name="text">
+            <string>Remo&amp;ve</string>
+          </property>
+          <property name="shortcut">
+            <string>Alt+V</string>
+          </property>
+        </widget>
+      </item>
+      <item row="3" column="2" rowspan="4" colspan="2">
+        <widget class="Q3ListView" name="lvCharacters">
+          <column>
+            <property name="text">
+              <string>Character</string>
+            </property>
+            <property name="clickable">
+              <bool>true</bool>
+            </property>
+            <property name="resizable">
+              <bool>true</bool>
+            </property>
+          </column>
+        </widget>
+      </item>
+      <item row="3" column="4" rowspan="1" colspan="2">
+        <widget class="QPushButton" name="pbAdd">
+          <property name="text">
+            <string>Add</string>
+          </property>
+        </widget>
+      </item>
+      <item row="0" column="0" rowspan="7" colspan="2">
+        <widget class="Q3Frame" name="frmCharacter">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>7</hsizetype>
+              <vsizetype>7</vsizetype>
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+            <size>
+              <width>80</width>
+              <height>100</height>
+            </size>
+          </property>
+          <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+          </property>
+        </widget>
+      </item>
+      <item row="5" column="4" rowspan="1" colspan="2">
+        <widget class="QPushButton" name="pbUp">
+          <property name="text">
+            <string>&amp;Up</string>
+          </property>
+          <property name="shortcut">
+            <string>Alt+U</string>
+          </property>
+        </widget>
+      </item>
+      <item row="0" column="2">
+        <widget class="QLabel" name="tlVarName">
+          <property name="text">
+            <string>Variable name:</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="6" column="4" rowspan="1" colspan="2">
+        <widget class="QPushButton" name="pbDown">
+          <property name="text">
+            <string>Do&amp;wn</string>
+          </property>
+          <property name="shortcut">
+            <string>Alt+W</string>
+          </property>
+        </widget>
+      </item>
+      <item row="1" column="2">
+        <widget class="QLabel" name="tlVarType">
+          <property name="text">
+            <string>Type:</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="0" column="3">
+        <widget class="QLineEdit" name="leVarName">
+          <property name="text">
+            <string>newChars</string>
+          </property>
+        </widget>
+      </item>
+      <item row="1" column="3">
+        <widget class="QLineEdit" name="leVarType">
+          <property name="text">
+            <string>static prog_char</string>
+          </property>
+        </widget>
+      </item>
+      <item row="7" column="0" rowspan="1" colspan="6">
+        <widget class="Line" name="line1">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>1</hsizetype>
+              <vsizetype>4</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="minimumSize">
+            <size>
+              <width>0</width>
+              <height>3</height>
+            </size>
+          </property>
+          <property name="frameShape">
+            <enum>QFrame::HLine</enum>
+          </property>
+          <property name="frameShadow">
+            <enum>QFrame::Sunken</enum>
+          </property>
+        </widget>
+      </item>
+      <item row="8" column="5">
+        <widget class="QPushButton" name="pbCancel">
+          <property name="text">
+            <string>Ca&amp;ncel</string>
+          </property>
+          <property name="shortcut">
+            <string>Alt+N</string>
+          </property>
+        </widget>
+      </item>
+      <item row="8" column="0">
+        <widget class="QPushButton" name="pbOK">
+          <property name="text">
+            <string>&amp;OK</string>
+          </property>
+          <property name="shortcut">
+            <string>Alt+O</string>
+          </property>
+        </widget>
+      </item>
+      <item row="8" column="1" rowspan="1" colspan="4">
+        <spacer name="spacer10">
+          <property name="sizeHint">
+            <size>
+              <width>290</width>
+              <height>21</height>
+            </size>
+          </property>
+          <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+          </property>
+        </spacer>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <tabstops>
+    <tabstop>leVarName</tabstop>
+    <tabstop>leVarType</tabstop>
+    <tabstop>rb5x8</tabstop>
+    <tabstop>lvCharacters</tabstop>
+    <tabstop>pbAdd</tabstop>
+    <tabstop>pbRemove</tabstop>
+    <tabstop>pbUp</tabstop>
+    <tabstop>pbDown</tabstop>
+    <tabstop>pbCancel</tabstop>
+    <tabstop>pbOK</tabstop>
+  </tabstops>
+  <connections>
+    <connection>
+      <sender>rb5x8</sender>
+      <signal>toggled(bool)</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotSizeChanged()</slot>
+    </connection>
+    <connection>
+      <sender>pbCancel</sender>
+      <signal>clicked()</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotCancel()</slot>
+    </connection>
+    <connection>
+      <sender>pbOK</sender>
+      <signal>clicked()</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotOK()</slot>
+    </connection>
+    <connection>
+      <sender>pbAdd</sender>
+      <signal>clicked()</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotAdd()</slot>
+    </connection>
+    <connection>
+      <sender>pbRemove</sender>
+      <signal>clicked()</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotRemove()</slot>
+    </connection>
+    <connection>
+      <sender>pbUp</sender>
+      <signal>clicked()</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotUp()</slot>
+    </connection>
+    <connection>
+      <sender>pbDown</sender>
+      <signal>clicked()</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotDown()</slot>
+    </connection>
+    <connection>
+      <sender>lvCharacters</sender>
+      <signal>selectionChanged(Q3ListViewItem*)</signal>
+      <receiver>KLDotMatrixCharacterWizardBase</receiver>
+      <slot>slotSelectedCharacterChanged(Q3ListViewItem*)</slot>
+    </connection>
+  </connections>
+</ui>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>KLProjectManagerWidgetBase</class>
+  <widget class="QWidget" name="KLProjectManagerWidgetBase">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>227</width>
+        <height>293</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Project manager</string>
+    </property>
+    <layout class="QGridLayout">
+      <property name="margin">
+        <number>3</number>
+      </property>
+      <item row="0" column="0" rowspan="1" colspan="3">
+        <widget class="Q3ListView" name="lvFiles">
+          <column>
+            <property name="text">
+              <string>Name</string>
+            </property>
+            <property name="clickable">
+              <bool>true</bool>
+            </property>
+            <property name="resizable">
+              <bool>true</bool>
+            </property>
+          </column>
+          <column>
+            <property name="text">
+              <string>Size</string>
+            </property>
+            <property name="clickable">
+              <bool>true</bool>
+            </property>
+            <property name="resizable">
+              <bool>true</bool>
+            </property>
+          </column>
+          <column>
+            <property name="text">
+              <string>Modified</string>
+            </property>
+            <property name="clickable">
+              <bool>true</bool>
+            </property>
+            <property name="resizable">
+              <bool>true</bool>
+            </property>
+          </column>
+          <item>
+            <property name="text">
+              <string>Notes</string>
+            </property>
+            <property name="text">
+              <string/>
+            </property>
+            <property name="text">
+              <string/>
+            </property>
+            <property name="pixmap">
+              <pixmap>image0</pixmap>
+            </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+          </item>
+          <item>
+            <property name="text">
+              <string>Sources</string>
+            </property>
+            <property name="text">
+              <string/>
+            </property>
+            <property name="text">
+              <string/>
+            </property>
+            <property name="pixmap">
+              <pixmap>image1</pixmap>
+            </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+            <item>
+              <property name="text">
+                <string>main.c</string>
+              </property>
+              <property name="text">
+                <string/>
+              </property>
+              <property name="text">
+                <string/>
+              </property>
+              <property name="pixmap">
+                <pixmap/>
+              </property>
+              <property name="pixmap">
+                <pixmap/>
+              </property>
+              <property name="pixmap">
+                <pixmap/>
+              </property>
+            </item>
+          </item>
+          <item>
+            <property name="text">
+              <string>Headers</string>
+            </property>
+            <property name="text">
+              <string/>
+            </property>
+            <property name="text">
+              <string/>
+            </property>
+            <property name="pixmap">
+              <pixmap>image2</pixmap>
+            </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+            <property name="pixmap">
+              <pixmap/>
+            </property>
+            <item>
+              <property name="text">
+                <string>global.h</string>
+              </property>
+              <property name="text">
+                <string/>
+              </property>
+              <property name="text">
+                <string/>
+              </property>
+              <property name="pixmap">
+                <pixmap/>
+              </property>
+              <property name="pixmap">
+                <pixmap/>
+              </property>
+              <property name="pixmap">
+                <pixmap/>
+              </property>
+            </item>
+          </item>
+        </widget>
+      </item>
+      <item row="1" column="2">
+        <widget class="QLabel" name="lblProjectName">
+          <property name="text">
+            <string>Project name</string>
+          </property>
+          <property name="wordWrap">
+            <bool>false</bool>
+          </property>
+        </widget>
+      </item>
+      <item row="1" column="1">
+        <widget class="QToolButton" name="tbConfigure">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>1</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string/>
+          </property>
+          <property name="icon">
+            <iconset>image3</iconset>
+          </property>
+        </widget>
+      </item>
+      <item row="1" column="0">
+        <widget class="QToolButton" name="tbTrash">
+          <property name="sizePolicy">
+            <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>1</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <property name="text">
+            <string/>
+          </property>
+          <property name="icon">
+            <iconset>image4</iconset>
+          </property>
+        </widget>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <images>
+    <image name="image0">
+      <data format="PNG" length="270">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000000d549444154388da592410e832010453f68525df5785e434f2217f2542e4c20337451670a04489b4e324189efe53368f67d8ff8a3460058d7b5f9418c11ccacab3ccff30ce7dc5bd002892813c87b8c9fd0b627489b99b3fdaea0840590556455411ab9d6cc0cef7d5fd0eb1042fb08e5c45321332b3c0c83327a0b029622220211a9308533c1799eb0d6c218539dbeb5f50bcbfe8374ba7ac65b0a0021842c692628a3a5658cc1755d388ea39da0155104926259160080730edbb63d7f1624f0038057c1344d4d01f039e20dab6d94cd6f2b8501e005c284f629277071350000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+      <data format="PNG" length="503">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff61000001be49444154388da5913d8eda501485bf67fc93d8fc0841454115a1295844caec806d302b19d75942aa48a9662388862a198d68c6c28c8d3de6de9b821902194293533d3dbdf3dd73ee73777777c67fc80798cfe77cfbb1e5d7cf9aa6505e4ae5a510ea42680aa52e04953f7354e1ebf74fa4697a00007cf91c23f2113330051343543131540d55c1ec7036b5f30400dd4eeb424003f430d51411c15451bb00f85b4551b05eaf29cb12dff7190c06743a1d440c55e5437478e75d323f3f3fb35c2ec9f39c2449a8aa8ac562c1d3d313ce3944e47a828787079c73dcdcdc1086216559f2f8f888e779871ad72a8808bbdd8e2449f07d9fa66968b55a8cc7639aa64144f03cefdf8037fa7ebf47555f37af6cb75bc230c4f7cf2d47549ee7e4798eaa12c731599691651966c666b361b95c92651941105c4eb05eafc9b28ce974ca6834a2aa2a56ab15511451d735ed769b6eb74b55559819711c9f0386c321bd5e0fe71c411030994cc8f39cbaae09c390288ab8bfbf7fb7f023a0dd6e9f7d91e779f4fb7d9c7300ec763b0066b31900699a727b7b3b3cdb88999df57bbb73ce1d4127e604288f802008dec53b559224a7661f906385344daf9a4f756a06f80d8209f614d42bd9090000000049454e44ae426082</data>
+    </image>
+    <image name="image2">
+      <data format="PNG" length="465">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000019849444154388da592cdaada501485bf93984425a1581ce84c2c7d98163af635f4456ae85b953b71ec442852cd501b734dcecfee2026c46a2f856ed870ce81f5edb51747add76be13faa07b05c2ef9f9f295d38fefe86b8ebe9cd1af27aacb89eaf5842e7e21d6a16e2271f0f99b90a6690d00187df8c2bbd927c459c4199c3558a3b146e3ac032788084e1ce2dcbd0380c1fb8f0ff6a4690127f5642735e801d0ad3ccfd9eff74c26139224c15acbe170a0aa2aa6d3690d081300bc6700ad35e7f319ad75ed4484ebf5cae5724144b0d6beed00c0f33c8c31946589b51611c1f3bc3bf103404450aace5a29c5f17824cb32008c314451d4c21f00dd60e416d4783c268e639c736459863106dff79f03f23cc718c36030686d0641c07038c43987effb1863f03cef0ed09e8aa260b7db511445bbc69fceacb554554559968f0ee23866369bd1eff71111e6f3395114a1944229c5683462b3d9b0dd6e9f871804016118b613c330bc0bb60970b1580090a629abd56ad0029abdbaf69b7bd34dddc43ee05a40aff7d72f014092245d714beb358fff5a5d31c06f9a8ae5c4cd6b32840000000049454e44ae426082</data>
+    </image>
+    <image name="image3">
+      <data format="PNG" length="847">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000031649444154388d85d04b4f5c751c87f1e77fce9973e60093c240196ed35a400b03559b80c601a209a5919026c6a6f505b83271675c9998b847928eae3571a3be80ba20a989095a2fb8d000822222cdd061a6c35ccffdf277d1b4aeaa4ff25dfd92cfe22756573f63783803c81ec3d0bf9f9c1c1d8ee34856ab8dd2f171f956abe57c1a04a125048f73dd80d9d91cf9fcb328aeeb737858c4f3fcb66d7b9f388ed3313979a16b7efef9f19999dc479aa67e0832218440081eef51ea952baf251cc78d1b8d566c18896ff7f78bb5280ae78787cf1abdbddd280a333b3b7fedb8aebfe579214110d06c5a643269c6c6465080cf41ccb65a16dbdbfb148ba5c2e6e6ce0ff57a0b8073e786e8ea32975dd7557ddfc7763c745d6768a81f00656424733d9bcd7ce9fbc1a5288a48268df7e6e62ecfa7529d785e0080a6a9d95ad3ebb42c8766a34d2a65323d3dfaf0a6ebaabdb4b470a15a6d7c512a3df86671f185b72e5e7c8a46c342d3344e4febdc3baedd4f877bcdc5d43a4dc723694d016f3c04f6f6fe3ecce79fcbadac2ce42a95d3dcf878965aad01c408a152a9d468db7166d9bc33ddabd4b76211a2d3faf789fdfd93a1945c9b98384f5f5f37b6ed13c7922088383a2a516fc379737f7440dcbd16f971e838f247d19126bbf0660250d48989977ededd3d88cae55a5e4a34db762997ab388e8b6e76a33ef88ec1e22d06dde2197a8ce596adb79b2727771ba55d2934538a1b37dea5dd6ee338de8a69265f4ea53a262ccb2ba5fb072fdf7ca57b66a45c602838a00fb0cd04472215fef987fa8e65b985961da10108a1904868b72dcbb9dd6cda662c14a73fbef3a2fc65efabd15c239d323a00e89430a6b85a24cdb5ad6d1ddda0a04e4dcd110401711c232548a18703669dd7b33f15dbadd8d6bbf4a58167122a670c48a8a891e46c87afc48afaeafd8a38d1784212811f291f6f6ca2fb92d5d9ab09c1a90b876d4428b9d41b887b3d9d1f3c110050558822d6bede20f41c776dfee94825a9402d40f1023a9528fd9fc023444a0aeb1be01dcbb5c5bca662486a27b075a4fefabf0080a2402c28acff6e7270e2be9feec238a819bf555de5ed7f00ef6178a8ad6a6f920000000049454e44ae426082</data>
+    </image>
+    <image name="image4">
+      <data format="PNG" length="675">89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000026a49444154388d6d91cb6b13511487bf9b99246ded23699b46c5d48250a9baf001a55070d10788d0459782eec485dd8922f807b870e7c28d2bbbd1bd0b051fb5e0464441108ca52ab1b14dcdb3c964eebd33c9ccb88891d6f407e77016f7f79d73cf11ecd6b5a73da9b1e985a931e34232163edef0c4a05d6f52acc8e2ef8dcc97cdf74f9ee557ee3f079cb645b48bfed4c963b71ebd793c75363149080a55f89683ed3254aaf075138a0548565fad7c58be741959cc0184da8085ab776e2fce24268509750db6039e07be0fca858a05d90c94bcb999f38bd76fb47dff00fd1163200e043e78c1ded85150ac43b81baecc422ad93fd2f699edc295521e069a512802077c305de80e6040c0f411383a04b3e760e9454d760094eb49808c0d9912381a2c0586010303b0e3c2db02f4e7a05e57ba03206b154b030d20afe16701b225703c0889d6b6a3666b3796d4fb014a52fdbd8b2120624057184246cbecfb100a41d506cbda6f02b7e94820a0951a4d90ca4337024c4360860da211a86950b2d56b0fc0b6b59480d250aec056ce25f34b51b5348eab09028f83237dc4cc048e763a27b0ad8aac39602b500a5c570011226183908860cb3adf7f94a85514d64ebdf30a0dddd45241c9826633c0344d7abac29861100262f138b6eb135539d0d5ce2f28e9aa84dd64226e62d9826a032a0e88068443d01b09984a0916c647985b0e74f97f40319bde584b6fe98bd3a9ae33833e79655094e007108bc2d8a0a02f0a2fdfe5dc723e9b633f25c7e797ee3e582da4d7ad40e9608fb60a4e70efe16a696874fae66e8fd88733da7b686a7ee2c4a9d3c3c9e47010f8a2b09d2fada53f7dae6f7f7c0dacef7efc0705f4414ce2017a830000000049454e44ae426082</data>
+    </image>
+  </images>
+  <connections>
+    <connection>
+      <sender>lvFiles</sender>
+      <signal>doubleClicked(Q3ListViewItem*)</signal>
+      <receiver>KLProjectManagerWidgetBase</receiver>
+      <slot>slotDoubleClicked(Q3ListViewItem*)</slot>
+    </connection>
+    <connection>
+      <sender>tbTrash</sender>
+      <signal>clicked()</signal>
+      <receiver>KLProjectManagerWidgetBase</receiver>
+      <slot>slotTrash()</slot>
+    </connection>
+    <connection>
+      <sender>tbConfigure</sender>
+      <signal>clicked()</signal>
+      <receiver>KLProjectManagerWidgetBase</receiver>
+      <slot>slotConfigure()</slot>
+    </connection>
+  </connections>
+</ui>

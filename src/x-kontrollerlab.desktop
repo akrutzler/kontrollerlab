@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=MimeType
+MimeType=application/x-kontrollerlab
+Icon=kontrollerlab
+Patterns=*.kontrollerlab;
+DefaultApp=kontrollerlab
+Comment=KontrollerLab project file
+Comment[de]=KontrollerLab Projektdatei
+
+

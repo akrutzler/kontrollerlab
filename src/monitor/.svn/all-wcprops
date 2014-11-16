@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/monitor
+END
+monitor.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/monitor/monitor.c
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/monitor/Makefile.am
+END

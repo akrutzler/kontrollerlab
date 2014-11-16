@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/uart
+END
+uart.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/uart/uart.h
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/uart/Makefile.am
+END
+uart.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/kontrollerlab/!svn/ver/175/tags/v0.8.0-beta1/src/uart/uart.c
+END
