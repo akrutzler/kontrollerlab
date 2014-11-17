@@ -52,11 +52,12 @@ KLFileNewDialog::KLFileNewDialog(KontrollerLab *parent, KLProject* project, cons
     m_project = project;
     //TODO:  QListView::setViewMode(QListView::IconMode)
     KIconLoader *iconLoader = KIconLoader::global();
-    m_cSource = new Q3IconViewItem( ui->klNewFile, i18n("C source"), iconLoader->loadIcon( "text/x-csrc", KIconLoader::Desktop ) );
-    m_asmSource = new Q3IconViewItem( ui->klNewFile, i18n("ASM source"), iconLoader->loadIcon( "source_s", KIconLoader::Desktop ) );
-    m_cHeader = new Q3IconViewItem( ui->klNewFile, i18n("C header"), iconLoader->loadIcon( "source_h", KIconLoader::Desktop ) );
-    m_txt = new Q3IconViewItem( ui->klNewFile, i18n("Text"), iconLoader->loadIcon( "txt", KIconLoader::Desktop ) );
-    m_other = new Q3IconViewItem( ui->klNewFile, i18n("Other"), iconLoader->loadIcon( "unknown", KIconLoader::Desktop) );
+
+    m_cSource = new Q3IconViewItem( ui->klNewFile, i18n("C source"), iconLoader->loadMimeTypeIcon( "text/x-csrc",KIconLoader::Desktop, KIconLoader::SizeLarge ));
+    m_asmSource = new Q3IconViewItem( ui->klNewFile, i18n("ASM source"), iconLoader->loadMimeTypeIcon( "text/x-hex",KIconLoader::Desktop, KIconLoader::SizeLarge ));
+    m_cHeader = new Q3IconViewItem( ui->klNewFile, i18n("C header"), iconLoader->loadMimeTypeIcon( "text/x-chdr",KIconLoader::Desktop, KIconLoader::SizeLarge ));
+    m_txt = new Q3IconViewItem( ui->klNewFile, i18n("Text"), iconLoader->loadMimeTypeIcon( "text/plain",KIconLoader::Desktop, KIconLoader::SizeLarge ));
+    m_other = new Q3IconViewItem( ui->klNewFile, i18n("Other"), iconLoader->loadMimeTypeIcon( "all/all",KIconLoader::Desktop, KIconLoader::SizeLarge ));
     if (m_project)
         m_targetDirectory = m_project->projectBaseURL();
     ui->tlDirectory->setText( PROJECT_ROOT_STRING );
