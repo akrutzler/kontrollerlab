@@ -41,25 +41,24 @@ int main(int argc, char **argv)
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-    /*KAboutData about("kontrollerlab", I18N_NOOP("KontrollerLab"), version, description,
-		     KAboutData::License_GPL, "(C) 2006 - 2008 cadManiac.org", 0, 0, "help@cadmaniac.org");
-    about.addAuthor( "Martin Strasser", 0, "strasser@cadmaniac.org" );
-    about.addAuthor( "Mario Boikov", 0, "squeeze@cadmaniac.org" );
-    about.addAuthor( "Thomas Grübler", "Debian package manager", "debian@cadmaniac.org" );
-    about.addCredit( "Peter Fleury", "For the dot matrix LCD library",
-                     "pfleury@gmx.ch", "http://www.jump.to/fleury" );
-    about.addCredit( "Jürgen Eckert", "For fixing a bug in the avr-gcc linker command",
-                     "je.sid@gmx.de" );
-    about.addCredit( "Christian Waldherr", "For the Arch Linux packages of KontrollerLab",
-                     "woodghost@online.de" );
-    about.addCredit( "Christian Riggenbach", "For writing some patches and improvements for KontrollerLab",
-                     "criggenbach@magahugu.net" );
-
-
-*/
 
     KAboutData about(QByteArray("kontrollerlab"), QByteArray("KontrollerLab"), ki18n(version), QByteArray(description), ki18n(""),
                  KAboutData::License_GPL, ki18n("(C) 2006 - 2008 cadManiac.org"), ki18n(""), QByteArray(""), QByteArray("help@cadmaniac.org"));
+
+    about.addAuthor( ki18n("Martin Strasser"),
+                     ki18n(""), "strasser@cadmaniac.org" );
+    about.addAuthor( ki18n("Mario Boikov"),
+                     ki18n(""), "squeeze@cadmaniac.org" );
+    about.addAuthor( ki18n("Thomas Grübler"),
+                     ki18n("Debian package manager"), "debian@cadmaniac.org" );
+    about.addCredit( ki18n("Peter Fleury"),
+                     ki18n("For the dot matrix LCD library"),"pfleury@gmx.ch", "http://www.jump.to/fleury" );
+    about.addCredit( ki18n("Jürgen Eckert"),
+                     ki18n("For fixing a bug in the avr-gcc linker command"),"je.sid@gmx.de" );
+    about.addCredit( ki18n("Christian Waldherr"),
+                     ki18n("For the Arch Linux packages of KontrollerLab"),"woodghost@online.de" );
+    about.addCredit( ki18n("Christian Riggenbach"),
+                     ki18n("For writing some patches and improvements for KontrollerLab"),"criggenbach@magahugu.net" );
 
     KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions( options );
