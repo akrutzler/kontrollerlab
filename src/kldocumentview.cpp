@@ -36,7 +36,7 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
 {
     // Store the document for this view:
     setObjectName(doc->name());
-    setWindowState(Qt::WindowMaximized);
+    //setWindowState(Qt::WindowMaximized);
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_document = doc;
@@ -54,6 +54,7 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     setWindowTitle(doc->name());
 
     // remove the unwanted actions
+
     QAction *a = m_view->actionCollection()->action( "file_export" );
 
     if (a)
@@ -71,7 +72,7 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     
     if (a)
         connect( a, SIGNAL(activated()), this, SLOT(slotCheckForModifiedFiles()) );
-        // m_view->actionCollection()->take(a);
+    // m_view->actionCollection()->take(a);
     
     a = m_view->actionCollection()->action( "edit_undo" );
     if (a)
@@ -98,13 +99,13 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     if (bookmarkAction)
     {
         m_view->actionCollection()->removeAction(bookmarkAction);
-    //kdDebug(24000) << "Bookmarks found!" << endl;
-    //bookmarkAction->insert(quantaApp->actionCollection()->action( "file_quit" ));
+        //kdDebug(24000) << "Bookmarks found!" << endl;
+        //bookmarkAction->insert(quantaApp->actionCollection()->action( "file_quit" ));
     }
-//    viewCursorIf = dynamic_cast<KTextEditor::ViewCursorInterface *>(m_view);
+    //    viewCursorIf = dynamic_cast<KTextEditor::ViewCursorInterface *>(m_view);
     codeCompletionIf = dynamic_cast<KTextEditor::CodeCompletionInterface *>(m_view);
     
-   /* KTextEditor::PopupMenuInterface* popupIf = dynamic_cast<KTextEditor::PopupMenuInterface*>(m_view);
+    /* KTextEditor::PopupMenuInterface* popupIf = dynamic_cast<KTextEditor::PopupMenuInterface*>(m_view);
     if (popupIf)
     {
         QPopupMenu *thePopup = (QPopupMenu*)parent->factory()->container("ktexteditor_popup", parent);
@@ -112,16 +113,16 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
             m_parent->debugToggleBreakpoint()->plug( thePopup );
         popupIf->installPopup ( thePopup );
     }*/
-    //setFocusProxy( m_view );
+    setFocusProxy( m_view );
     m_view->setFocusPolicy(Qt::WheelFocus);
     m_parent->slotNewPart(doc->kateDoc(), true);
     // add the view's XML GUI Client
-    /*if ( !m_parent->kateGuiClientAdded() )
+    if ( !m_parent->kateGuiClientAdded() )
     {
         m_parent->guiFactory()->addClient( m_view );
         m_parent->setKateGuiClientAdded( (KXMLGUIClient*) m_view );
     }
-    */
+
     doc->registerKLDocumentView( this );
     //QGridLayout *m_layout = new QGridLayout( this, 1, 1 );
     //m_layout->addWidget( m_view, 1, 1 );
@@ -144,8 +145,8 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
 
 KLDocumentView::~KLDocumentView()
 {
-     qDebug() << "removing" << this;
-/*
+    qDebug() << "removing" << this;
+
     if ( m_parent->oldKTextEditor() == m_view )
     {
         if ( m_parent->guiFactory()->clients().indexOf( m_view ) >= 0 )
@@ -155,15 +156,14 @@ KLDocumentView::~KLDocumentView()
         }
         m_parent->setOldKTextEditor( 0L );
     }
-
-    */
     
     if (m_document)
         m_document->unregisterKLDocumentView( this );
-    /*if ( m_parent->kateGuiClientAdded() )
+    if ( m_parent->kateGuiClientAdded() )
     {
         m_parent->guiFactory()->removeClient( m_parent->kateGuiClientAdded() );
-        m_parent->setKateGuiClientAdded( 0L );*/
+        m_parent->setKateGuiClientAdded( 0L );
+    }
 
     delete m_view;
 }
@@ -190,7 +190,7 @@ void KLDocumentView::mdiViewActivated( )
 
     if ( m_document )
     {
-        //m_parent->partManager()->setActivePart(m_document->kateDoc(), m_view);
+        m_parent->partManager()->setActivePart(m_document->kateDoc(), m_view);
         m_document->setActiveView( this );
     }
 }
@@ -198,8 +198,8 @@ void KLDocumentView::mdiViewActivated( )
 
 void KLDocumentView::activated( )
 {
-   // if ( m_document )
-       // m_parent->m_mdiArea->setActiveSubWindow();
+    // if ( m_document )
+    // m_parent->m_mdiArea->setActiveSubWindow();
 }
 
 
@@ -210,28 +210,40 @@ void KLDocumentView::setCursorToLine( int lineNr )
 
 void KLDocumentView::closeEvent(QCloseEvent *e)
 {
-    if(!m_document) {
+    if ( !m_document )
+    {
+        m_parent->setOldKTextEditor( m_view );
         e->accept();
-        return;
     }
-
-    if(m_document->isModified()) {
-
+    else if ( ( !m_document->isModified() ) ||
+              ( m_document->kateDoc() &&
+                ( m_document->kateDoc()->views().count() > 1 ) ) )
+    {
+        m_parent->setOldKTextEditor( m_view );
+        e->accept();
+    }
+    else
+    {
         int retVal = KMessageBox::questionYesNoCancel( this,
-                                                       i18n("Document %1 has been modified! Do You want to save before closing?",objectName()),
-                                                       i18n("Closing KontrollerLab") );
+                                                       i18n("Do you want to save the document before closing?"),
+                                                       i18n("Close document") );
+
         if ( retVal == KMessageBox::No )
-            e->accept();
-        else if ( retVal == KMessageBox::Cancel )
-            e->ignore();
-        else
         {
-            m_document->save();
+            m_parent->setOldKTextEditor( m_view );
+            m_document->revert();
             e->accept();
         }
-    }
-    else {
-        e->accept();
+        else if ( retVal == KMessageBox::Yes )
+        {
+            if (m_document->save())
+            {
+                m_parent->setOldKTextEditor( m_view );
+                e->accept();
+            }
+        }
+        else if ( retVal == KMessageBox::Cancel )
+            e->ignore();
     }
 }
 

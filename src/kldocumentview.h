@@ -65,6 +65,7 @@ public:
     KLDocument* document() const { return m_document; }
 
     void setCursorToLine( int lineNr );
+
 protected:
     virtual void closeEvent( QCloseEvent* e );
 
