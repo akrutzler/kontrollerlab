@@ -60,13 +60,15 @@ class KLDocumentView;
 class KLProject;
 class KLDebuggerConfigWidget;
 
+class KRadioAction;
+
 
 /**
  * @short Application Main Window
  * @author Martin Strasser <strasser@kontrollerlab.org>
  * @version 0.1
  */
-class KontrollerLab : public KMainWindow
+class KontrollerLab : public KXmlGuiWindow
 {
     Q_OBJECT
 public:
@@ -96,8 +98,6 @@ public:
     KLProject* project() { return m_project; }
 private:
     void createActions();
-    void createMenus();
-    void createToolBars();
 protected:
     virtual void saveProperties(KSharedConfig::Ptr config );
     virtual void readProperties(KSharedConfig::Ptr config );
@@ -105,14 +105,14 @@ protected:
     virtual void resizeEvent( QResizeEvent* e );
 public slots:
     void keyPressedOnDocument();
-    // ACTION SLOTS:
+    // File ACTION SLOTS:
     void slotNewFile();
     void slotSaveFile();
     void slotSaveFileAs();
     void slotOpenFile();
     void slotCloseFile();
     void slotNewPart(KParts::Part *newPart, bool setActiv);
-    
+
     void setKateGuiClientAdded(KXMLGUIClient* theValue)
     { m_kateGuiClientAdded = theValue; }
     /** connected to the part manager, activates a new part */
@@ -219,83 +219,62 @@ signals:
     void activePartChanged( KParts::Part* );
 
 protected:
-    /*KAction *m_newFile;
-    KAction *m_openFile;
-    KAction *m_saveFile;
-    KAction *m_closeFile;
-    KAction *m_saveFileAs;
-    KAction *m_closeProgram;
+    QAction *m_newFile;
+    QAction *m_openFile;
+    QAction *m_saveFile;
+    QAction *m_closeFile;
+    QAction *m_saveFileAs;
+    QAction *m_closeProgram;
 
     QAction *m_newProject;
-    KAction *m_openProject;
-    KAction *m_saveProject;
-    KAction *m_saveProjectAs;
-    KAction *m_closeProject;
-    KAction *m_compileAssemble;
-    KAction *m_build;
-    KAction *m_rebuildAll;
-    KAction *m_erase;
-    KAction *m_upload;
-    KAction *m_uploadHex;
-    KAction *m_verify;
-    KAction *m_download;
-    KAction *m_ignite;
-    KAction *m_stopKillingProc;
-    KAction *m_fuses;
-    KAction *m_configProgrammer;
-    KAction *m_configProject;
+    QAction *m_openProject;
+    QAction *m_saveProject;
+    QAction *m_saveProjectAs;
+    QAction *m_closeProject;
+    QAction *m_compileAssemble;
+    QAction *m_build;
+    QAction *m_rebuildAll;
+    QAction *m_erase;
+    QAction *m_upload;
+    QAction *m_uploadHex;
+    QAction *m_verify;
+    QAction *m_download;
+    QAction *m_ignite;
+    QAction *m_stopKillingProc;
+    QAction *m_fuses;
+    QAction *m_configProgrammer;
+    QAction *m_configProject;
     
-    KAction *m_sevenSegmentsWizardAction;
-    KAction *m_dotMatrixWizardAction;
-    KAction *m_dotMatrixCharacterWizardAction;
+    QAction *m_sevenSegmentsWizardAction;
+    QAction *m_dotMatrixWizardAction;
+    QAction *m_dotMatrixCharacterWizardAction;
     
     // Debug:
-    //KRadioAction *m_directMemoryDebug;
-    //KRadioAction *m_inCircuitDebugger;
-    //KRadioAction *m_PCOnlyDebug;
-    KAction *m_debugStart;
-    KAction *m_debugStop;
-    KAction *m_debugPause;
-    KAction *m_debugRunToCursor;
-    KAction *m_debugStepOver;
-    KAction *m_debugStepInto;
-    KAction *m_debugStepOut;
-    KAction *m_debugRestart;
-    KAction *m_debugConfigureICD;
-    KAction *m_debugToggleBreakpoint;
 
-    KAction *m_newViewForDocument;*/
+    QAction *m_directMemoryDebug;
+    QAction *m_inCircuitDebugger;
+    QAction *m_PCOnlyDebug;
+    QAction *m_debugStart;
+    QAction *m_debugStop;
+    QAction *m_debugPause;
+    QAction *m_debugRunToCursor;
+    QAction *m_debugStepOver;
+    QAction *m_debugStepInto;
+    QAction *m_debugStepOut;
+    QAction *m_debugRestart;
+    QAction *m_debugConfigureICD;
+    QAction *m_debugToggleBreakpoint;
+
+    QAction *m_newViewForDocument;
 
     //QSignalMapper *windowMapper;
-
-    QMenu *fileMenu;
-    QMenu *editMenu;
-    QMenu *windowMenu;
-    QMenu *helpMenu;
 
     KToolBar *fileToolBar;
     KToolBar *editToolBar;
 
-    QAction *newAct;
-    QAction *openAct;
-    QAction *saveAct;
-    QAction *saveAsAct;
-    QAction *exitAct;
-    QAction *cutAct;
-    QAction *copyAct;
-    QAction *pasteAct;
-    QAction *closeAct;
-    QAction *closeAllAct;
-    QAction *tileAct;
-    QAction *cascadeAct;
-    QAction *nextAct;
-    QAction *previousAct;
-    QAction *separatorAct;
-    QAction *aboutAct;
-    QAction *aboutQtAct;
 
-    //KToggleAction *m_hideShowMessageBox, *m_hideShowProjectManager;
-    //KToggleAction *m_hideShowSerialTerminal, *m_hideShowMemoryView;
+    QAction *m_hideShowMessageBox, *m_hideShowProjectManager;
+    QAction *m_hideShowSerialTerminal, *m_hideShowMemoryView;
     KMenu *m_msgBoxPopup;
 
 

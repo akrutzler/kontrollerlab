@@ -28,6 +28,10 @@
 #include <klocale.h>
 #include <kstdaction.h>
 
+#include <khelpmenu.h>
+
+#include <QActionGroup>
+
 
 
 #include <ktexteditor/markinterface.h>
@@ -77,23 +81,21 @@
 #include <kactioncollection.h>
 
 #include <QDockWidget>
+#include <kedittoolbar.h>
+#include <kxmlguifactory.h>
 
-
+#include <kaction.h>
 
 
 KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
-    : KMainWindow( 0 )
+    : KXmlGuiWindow( 0 )
 {
-    //setStandardToolBarMenuEnabled( true );
-    //createStandardStatusBarAction();
+    setStandardToolBarMenuEnabled( true );
+    createStandardStatusBarAction();
 
     m_lastDownloadHexURL = "";
     m_lastUploadHexURL = "";
     m_serialTerminalWidget = 0L;
-
-    // set the shell's ui resource file
-    // setXMLFile("kontrollerlabui.rc");
-    //
 
     m_mdiArea = new QMdiArea(this);
     m_mdiArea->setViewMode(QMdiArea::TabbedView);
@@ -103,175 +105,21 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
 
     setCentralWidget(m_mdiArea);
 
-    //m_editorWidget = new KLEditorWidget(this);
-
-    KLDocument* doc = new KLDocument(this);
-    doc->activateCHighlighting();
-    doc->setUrl(KUrl("unnamed"));
-    new KLDocumentView( doc, this );
-
     m_oldKTextEditor = 0L;
     m_viewToBeOpened = 0L;
     m_doNotOpenProjectFromSession = doNotOpenProjectFromSession;
 
-    // ACTIONS:
-    /*
-    m_newFile = KStandardAction::openNew( this, SLOT( slotNewFile() ), actionCollection());
-    m_openFile = KStandardAction::open( this, SLOT( slotOpenFile() ), actionCollection());
-    m_saveFile = KStandardAction::save( this, SLOT( slotSaveFile() ), actionCollection());
-    m_saveFileAs = KStandardAction::saveAs( this, SLOT( slotSaveFileAs() ), actionCollection());
-    m_closeProgram = KStandardAction::quit( this, SLOT( close() ), actionCollection());
-    m_newProject = new QAction( i18n("Close file"), "fileclose",
-                                KShortcut(), this, SLOT( slotCloseFile() ),
-                                actionCollection());
-    // Project:
-    m_newProject = new QAction( i18n("New project"),QKeySequence(), this, SLOT( slotProjectNew() );
+    // Settings menu*/
 
-    m_openProject = new QAction( i18n("Open project"), "fileopen",
-                                KShortcut(), this, SLOT( slotProjectOpen() ),
-                                actionCollection(), "open_project" );
-    m_saveProject = new QAction( i18n("Save project"), "filesave",
-                                KShortcut(), this, SLOT( slotProjectSave() ),
-                                actionCollection(), "save_project" );
-    m_saveProjectAs = new QAction( i18n("Save project as"), "filesave",
-                                 KShortcut(), this, SLOT( slotProjectSaveAs() ),
-                                 actionCollection(), "save_project_as" );
-    m_closeProject = new QAction( i18n("Close project"), "fileclose",
-                                   KShortcut(), this, SLOT( slotProjectClose() ),
-                                   actionCollection(), "close_project" );
-
-    m_compileAssemble = new QAction( i18n("Compile file"), "compfile",
-                                     KShortcut("F7"), this, SLOT( slotCompileAssemble() ),
-                                     actionCollection(), "compile" );
-    m_build = new QAction( i18n("Build project"), "gear",
-                           KShortcut("F9"), this, SLOT( slotBuild() ),
-                           actionCollection(), "build" );
-    m_rebuildAll = new QAction( i18n("Rebuild all"), "rebuild",
-                                KShortcut(), this, SLOT( slotRebuildAll() ),
-                                actionCollection(), "rebuild" );
-    m_erase = new QAction( i18n("Erase device"), "eraser",
-                           KShortcut(), this, SLOT( slotErase() ),
-                           actionCollection(), "erase" );
-    m_upload = new QAction( i18n("Upload"), "up",
-                            KShortcut(), this, SLOT( slotUpload() ),
-                            actionCollection(), "upload" );
-    m_uploadHex = new QAction( i18n("Upload hex file"), "up",
-                               KShortcut(), this, SLOT( slotUploadHex() ),
-                               actionCollection(), "uploadHex" );
-    m_verify = new QAction( i18n("Verify"), "viewmag1",
-                            KShortcut(), this, SLOT( slotVerify() ),
-                            actionCollection(), "verify" );
-    m_download = new QAction( i18n("Download"), "down",
-                              KShortcut(), this, SLOT( slotDownload() ),
-                              actionCollection(), "download" );
-    m_ignite = new QAction( i18n("Ignite"), "fork",
-                            KShortcut("Shift+F9"), this, SLOT( slotIgnite() ),
-                            actionCollection(), "ignite" );
-    m_stopKillingProc = new QAction( i18n("Stop"), "cancel",
-                                     KShortcut("ESC"), this, SLOT( slotStopProgrammer() ),
-                                     actionCollection(), "stop_programming" );
-    m_fuses = new QAction( i18n("Fuses"), "flag",
-                           KShortcut(), this, SLOT( slotFuses() ),
-                           actionCollection(), "fuses" );
-    m_configProgrammer = new QAction( i18n("Configure programmer"), "configure",
-                                      KShortcut(), this, SLOT( slotConfigProgrammer() ),
-                                      actionCollection(), "configProgrammer" );
-    m_configProgrammer = new QAction( i18n("Configure project"), "configure",
-                                      KShortcut(), this, SLOT( slotConfigProject() ),
-                                      actionCollection(), "configProject" );
-    // Wizards:
-    m_sevenSegmentsWizardAction = new QAction( i18n("Seven segments wizard"), "wizard",
-                                      KShortcut(), this, SLOT( slotSevenSegmentsWizard() ),
-                                      actionCollection(), "seven_segment_wizard" );
-    m_dotMatrixWizardAction = new QAction( i18n("Dot matrix display wizard"), "wizard",
-                                        KShortcut(), this, SLOT( slotDotMatrixWizard() ),
-                                        actionCollection(), "dot_matrix_wizard" );
-    m_dotMatrixCharacterWizardAction = new QAction( i18n("Dot matrix character wizard"), "wizard",
-                                        KShortcut(), this, SLOT( slotDotMatrixCharacterWizard() ),
-                                        actionCollection(), "dot_matrix_character_wizard" );
-    // Debug:
-    m_directMemoryDebug = new KRadioAction( i18n("Direct memory debugger"), "dbg_dm",
-                                            KShortcut(), this, SLOT( slotDirectMemoryDebug() ),
-                                            actionCollection(), "direct_memory_debug" );
-    m_directMemoryDebug->setExclusiveGroup( "debugMode" );
-    m_inCircuitDebugger = new KRadioAction( i18n("In circuit debugger"), "dbg_icd",
-                                            KShortcut(), this, SLOT( slotInCircuitDebugger() ),
-                                            actionCollection(), "in_circuit_debugger" );
-    m_inCircuitDebugger->setExclusiveGroup( "debugMode" );
-    m_PCOnlyDebug = new KRadioAction( i18n("PC only debugging"), "dbg_pco",
-                                      KShortcut(), this, SLOT( slotPCOnlyDebug() ),
-                                      actionCollection(), "pc_only_debug" );
-    m_PCOnlyDebug->setChecked( true );
-    m_PCOnlyDebug->setExclusiveGroup( "debugMode" );
-
-    m_debugStart = new QAction( i18n("Enable"), "dbgrun",
-                                KShortcut(), this, SLOT( slotDebugStart() ),
-                                actionCollection(), "debug_start" );
-    m_debugStop = new QAction( i18n("Stop"), "stop",
-                               KShortcut(), this, SLOT( slotDebugStop() ),
-                               actionCollection(), "debug_stop" );
-    m_debugPause = new QAction( i18n("Start"), "player_play",
-                                KShortcut(), this, SLOT( slotDebugPause() ),
-                                actionCollection(), "debug_pause" );
-    m_debugRunToCursor = new QAction( i18n("Run to cursor"), "dbgrunto",
-                                      KShortcut(), this, SLOT( slotDebugRunToCursor() ),
-                                      actionCollection(), "debug_run_to_cursor" );
-    m_debugStepOver = new QAction( i18n("Step over"), "dbgnext",
-                                   KShortcut(), this, SLOT( slotDebugStepOver() ),
-                                   actionCollection(), "debug_step_over" );
-    m_debugStepInto = new QAction( i18n("Step into"), "dbgstep",
-                                   KShortcut(), this, SLOT( slotDebugStepInto() ),
-                                   actionCollection(), "debug_step_into" );
-    m_debugStepOut = new QAction( i18n("Step out"), "dbgstepout",
-                                  KShortcut(), this, SLOT( slotDebugStepOut() ),
-                                  actionCollection(), "debug_step_out" );
-    m_debugRestart = new QAction( i18n("Restart"), "reload",
-                                  KShortcut(), this, SLOT( slotDebugRestart() ),
-                                  actionCollection(), "debug_restart" );
-    m_debugConfigureICD = new QAction( i18n("Configure ICD"), "configure",
-                                       KShortcut(), this, SLOT( slotDebugConfigureICD() ),
-                                       actionCollection(), "debug_configure_icd" );
-    m_debugToggleBreakpoint = new QAction( i18n("Toggle breakpoint"), "player_pause",
-                                         KShortcut(), this, SLOT( slotDebugToggleBreakpoint() ),
-                                         actionCollection(), "debug_toggle_breakpoint" );
-
-    activateDebuggerActions( false );
-
-
-    // new view:
-    m_newViewForDocument = new QAction( i18n("New view for document"), "contents",
-                                        KShortcut(), this, SLOT( slotNewViewForDocument() ),
-                                        actionCollection(), "view_new_view" );
-
-    // Message box:
-    m_hideShowMessageBox = new KToggleAction( i18n("Show message box"), "",
-                                              KShortcut::KShortcut( "" ), this,
-            SLOT(slotHideShowMessageBox()), actionCollection(), "showmessagebox" );
-    m_hideShowProjectManager = new KToggleAction( i18n("Show project manager"), "",
-                                              KShortcut::KShortcut( "" ), this,
-                                              SLOT(slotHideShowProjectManager()),
-                                              actionCollection(), "showprojectmanager" );
-    m_hideShowSerialTerminal = new KToggleAction( i18n("Show serial terminal"), "",
-            KShortcut::KShortcut( "" ), this,
-            SLOT(slotHideShowSerialTerminal()),
-            actionCollection(), "showserialterminal" );
-
-    m_hideShowMemoryView = new KToggleAction( i18n("Show memory view"), "dbgmemview",
-                                              KShortcut::KShortcut( "" ), this,
-                                              SLOT(slotHideShowMemoryView()),
-                                              actionCollection(), "showmemoryview" );
-
-    // Settings menu
-    KStdAction::configureToolbars(this, SLOT(slotConfToolbar()), actionCollection());
-    KStdAction::keyBindings(guiFactory(), SLOT(configureShortcuts()), actionCollection());*/
-
-    
-    //createGUI( 0L );
-    // The procmanager must be set up before the project is built.
+    KStandardAction::configureToolbars(this, SLOT(slotConfToolbar()), actionCollection());
+    //KStandardAction::keyBindings(this, SLOT(configureShortcuts()), actionCollection());
 
     createActions();
-    createMenus();
-    createToolBars();
+    
+    setupGUI(KXmlGuiWindow::Default,QDir::currentDirPath() + "/kontrollerlabui.rc");    //absolut just for now
+
+    // The procmanager must be set up before the project is built.
+
 
     m_procManager = new KLProcessManager( this, "processManager" );
     
@@ -284,7 +132,12 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_programmerInterface[ UISP ] = new KLProgrammerUISP( m_procManager, m_project );
     m_programmerInterface[ AVRDUDE ] = new KLProgrammerAVRDUDE( m_procManager, m_project );
 
-    m_project->addDocument( doc );
+    //KLDocument* doc = new KLDocument(this);
+    //doc->activateCHighlighting();
+    //doc->setUrl(KUrl("unnamed"));
+    //new KLDocumentView( doc, this );
+
+    //m_project->addDocument( doc );
     m_project->setProgrammerInterface( getProgrammer( UISP ) );
 
     m_kateGuiClientAdded = 0L;
@@ -315,14 +168,14 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_serialTerminalWidget = new KLSerialTerminalWidget( this, "serialTerminalWidget" );
     dock->setWidget(m_serialTerminalWidget);
     addDockWidget (Qt::LeftDockWidgetArea,dock );
-    m_serialTerminalWidget->hide();
+    m_serialTerminalWidget->close();
 
     dock = new QDockWidget(tr("Memory View"), this);
-    
+
     m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryView");
     dock->setWidget(m_memoryViewWidget);
     addDockWidget(Qt::LeftDockWidgetArea, dock );
-    m_memoryViewWidget->hide();
+    m_memoryViewWidget->close();
     
     m_debugger = new KLDebugger( m_serialTerminalWidget, this, "debugger" );
     m_debugger->setMemoryViewWidget( m_memoryViewWidget );
@@ -380,147 +233,320 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
 
 void KontrollerLab::createActions()
 {
-    newAct = new QAction(QIcon(":/images/new.png"), tr("&New"), this);
-    newAct->setShortcuts(QKeySequence::New);
-    newAct->setStatusTip(tr("Create a new file"));
-    connect(newAct, SIGNAL(triggered()), this, SLOT(slotNewFile()));
+    KActionCollection *actionc = actionCollection();
+    m_newFile       =   (QAction*) actionc->addAction(KStandardAction::New,"file_new",this,SLOT(slotNewFile()));
+    m_openFile      =   (QAction*) actionc->addAction(KStandardAction::Open,"file_open",this,SLOT(slotOpenFile()));
+    m_saveFile      =   (QAction*) actionc->addAction(KStandardAction::Save,"file_save",this,SLOT(slotSaveFile()));
+    m_saveFileAs    =   (QAction*) actionc->addAction(KStandardAction::SaveAs,"file_save_as",this,SLOT(slotSaveFileAs()));
+    m_closeFile     =   (QAction*) actionc->addAction(KStandardAction::Close,"file_close",this,SLOT(slotCloseFile()));
 
-    openAct = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
-    openAct->setShortcuts(QKeySequence::Open);
-    openAct->setStatusTip(tr("Open an existing file"));
-    connect(openAct, SIGNAL(triggered()), this, SLOT(slotOpenFile()));
+    m_closeProgram  =   (QAction*) actionc->addAction(KStandardAction::Quit,"file_quit",this,SLOT(close()));
+//Project
+    m_openProject = (QAction*) actionc->addAction("open_project",this, SLOT( slotProjectOpen() ));
+    m_openProject->setText(i18n("Open project"));
+    m_openProject->setIcon(KIcon("document-open"));
 
-    saveAct = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
-    saveAct->setShortcuts(QKeySequence::Save);
-    saveAct->setStatusTip(tr("Save the document to disk"));
-    connect(saveAct, SIGNAL(triggered()), this, SLOT(slotSaveFile()));
+    m_newProject = (QAction*) actionc->addAction("new_project",this, SLOT( slotProjectNew() ));
+    m_newProject->setText(i18n("New project"));
+    m_newProject->setIcon(KIcon("document-new"));
 
-    saveAsAct = new QAction(tr("Save &As..."), this);
-    saveAsAct->setShortcuts(QKeySequence::SaveAs);
-    saveAsAct->setStatusTip(tr("Save the document under a new name"));
-    connect(saveAsAct, SIGNAL(triggered()), this, SLOT(slotSaveFileAs()));
+    m_saveProject = (QAction*) actionc->addAction("save_project",this, SLOT( slotProjectSave() ));
+    m_saveProject->setText(i18n("Save project"));
+    m_saveProject->setIcon(KIcon("document-save"));
 
-    exitAct = new QAction(tr("E&xit"), this);
-    exitAct->setShortcuts(QKeySequence::Quit);
-    exitAct->setStatusTip(tr("Exit the application"));
-    connect(exitAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
+    m_saveProjectAs = (QAction*) actionc->addAction("save_project_as",this, SLOT( slotProjectSaveAs() ));
+    m_saveProjectAs->setText(i18n("Save project as"));
+    m_saveProjectAs->setIcon(KIcon("document-save-as"));
 
-    cutAct = new QAction(QIcon(":/images/cut.png"), tr("Cu&t"), this);
-    cutAct->setShortcuts(QKeySequence::Cut);
-    cutAct->setStatusTip(tr("Cut the current selection's contents to the "
-                            "clipboard"));
-    //connect(cutAct, SIGNAL(triggered()), this, SLOT(cut()));
+    m_closeProject = (QAction*) actionc->addAction("close_project",this, SLOT( slotProjectClose() ));
+    m_closeProject->setText(i18n("Close project"));
+    m_closeProject->setIcon(KIcon("document-close"));
 
-    copyAct = new QAction(QIcon(":/images/copy.png"), tr("&Copy"), this);
-    copyAct->setShortcuts(QKeySequence::Copy);
-    copyAct->setStatusTip(tr("Copy the current selection's contents to the "
-                             "clipboard"));
-    //connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
+//
+    m_compileAssemble = (QAction*) actionc->addAction("compile",this, SLOT( slotCompileAssemble() ));
+    m_compileAssemble->setShortcut(QKeySequence("F7"));
+    m_compileAssemble->setText(i18n("Compile file"));
+    m_compileAssemble->setIcon(KIcon("document-close"));
 
-    pasteAct = new QAction(QIcon(":/images/paste.png"), tr("&Paste"), this);
-    pasteAct->setShortcuts(QKeySequence::Paste);
-    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
-                              "selection"));
-    //connect(pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
+    m_build = (QAction*) actionc->addAction("build",this, SLOT( slotBuild() ));
+    m_build->setShortcut(QKeySequence("F9"));
+    m_build->setText(i18n("Build project"));
+    m_build->setIcon(KIcon("document-close"));
 
-    closeAct = new QAction(tr("Cl&ose"), this);
-    closeAct->setStatusTip(tr("Close the active window"));
-    //connect(closeAct, SIGNAL(triggered()),
-    //mdiArea, SLOT(closeActiveSubWindow()));
+    m_rebuildAll = (QAction*) actionc->addAction("rebuild",this, SLOT( slotRebuildAll() ));
+    m_rebuildAll->setText(i18n("Rebuild all"));
+    m_rebuildAll->setIcon(KIcon("document-close"));
 
-    closeAllAct = new QAction(tr("Close &All"), this);
-    closeAllAct->setStatusTip(tr("Close all the windows"));
-    //connect(closeAllAct, SIGNAL(triggered()),
-    //mdiArea, SLOT(closeAllSubWindows()));
+    m_erase = (QAction*) actionc->addAction("erase",this, SLOT( slotErase() ));
+    m_erase->setText(i18n("Erase device"));
+    m_erase->setIcon(KIcon("eraser"));
 
-    tileAct = new QAction(tr("&Tile"), this);
-    tileAct->setStatusTip(tr("Tile the windows"));
-    //connect(tileAct, SIGNAL(triggered()), mdiArea, SLOT(tileSubWindows()));
+    m_upload = (QAction*) actionc->addAction("upload",this, SLOT( slotUpload() ));
+    m_upload->setText(i18n("Upload"));
+    m_upload->setIcon(KIcon("document-close"));
 
-    cascadeAct = new QAction(tr("&Cascade"), this);
-    cascadeAct->setStatusTip(tr("Cascade the windows"));
-    //connect(cascadeAct, SIGNAL(triggered()), mdiArea, SLOT(cascadeSubWindows()));
+    m_uploadHex = (QAction*) actionc->addAction("uploadHex",this, SLOT( slotUploadHex() ));
+    m_uploadHex->setText(i18n("Upload hex file"));
+    m_uploadHex->setIcon(KIcon("document-close"));
 
-    nextAct = new QAction(tr("Ne&xt"), this);
-    nextAct->setShortcuts(QKeySequence::NextChild);
-    nextAct->setStatusTip(tr("Move the focus to the next window"));
-    //connect(nextAct, SIGNAL(triggered()),
-    //mdiArea, SLOT(activateNextSubWindow()));
+    m_verify = (QAction*) actionc->addAction("verify",this, SLOT( slotVerify() ));
+    m_verify->setText(i18n("Verify"));
+    m_verify->setIcon(KIcon("document-close"));
 
-    previousAct = new QAction(tr("Pre&vious"), this);
-    previousAct->setShortcuts(QKeySequence::PreviousChild);
-    previousAct->setStatusTip(tr("Move the focus to the previous "
-                                 "window"));
-    //connect(previousAct, SIGNAL(triggered()),
-    //mdiArea, SLOT(activatePreviousSubWindow()));
+    m_download = (QAction*) actionc->addAction("download",this, SLOT( slotDownload() ));
+    m_download->setText(i18n("Download"));
+    m_download->setIcon(KIcon("document-close"));
 
-    separatorAct = new QAction(this);
-    separatorAct->setSeparator(true);
+    m_download = (QAction*) actionc->addAction("ignite",this, SLOT( slotIgnite() ));
+    m_download->setText(i18n("Ignite"));
+    m_download->setIcon(KIcon("document-close"));
 
-    aboutAct = new QAction(tr("&About"), this);
-    aboutAct->setStatusTip(tr("Show the application's About box"));
-    connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+    m_stopKillingProc = (QAction*) actionc->addAction("stop_programming",this, SLOT( slotStopProgrammer() ));
+    m_stopKillingProc->setShortcut(QKeySequence("ESC"));
+    m_stopKillingProc->setText(i18n("Stop"));
+    m_stopKillingProc->setIcon(KIcon("application-cancel"));
 
-    aboutQtAct = new QAction(tr("About &Qt"), this);
-    aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
-    connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-}
+    m_fuses = (QAction*) actionc->addAction("fuses",this, SLOT( slotFuses() ));
+    m_fuses->setText(i18n("Fuses"));
+    m_fuses->setIcon(KIcon("application-cancel"));
 
-void KontrollerLab::createMenus()
-{
-    fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addAction(newAct);
-    fileMenu->addAction(openAct);
-    fileMenu->addAction(saveAct);
-    fileMenu->addAction(saveAsAct);
-    fileMenu->addSeparator();
-    QAction *action = fileMenu->addAction(tr("Switch layout direction"));
-    connect(action, SIGNAL(triggered()), this, SLOT(switchLayoutDirection()));
-    fileMenu->addAction(exitAct);
+    m_configProgrammer = (QAction*) actionc->addAction("configProgrammer",this, SLOT( slotConfigProgrammer() ));
+    m_configProgrammer->setText(i18n("Configure programmer"));
+    m_configProgrammer->setIcon(KIcon("application-cancel"));
 
-    editMenu = menuBar()->addMenu(tr("&Edit"));
-    editMenu->addAction(cutAct);
-    editMenu->addAction(copyAct);
-    editMenu->addAction(pasteAct);
+    m_configProgrammer = (QAction*) actionc->addAction("configProject",this, SLOT( slotConfigProject() ));
+    m_configProgrammer->setText(i18n("Configure project"));
+    m_configProgrammer->setIcon(KIcon("application-cancel"));
+// Wizards:
+    m_sevenSegmentsWizardAction = (QAction*) actionc->addAction("seven_segment_wizard",this, SLOT( slotSevenSegmentsWizard() ));
+    m_sevenSegmentsWizardAction->setText(i18n("Seven segments wizard"));
+    m_sevenSegmentsWizardAction->setIcon(KIcon("application-cancel"));
 
-    windowMenu = menuBar()->addMenu(tr("&Window"));
-    //updateWindowMenu();
-    connect(windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+    m_dotMatrixWizardAction = (QAction*) actionc->addAction("dot_matrix_wizard",this, SLOT( slotDotMatrixWizard() ));
+    m_dotMatrixWizardAction->setText(i18n("Dot matrix display wizard"));
+    m_dotMatrixWizardAction->setIcon(KIcon("application-cancel"));
 
-    menuBar()->addSeparator();
+    m_dotMatrixCharacterWizardAction = (QAction*) actionc->addAction("dot_matrix_character_wizard",this, SLOT( slotDotMatrixCharacterWizard() ));
+    m_dotMatrixCharacterWizardAction->setText(i18n("Dot matrix character wizard"));
+    m_dotMatrixCharacterWizardAction->setIcon(KIcon("application-cancel"));
 
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->addAction(aboutAct);
-    helpMenu->addAction(aboutQtAct);
-}
 
-void KontrollerLab::createToolBars()
-{
-    fileToolBar = toolBar(i18n("File"));
-    fileToolBar->setCaption(i18n("File"));
-    fileToolBar->addAction(newAct);
-    fileToolBar->addAction(openAct);
-    fileToolBar->addAction(saveAct);
+    /*
 
-    editToolBar = toolBar(i18n("Edit"));
-    editToolBar->setCaption(i18n("Edit"));
-    editToolBar->addAction(cutAct);
-    editToolBar->addAction(copyAct);
-    editToolBar->addAction(pasteAct);
+    m_compileAssemble = new QAction( i18n("Compile file"), "compfile",
+                                     KShortcut("F7"), this, SLOT( slotCompileAssemble() ),
+                                     actionCollection(), "compile" );
+    m_build = new QAction( i18n("Build project"), "gear",
+                           KShortcut("F9"), this, SLOT( slotBuild() ),
+                           actionCollection(), "build" );
+    m_rebuildAll = new QAction( i18n("Rebuild all"), "rebuild",
+                                KShortcut(), this, SLOT( slotRebuildAll() ),
+                                actionCollection(), "rebuild" );
+    m_erase = new QAction( i18n("Erase device"), "eraser",
+                           KShortcut(), this, SLOT( slotErase() ),
+                           actionCollection(), "erase" );
+    m_upload = new QAction( i18n("Upload"), "up",
+                            KShortcut(), this, SLOT( slotUpload() ),
+                            actionCollection(), "upload" );
+    m_uploadHex = new QAction( i18n("Upload hex file"), "up",
+                               KShortcut(), this, SLOT( slotUploadHex() ),
+                               actionCollection(), "uploadHex" );
+    m_verify = new QAction( i18n("Verify"), "viewmag1",
+                            KShortcut(), this, SLOT( slotVerify() ),
+                            actionCollection(), "verify" );
+    m_download = new QAction( i18n("Download"), "down",
+                              KShortcut(), this, SLOT( slotDownload() ),
+                              actionCollection(), "download" );
+    m_ignite = new QAction( i18n("Ignite"), "fork",
+                            KShortcut("Shift+F9"), this, SLOT( slotIgnite() ),
+                            actionCollection(), "ignite" );
+    m_stopKillingProc = new QAction( i18n("Stop"), "cancel",
+                                     KShortcut("ESC"), this, SLOT( slotStopProgrammer() ),
+                                     actionCollection(), "stop_programming" );
+    m_fuses = new QAction( i18n("Fuses"), "flag",
+                           KShortcut(), this, SLOT( slotFuses() ),
+                           actionCollection(), "fuses" );
+    m_configProgrammer = new QAction( i18n("Configure programmer"), "configure",
+                                      KShortcut(), this, SLOT( slotConfigProgrammer() ),
+                                      actionCollection(), "configProgrammer" );
+    m_configProgrammer = new QAction( i18n("Configure project"), "configure",
+                                      KShortcut(), this, SLOT( slotConfigProject() ),
+                                      actionCollection(), "configProject" );
+    //-----*/
+    QActionGroup *debugMode = new QActionGroup(this);
+    debugMode->setExclusive(true);
+
+    m_directMemoryDebug = (QAction*) actionc->addAction("direct_memory_debug",this, SLOT( slotDirectMemoryDebug() ));
+    m_directMemoryDebug->setText(i18n("Direct memory debugger"));
+    m_directMemoryDebug->setIcon(KIcon("application-cancel"));
+    m_directMemoryDebug->setCheckable(true);
+    debugMode->addAction(m_directMemoryDebug);
+
+    m_inCircuitDebugger = (QAction*) actionc->addAction("in_circuit_debugger",this, SLOT( slotInCircuitDebugger() ));
+    m_inCircuitDebugger->setText(i18n("In circuit debugger"));
+    m_inCircuitDebugger->setIcon(KIcon("application-cancel"));
+    m_inCircuitDebugger->setCheckable(true);
+    debugMode->addAction(m_inCircuitDebugger);
+
+    m_PCOnlyDebug = (QAction*) actionc->addAction("pc_only_debug",this, SLOT( slotPCOnlyDebug() ));
+    m_PCOnlyDebug->setText(i18n("PC only debugging"));
+    m_PCOnlyDebug->setIcon(KIcon("application-cancel"));
+    m_PCOnlyDebug->setCheckable(true);
+    m_PCOnlyDebug->setChecked(true);
+    debugMode->addAction(m_PCOnlyDebug);
+
+    m_debugStart = (QAction*) actionc->addAction("debug_start",this, SLOT( slotDebugStart() ));
+    m_debugStart->setText(i18n("Enable"));
+    m_debugStart->setIcon(KIcon("application-cancel"));
+
+    m_debugStop = (QAction*) actionc->addAction("debug_stop",this, SLOT( slotDebugStop() ));
+    m_debugStop->setText(i18n("Stop"));
+    m_debugStop->setIcon(KIcon("application-cancel"));
+
+    m_debugPause = (QAction*) actionc->addAction("debug_pause",this, SLOT( slotDebugPause() ));
+    m_debugPause->setText(i18n("Pause"));
+    m_debugPause->setIcon(KIcon("application-cancel"));
+
+    m_debugRunToCursor = (QAction*) actionc->addAction("debug_run_to_cursor",this, SLOT( slotDebugRunToCursor() ));
+    m_debugRunToCursor->setText(i18n("Run to cursor"));
+    m_debugRunToCursor->setIcon(KIcon("application-cancel"));
+
+    m_debugStepOver = (QAction*) actionc->addAction("debug_step_over",this, SLOT( slotDebugStepOver() ));
+    m_debugStepOver->setText(i18n("Step over"));
+    m_debugStepOver->setIcon(KIcon("application-cancel"));
+
+    m_debugStepInto = (QAction*) actionc->addAction("debug_step_into",this, SLOT( slotDebugStepInto() ));
+    m_debugStepInto->setText(i18n("Step into"));
+    m_debugStepInto->setIcon(KIcon("application-cancel"));
+
+    m_debugStepOut = (QAction*) actionc->addAction("debug_step_out",this, SLOT( slotDebugStepOut() ));
+    m_debugStepOut->setText(i18n("Step out"));
+    m_debugStepOut->setIcon(KIcon("application-cancel"));
+
+    m_debugRestart = (QAction*) actionc->addAction("debug_restart",this, SLOT( slotDebugRestart() ));
+    m_debugRestart->setText(i18n("Restart"));
+    m_debugRestart->setIcon(KIcon("application-cancel"));
+
+    m_debugConfigureICD = (QAction*) actionc->addAction("debug_configure_icd",this, SLOT( slotDebugConfigureICD() ));
+    m_debugConfigureICD->setText(i18n("Configure ICD"));
+    m_debugConfigureICD->setIcon(KIcon("application-cancel"));
+
+    m_debugToggleBreakpoint = (QAction*) actionc->addAction("debug_toggle_breakpoint",this, SLOT( slotDebugToggleBreakpoint() ));
+    m_debugToggleBreakpoint->setText(i18n("Toggle breakpoint"));
+    m_debugToggleBreakpoint->setIcon(KIcon("application-cancel"));
+    activateDebuggerActions(false);
+
+    /*
+    // Debug:
+    m_directMemoryDebug = new KRadioAction( i18n("Direct memory debugger"), "dbg_dm",
+                                            KShortcut(), this, SLOT( slotDirectMemoryDebug() ),
+                                            actionCollection(), "direct_memory_debug" );
+    m_directMemoryDebug->setExclusiveGroup( "debugMode" );
+    m_inCircuitDebugger = new KRadioAction( i18n("In circuit debugger"), "dbg_icd",
+                                            KShortcut(), this, SLOT( slotInCircuitDebugger() ),
+                                            actionCollection(), "in_circuit_debugger" );
+    m_inCircuitDebugger->setExclusiveGroup( "debugMode" );
+    m_PCOnlyDebug = new KRadioAction( i18n("PC only debugging"), "dbg_pco",
+                                      KShortcut(), this, SLOT( slotPCOnlyDebug() ),
+                                      actionCollection(), "pc_only_debug" );
+    m_PCOnlyDebug->setChecked( true );
+    m_PCOnlyDebug->setExclusiveGroup( "debugMode" );
+
+    m_debugStart = new QAction( i18n("Enable"), "dbgrun",
+                                KShortcut(), this, SLOT( slotDebugStart() ),
+                                actionCollection(), "debug_start" );
+    m_debugStop = new QAction( i18n("Stop"), "stop",
+                               KShortcut(), this, SLOT( slotDebugStop() ),
+                               actionCollection(), "debug_stop" );
+    m_debugPause = new QAction( i18n("Start"), "player_play",
+                                KShortcut(), this, SLOT( slotDebugPause() ),
+                                actionCollection(), "debug_pause" );
+    m_debugRunToCursor = new QAction( i18n("Run to cursor"), "dbgrunto",
+                                      KShortcut(), this, SLOT( slotDebugRunToCursor() ),
+                                      actionCollection(), "debug_run_to_cursor" );
+    m_debugStepOver = new QAction( i18n("Step over"), "dbgnext",
+                                   KShortcut(), this, SLOT( slotDebugStepOver() ),
+                                   actionCollection(), "debug_step_over" );
+    m_debugStepInto = new QAction( i18n("Step into"), "dbgstep",
+                                   KShortcut(), this, SLOT( slotDebugStepInto() ),
+                                   actionCollection(), "debug_step_into" );
+    m_debugStepOut = new QAction( i18n("Step out"), "dbgstepout",
+                                  KShortcut(), this, SLOT( slotDebugStepOut() ),
+                                  actionCollection(), "debug_step_out" );
+    m_debugRestart = new QAction( i18n("Restart"), "reload",
+                                  KShortcut(), this, SLOT( slotDebugRestart() ),
+                                  actionCollection(), "debug_restart" );
+    m_debugConfigureICD = new QAction( i18n("Configure ICD"), "configure",
+                                       KShortcut(), this, SLOT( slotDebugConfigureICD() ),
+                                       actionCollection(), "debug_configure_icd" );
+    m_debugToggleBreakpoint = new QAction( i18n("Toggle breakpoint"), "player_pause",
+                                         KShortcut(), this, SLOT( slotDebugToggleBreakpoint() ),
+                                         actionCollection(), "debug_toggle_breakpoint" );
+
+    activateDebuggerActions( false );
+*/
+
+    // new view:
+
+    m_hideShowMessageBox = (QAction*) actionc->addAction("showmessagebox",this, SLOT( slotHideShowMessageBox() ));
+    m_hideShowMessageBox->setText(i18n("Show message box"));
+    m_hideShowMessageBox->setIcon(KIcon("application-cancel"));
+    m_hideShowMessageBox->setCheckable(true);
+
+    m_hideShowProjectManager = (QAction*) actionc->addAction("showprojectmanager",this, SLOT( slotHideShowProjectManager() ));
+    m_hideShowProjectManager->setText(i18n("Show project manager"));
+    m_hideShowProjectManager->setIcon(KIcon("application-cancel"));
+    m_hideShowProjectManager->setCheckable(true);
+
+    m_hideShowSerialTerminal = (QAction*) actionc->addAction("showserialterminal",this, SLOT( slotHideShowSerialTerminal() ));
+    m_hideShowSerialTerminal->setText(i18n("Show serial terminal"));
+    m_hideShowSerialTerminal->setIcon(KIcon("application-cancel"));
+    m_hideShowSerialTerminal->setCheckable(true);
+
+    m_hideShowMemoryView = (QAction*) actionc->addAction("showmemoryterminal",this, SLOT( slotHideShowMemoryView() ));
+    m_hideShowMemoryView->setText(i18n("Show memory terminal"));
+    m_hideShowMemoryView->setIcon(KIcon("application-cancel"));
+    m_hideShowMemoryView->setCheckable(true);
+
+    /*
+    m_newViewForDocument = new QAction( i18n("New view for document"), "contents",
+                                        KShortcut(), this, SLOT( slotNewViewForDocument() ),
+                                        actionCollection(), "view_new_view" );
+
+    // Message box:
+    m_hideShowMessageBox = new KToggleAction( i18n("Show message box"), "",
+                                              KShortcut::KShortcut( "" ), this,
+            SLOT(slotHideShowMessageBox()), actionCollection(), "showmessagebox" );
+    m_hideShowProjectManager = new KToggleAction( i18n("Show project manager"), "",
+                                              KShortcut::KShortcut( "" ), this,
+                                              SLOT(slotHideShowProjectManager()),
+                                              actionCollection(), "showprojectmanager" );
+    m_hideShowSerialTerminal = new KToggleAction( i18n("Show serial terminal"), "",
+            KShortcut::KShortcut( "" ), this,
+            SLOT(slotHideShowSerialTerminal()),
+            actionCollection(), "showserialterminal" );
+
+    m_hideShowMemoryView = new KToggleAction( i18n("Show memory view"), "dbgmemview",
+                                              KShortcut::KShortcut( "" ), this,
+                                              SLOT(slotHideShowMemoryView()),
+                                              actionCollection(), "showmemoryview" );
+
+*/
 }
 
 KontrollerLab::~KontrollerLab()
 {
     saveProperties( KSharedConfig::openConfig() );
     //dockManager->writeConfig( KGlobal::config(), "kontrollerlab_dockinfo" );
+    foreach(KLDocument *it, m_project->documents())
+        delete it;
 }
 
 
 void KontrollerLab::slotNewPart(KParts::Part *newPart, bool setActiv)
 {
-    //m_partManager->addPart(newPart, setActiv);
+    m_partManager->addPart(newPart, setActiv);
 }
-
 
 void KontrollerLab::keyPressedOnDocument( )
 {
@@ -581,26 +607,26 @@ void KontrollerLab::slotActivePartChanged(KParts::Part *)
     if (!dynamic_cast<KTextEditor::View *>(activeWid))
         return;
 
-    // If there is an old widget showing the document, delete the old view:
-    //if ( guiFactory()->clients().findRef( m_oldKTextEditor ) >= 0 )
-    //{
-    // qDebug("REMOVE: %d", m_oldKTextEditor);
-    //guiFactory()->removeClient( m_oldKTextEditor );
-    // qDebug("remove %d", (unsigned int) m_oldKTextEditor );
-    //}
-    // Activate the new one:
-    //m_oldKTextEditor = dynamic_cast<KTextEditor::View *>(activeWid);
-    //if ( m_oldKTextEditor )
-    //{
-    //if ( guiFactory()->clients().findRef( m_oldKTextEditor ) < 0 )
-    //{
-    //guiFactory()->addClient(m_oldKTextEditor);
-    // qDebug("added %d", (unsigned int) m_oldKTextEditor );
-    //}
-    //if ( m_project && m_project->getDocumentForView(m_oldKTextEditor) )
-    //setCaption( m_project->getDocumentForView(m_oldKTextEditor)->name() );
-    //}
-    // qDebug("end activeWdg %d", (unsigned int) activeWid );
+    //If there is an old widget showing the document, delete the old view:
+    if ( guiFactory()->clients().indexOf( m_oldKTextEditor ) >= 0 )
+    {
+        //qDebug("REMOVE: %d", m_oldKTextEditor);
+        guiFactory()->removeClient( m_oldKTextEditor );
+        //qDebug("remove %d", (unsigned int) m_oldKTextEditor );
+    }
+    //Activate the new one:
+    m_oldKTextEditor = dynamic_cast<KTextEditor::View *>(activeWid);
+    if ( m_oldKTextEditor )
+    {
+        if ( guiFactory()->clients().indexOf( m_oldKTextEditor ) < 0 )
+        {
+            guiFactory()->addClient(m_oldKTextEditor);
+            //qDebug("added %d", (unsigned int) m_oldKTextEditor );
+        }
+        if ( m_project && m_project->getDocumentForView(m_oldKTextEditor) )
+            setCaption( m_project->getDocumentForView(m_oldKTextEditor)->name() );
+    }
+    //qDebug("end activeWdg %d", (unsigned int) activeWid );
 }
 
 
@@ -961,9 +987,9 @@ void KontrollerLab::slotConfToolbar( )
 {
     KConfigGroup group(KSharedConfig::openConfig(),autoSaveGroup());
     saveMainWindowSettings(group);
-    //KEditToolbar dlg(actionCollection());
-    //connect(&dlg,SIGNAL(newToolbarConfig()),this,SLOT(slotNewToolbarConfig()));
-    //dlg.exec();
+    KEditToolBar dlg(actionCollection());
+    connect(&dlg,SIGNAL(newToolBarConfig()),this,SLOT(slotNewToolbarConfig()));
+    dlg.exec();
 }
 
 
@@ -1096,8 +1122,8 @@ void KontrollerLab::slotDocumentUrlChanged( KTextEditor::Document *document )
 
 void KontrollerLab::newDocumentOpened( KTextEditor::Document * doc )
 {
-    connect( doc, SIGNAL(nameChanged(Kate::Document*)),
-             this, SLOT(slotDocumentUrlChanged( Kate::Document* )) );
+    connect( doc, SIGNAL(documentNameChanged(KTextEditor::Document*)),
+             this, SLOT(slotDocumentUrlChanged(KTextEditor::Document*)) );
 }
 
 void KontrollerLab::resizeEvent( QResizeEvent * e )
@@ -1147,50 +1173,10 @@ void KontrollerLab::slotCloseFile( )
 
 //}
 
-/*void KontrollerLab::childWindowCloseRequest( KMdiChildView * pWnd )
-{
-    KLDocumentView *view = static_cast<KLDocumentView*>(pWnd);
-    if ( !view )
-        return;
-    if ( !view->document() )
-    {
-        setOldKTextEditor( view->view() );
-        emitActivePartChanged( 0L );
-        KMdiMainFrm::childWindowCloseRequest( pWnd );
-    }
-    else if ( ( !view->document()->isModified() ) ||
-              ( view->document()->kateDoc() &&
-                ( view->document()->kateDoc()->views().count() > 1 ) ) )
-    {
-        setOldKTextEditor( view->view() );
-        emitActivePartChanged( 0L );
-        KMdiMainFrm::childWindowCloseRequest( pWnd );
-    }
-    else
-    {
-        int retVal = KMessageBox::questionYesNoCancel( this,
-                         i18n("Do you want to save the document before closing?"),
-                         i18n("Close document") );
+//void KontrollerLab::childWindowCloseRequest( KMdiChildView * pWnd )
+//{
 
-        if ( retVal == KMessageBox::No )
-        {
-            KLDocument* doc = view->document();
-            setOldKTextEditor( view->view() );
-            emitActivePartChanged( 0L );
-            KMdiMainFrm::childWindowCloseRequest( pWnd );
-            doc->revert();
-        }
-        else if ( retVal == KMessageBox::Yes )
-        {
-            if (view->document()->save())
-            {
-                setOldKTextEditor( view->view() );
-                emitActivePartChanged( 0L );
-                KMdiMainFrm::childWindowCloseRequest( pWnd );
-            }
-        }
-    }
-}*/
+//}
 
 void KontrollerLab::emitActivePartChanged( KParts::Part * part, KLDocumentView* viewToBeOpened )
 {
@@ -1273,14 +1259,14 @@ void KontrollerLab::slotDotMatrixCharacterWizard( )
 void KontrollerLab::slotDirectMemoryDebug( )
 {
     m_debugger->setDMMode( true );
-    //m_debugStart->setEnabled( false );
+    m_debugStart->setEnabled( false );
 }
 
 
 void KontrollerLab::slotInCircuitDebugger( )
 {
     m_debugger->setICDMode( true );
-    //m_debugStart->setEnabled( true );
+    m_debugStart->setEnabled( true );
 }
 
 
@@ -1288,7 +1274,7 @@ void KontrollerLab::slotPCOnlyDebug( )
 {
     m_debugger->setICDMode( false );
     m_debugger->setDMMode( false );
-    //m_debugStart->setEnabled( true );
+    m_debugStart->setEnabled( true );
 }
 
 
@@ -1422,14 +1408,14 @@ void KontrollerLab::slotDebugToggleBreakpoint( )
 
 void KontrollerLab::activateDebuggerActions( bool activate )
 {
-    /*m_debugStart->setEnabled( !activate );
+    m_debugStart->setEnabled( !activate );
     m_debugStop->setEnabled( activate );
     m_debugPause->setEnabled( activate );
     m_debugRunToCursor->setEnabled( activate );
     m_debugStepOver->setEnabled( activate );
     m_debugStepInto->setEnabled( activate );
     m_debugStepOut->setEnabled( activate );
-    m_debugRestart->setEnabled( activate );*/
+    m_debugRestart->setEnabled( activate );
 }
 
 
