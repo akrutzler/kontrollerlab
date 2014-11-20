@@ -100,6 +100,7 @@ KLProject::KLProject( KontrollerLab* parent )
 
 KLProject::~KLProject()
 {
+
 }
 
 

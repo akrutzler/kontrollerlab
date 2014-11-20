@@ -48,7 +48,9 @@
 
 #include <kmessagebox.h>
 
-KLDocument::KLDocument( KontrollerLab* parent )
+#include <kxmlguifactory.h>
+
+KLDocument::KLDocument( KontrollerLab* parent ) : QObject(parent)
 {
     m_doc = 0L;
 
@@ -105,14 +107,12 @@ KLDocument::KLDocument( KontrollerLab* parent )
 
 KLDocument::~KLDocument()
 {
-    /*   if (configIf)
+    if (configIf)
         configIf->writeConfig();
 
-
-    KLDocumentView *it;
-    for (it=m_registeredViews.first(); it; it = m_registeredViews.next())
+    foreach (KLDocumentView *it,m_registeredViews)
     {
-        m_parent->removeWindowFromMdi( it );
+        //m_parent->removeWindowFromMdi( it );
         // To avoid, that the doc view deletes the
         // KATE view when being removed, we set the view pointer
         // to 0:
@@ -124,21 +124,20 @@ KLDocument::~KLDocument()
         it->setDocument( 0L );
         it->close();
         
-        // NO WAY: delete it;
+        delete it;
     }
-    m_registeredViews.setAutoDelete( false );
     m_registeredViews.clear();
     
     if (m_doc)
     {
-        m_doc->closeURL(false); //TODO: Workaround for a Kate bug. Remove when KDE < 3.2.0 support is dropped.
+        m_doc->closeUrl(false); //TODO: Workaround for a Kate bug. Remove when KDE < 3.2.0 support is dropped.
 
-        // m_parent->slotPartWillGetDeleted( m_doc );
-        // m_parent->slotActivePartChanged( 0L );
+        //m_parent->slotPartWillGetDeleted( m_doc );
+        m_parent->slotActivePartChanged( 0L );
         delete m_doc;
         // delete m_editInt;
         // delete m_listViewItem;
-    }*/
+    }
 }
 
 void KLDocument::slotModified(KTextEditor::Document* doc )
@@ -320,6 +319,7 @@ void KLDocument::makeLastActiveViewVisible( )
 void KLDocument::setActiveView( KLDocumentView * view )
 {
     qDebug() << "ActiveView" << view->objectName();
+    //m_parent->slotActivePartChanged(0l);
     m_lastActiveView = view;
     if(m_project)   //the document is assigned to an project
         m_project->setActiveDocument( this );
