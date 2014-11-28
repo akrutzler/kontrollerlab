@@ -146,36 +146,36 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_dotMatrixCharacterWizardWidget = 0L;
 
 
-    //m_msgBox = new Q3ListBox(this, "msgBox");
+    m_msgBox = new Q3ListBox(this, "msgBox");
     // m_msgBox->setReadOnly( true );
-    //m_msgBox->setCaption(i18n("Messages"));
-    //m_tvaMsg = addDockWidget( QDockWidget::DockBottom, getMainDockWidget() );
-    //m_tvaMsg->setName("messageBox");
+    m_msgBox->setWindowTitle(i18n("Messages"));
+    m_tvaMsg = new QDockWidget(tr("Messages"), this);
+    m_tvaMsg->setWidget(m_msgBox);
+    addDockWidget( Qt::BottomDockWidgetArea, m_tvaMsg );
+    m_tvaMsg->setName("messageBox");
 
     //Setting up UI, TODO -> inline func
 
-    //setCentralWidget(m_editorWidget);
-
-    QDockWidget *dock;
-
-    dock = new QDockWidget(tr("Project Manager"), this);
+    m_tvaProjectManager = new QDockWidget(i18n("Project Manager"), this);
     m_projectManager = new KLProjectManagerWidget( m_project, this, "projectManager" );
-    dock->setWidget(m_projectManager);
-    addDockWidget (Qt::LeftDockWidgetArea,dock );
+    m_tvaProjectManager->setWidget(m_projectManager);
+    m_tvaProjectManager->setObjectName("projectManagerDock");
+    addDockWidget (Qt::LeftDockWidgetArea,m_tvaProjectManager );
 
-    dock = new QDockWidget(tr("Serial terminal"), this);
-
+    m_tvaSerialTerminal = new QDockWidget(i18n("Serial terminal"), this);
     m_serialTerminalWidget = new KLSerialTerminalWidget( this, "serialTerminalWidget" );
-    dock->setWidget(m_serialTerminalWidget);
-    addDockWidget (Qt::LeftDockWidgetArea,dock );
-    m_serialTerminalWidget->close();
+    m_tvaSerialTerminal->setWidget(m_serialTerminalWidget);
+    m_tvaSerialTerminal->setObjectName("serialTerminalDock");
+    addDockWidget (Qt::LeftDockWidgetArea,m_tvaSerialTerminal );
+    m_tvaSerialTerminal->hide();
 
-    dock = new QDockWidget(tr("Memory View"), this);
+    m_tvaMemoryView = new QDockWidget(i18n("Memory View"), this);
 
     m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryView");
-    dock->setWidget(m_memoryViewWidget);
-    addDockWidget(Qt::LeftDockWidgetArea, dock );
-    m_memoryViewWidget->close();
+    m_tvaMemoryView->setWidget(m_memoryViewWidget);
+    m_tvaMemoryView->setObjectName("memoryViewDock");
+    addDockWidget(Qt::LeftDockWidgetArea, m_tvaMemoryView );
+    m_tvaMemoryView->hide();
     
     m_debugger = new KLDebugger( m_serialTerminalWidget, this, "debugger" );
     m_debugger->setMemoryViewWidget( m_memoryViewWidget );
@@ -188,8 +188,7 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     KIconLoader kico;
     //m_msgBoxPopup->insertItem( kico.loadIcon( "clear_left", KIcon::Toolbar ), i18n("Clear messages"), this, SLOT( clearMessages() ) );
     
-    connect(m_partManager, SIGNAL(activePartChanged(KParts::Part * )),
-            this, SLOT(slotActivePartChanged(KParts::Part * )));
+    connect(m_partManager, SIGNAL(activePartChanged(KParts::Part * )),this, SLOT(slotActivePartChanged(KParts::Part * )));
     //    connect( m_partManager, SIGNAL( activePartChanged( KParts::Part * ) ),
     //             this, SLOT( createGUI( KParts::Part * ) ) );
     connect(this, SIGNAL(dockWidgetHasUndocked(KDockWidget *)), this, SLOT(slotDockWidgetHasUndocked(KDockWidget *)));
@@ -199,8 +198,7 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     //connect(m_msgBox, SIGNAL(rightButtonPressed( QListBoxItem*, const QPoint& )), this,
     //        SLOT( rightButtonClickedOnMsgBox( Q3ListBoxItem*, const QPoint& ) ) );
     connect(this, SIGNAL(mdiModeHasBeenChangedTo(KMdi::MdiMode)), this, SLOT(slotMdiModeHasBeenChangedTo (KMdi::MdiMode)) );
-    connect( this, SIGNAL( activePartChanged( KParts::Part* ) ),
-             this, SLOT( slotActivePartChanged( KParts::Part* ) ) );
+    connect( this, SIGNAL( activePartChanged( KParts::Part* ) ),this, SLOT( slotActivePartChanged( KParts::Part* ) ) );
 
     //hideViewTaskBar();
     m_configProgrammerWidget = new KLProgrammerConfigWidget( this, "programmerConfigWdg" );
@@ -218,9 +216,9 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     //dockManager->finishReadDockConfig();
     //dockManager->readConfig( KGlobal::config(), "kontrollerlab_dockinfo" );
 
-    //m_hideShowMessageBox->setChecked( m_tvaMsg->wrapperWidget()->isShown() );
-    //m_hideShowProjectManager->setChecked( m_tvaProjectManager->wrapperWidget()->isShown() );
-    //m_hideShowSerialTerminal->setChecked( m_tvaSerialTerminal->wrapperWidget()->isShown() );
+    m_hideShowMessageBox->setChecked( !m_tvaMsg->isHidden() );
+    m_hideShowProjectManager->setChecked( !m_tvaProjectManager->isHidden() );
+    m_hideShowSerialTerminal->setChecked( !m_tvaSerialTerminal->isHidden() );
     /*
     KLProcess* proc = new KLProcess("uisp --help");
     connect( proc, SIGNAL(processExited( KLProcess* )),
@@ -801,6 +799,9 @@ void KontrollerLab::saveProperties( KSharedConfig::Ptr config )
 {
     // qDebug("KontrollerLab::saveProperties( KConfig * conf )");
     KConfigGroup conf ( config, "KontrollerLab" );
+
+    conf.writeEntry("geometry",saveGeometry());
+    conf.writeEntry("windowState",saveState());
     
     conf.writeEntry( "CURRENT_PROJECT_PATH", m_project->projectFileURL().url() );
     if ( m_project->activeDocument() )
@@ -816,7 +817,18 @@ void KontrollerLab::saveProperties( KSharedConfig::Ptr config )
 
 void KontrollerLab::readProperties( KSharedConfig::Ptr config )
 {
+
     KConfigGroup conf ( config, "KontrollerLab" );
+
+    conf.name()
+    QVariant val =  conf.readEntry("geometry","");
+    qDebug() << val.toByteArray().data();
+    //qDebug() << restoreGeometry(val.toByteArray());
+    val = conf.readEntry("windowState","");
+    qDebug() << val.toByteArray();
+    //qDebug() << restoreState(val.toByteArray());
+
+
 
     // restore MDI mode (toplevel, childframe, tabpage)
 
@@ -889,31 +901,31 @@ void KontrollerLab::slotDockWidgetHasUndocked(K3DockWidget * )
 
 void KontrollerLab::slotHideShowMessageBox( )
 {
-    /*if ( m_tvaMsg->wrapperWidget()->isShown() )
+    if ( !m_tvaMsg->isHidden() )
         m_tvaMsg->hide();
     else
-        m_tvaMsg->show();*/
+        m_tvaMsg->show();
 }
 
 
 void KontrollerLab::slotHideShowMemoryView( )
 {
-    /*if ( m_tvaMemoryView->wrapperWidget()->isShown() )
+    if ( !m_tvaMemoryView->isHidden() )
         m_tvaMemoryView->hide();
     else
-        m_tvaMemoryView->show();*/
+        m_tvaMemoryView->show();
 }
 
 
 void KontrollerLab::slotMessageBox( int, const QString & msg )
 {
-    /*m_tvaMsg->show();
+    m_tvaMsg->show();
     m_hideShowMessageBox->setChecked( true );
     QStringList list = QStringList::split( "\n", msg );
     m_msgBox->insertStringList( list );
     m_msgBox->setCurrentItem( m_msgBox->count() - 1 );
     m_msgBox->ensureCurrentVisible();
-    m_msgBox->setCurrentItem( -1 );*/
+    m_msgBox->setCurrentItem( -1 );
 }
 
 void KontrollerLab::clearMessages( )
@@ -1051,10 +1063,10 @@ void KontrollerLab::backannotateFuses( QMap< QString, QString > fuses )
 
 void KontrollerLab::slotHideShowProjectManager( )
 {
-    /* if ( m_tvaProjectManager->wrapperWidget()->isShown() )
+    if ( !m_tvaProjectManager->isHidden() )
         m_tvaProjectManager->hide();
     else
-        m_tvaProjectManager->show();*/
+        m_tvaProjectManager->show();
 }
 
 void KontrollerLab::slotNewFile( )
@@ -1072,10 +1084,10 @@ void KontrollerLab::slotNewFile( )
 
 void KontrollerLab::slotHideShowSerialTerminal( )
 {
-    /*if ( m_tvaSerialTerminal->wrapperWidget()->isShown() )
+    if ( !m_tvaSerialTerminal->isHidden() )
         m_tvaSerialTerminal->hide();
     else
-        m_tvaSerialTerminal->show();*/
+        m_tvaSerialTerminal->show();
 }
 
 void KontrollerLab::slotSaveFile( )
@@ -1281,7 +1293,7 @@ void KontrollerLab::slotPCOnlyDebug( )
 void KontrollerLab::slotDebugStart( )
 {
     m_debugger->startDebugger();
-    //m_directMemoryDebug->setEnabled( false );
+    m_directMemoryDebug->setEnabled( false );
 }
 
 
@@ -1296,7 +1308,7 @@ void KontrollerLab::slotDebugStop( )
     {
         //m_debugPause->setIcon( "player_play" );
     }
-    //m_directMemoryDebug->setEnabled( true );
+    m_directMemoryDebug->setEnabled( true );
 }
 
 
@@ -1306,7 +1318,7 @@ void KontrollerLab::slotDebugPause( )
     if ( m_debugger->state() == DBG_Started )
     {
         //m_debugPause->setIcon( "player_pause" );
-        //m_debugPause->setText( i18n("Pause") );
+        m_debugPause->setText( i18n("Pause") );
     }
     else
     {
@@ -1358,7 +1370,7 @@ void KontrollerLab::slotDebugRestart( )
 void KontrollerLab::slotDebugConfigureICD( )
 {
     m_debuggerConfigWidget = new KLDebuggerConfigWidget( this, "debugger_config_widget" );
-    //m_debuggerConfigWidget->setModal( true );
+    m_debuggerConfigWidget->setModal( true );
     m_debuggerConfigWidget->show();
 }
 
@@ -1422,7 +1434,7 @@ void KontrollerLab::activateDebuggerActions( bool activate )
 void KontrollerLab::notifyDebuggerPaused( )
 {
     //m_debugPause->setIcon( "player_play" );
-    //m_debugPause->setText( i18n("Start") );
+    m_debugPause->setText( i18n("Start") );
 }
 
 

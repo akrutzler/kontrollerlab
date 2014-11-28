@@ -42,6 +42,7 @@
 #include <kmenubar.h>
 
 #include <QAction>
+#include <QSettings>
 #include <ktoolbar.h>
 
 #include <QMdiArea>
@@ -290,6 +291,7 @@ protected:
     class KLDebugger* m_debugger;
     Q3ListBox* m_msgBox;
     //KMdiToolViewAccessor* m_tvaMsg, *m_tvaProjectManager, *m_tvaSerialTerminal, *m_tvaMemoryView;
+    QDockWidget* m_tvaMsg, *m_tvaProjectManager, *m_tvaSerialTerminal, *m_tvaMemoryView;
     KParts::PartManager* m_partManager;
     KXMLGUIClient* m_kateGuiClientAdded;
     KTextEditor::View * m_oldKTextEditor;
