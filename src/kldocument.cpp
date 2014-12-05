@@ -142,6 +142,7 @@ KLDocument::~KLDocument()
 
 void KLDocument::slotModified(KTextEditor::Document* doc )
 {
+    return;
     foreach(KLDocumentView *it, m_registeredViews)
     {
         it->setWindowTitle(doc->isModified()?name() + "*":name());
@@ -150,7 +151,7 @@ void KLDocument::slotModified(KTextEditor::Document* doc )
 
 void KLDocument::slotTabChanged(KLDocumentView *tab)
 {
-    setActiveView(tab);
+    //setActiveView(tab);
 }
 
 
@@ -177,7 +178,7 @@ void KLDocument::activateCHighlighting( )
 bool KLDocument::newFile( const KUrl& url )
 {
     m_url = url;
-    setCaptionOfAllViews( name() );
+    setWindowTitleOfAllViews( name() );
     m_type = typeForName( name() );
     if (m_project)
         m_project->update();
@@ -207,7 +208,7 @@ bool KLDocument::open( const KUrl& url )
 
     //m_name = url.fileName();
     m_url = url;
-    setCaptionOfAllViews( name() );
+    setWindowTitleOfAllViews( name() );
     m_type = typeForName( name() );
     
 
@@ -223,25 +224,24 @@ bool KLDocument::open( const KUrl& url )
 void KLDocument::registerKLDocumentView( KLDocumentView * view )
 {
     m_registeredViews.append( view );
-    setCaptionOfAllViews( name() );
+    setWindowTitleOfAllViews( name() );
 }
 
-void KLDocument::setCaptionOfAllViews( const QString cap )
+void KLDocument::setWindowTitleOfAllViews( const QString cap )
 {
-    /*    KLDocumentView *it;
     int counter = 1;
     QString modified = "";
     if (isModified())
         modified = "*";
 
-    for ( it = m_registeredViews.first(); it; it = m_registeredViews.next() )
+    foreach (KLDocumentView *it,m_registeredViews )
     {
         if ( m_registeredViews.count() > 1 )
-            it->setCaption( QString("%1 %2: %3").arg( cap ).arg(modified).arg( counter ) );
+            it->setWindowTitle(QString("%1 %2: %3").arg( cap ).arg(modified).arg( counter ) );
         else
-            it->setMDICaption( QString("%1 %2").arg( cap ).arg( modified ) );
+            it->setWindowTitle( QString("%1 %2").arg( cap ).arg( modified ) );
         counter++;
-    }*/
+    }
 }
 
 void KLDocument::unregisterKLDocumentView( KLDocumentView * view )
@@ -249,7 +249,7 @@ void KLDocument::unregisterKLDocumentView( KLDocumentView * view )
     m_registeredViews.remove( view );
     if ( view == m_lastActiveView )
         m_lastActiveView = 0L;
-    setCaptionOfAllViews( name() );
+    setWindowTitleOfAllViews( name() );
 }
 
 
@@ -268,7 +268,7 @@ bool KLDocument::save( )
         retVal = true;
     }
     m_project->checkForModifiedFiles();
-    setCaptionOfAllViews( name() );
+    setWindowTitleOfAllViews( name() );
     return retVal;
 }
 
@@ -285,12 +285,12 @@ bool KLDocument::saveAs( const KUrl & url )
             // m_unsaved = false;
             m_doc->setModified( false );
             m_url = url;
-            setCaptionOfAllViews( name() );
+            setWindowTitleOfAllViews( name() );
             m_project->update( this );
             retVal = true;
         }
         m_project->checkForModifiedFiles();
-        setCaptionOfAllViews( name() );
+        setWindowTitleOfAllViews( name() );
     }
     return retVal;
 }
@@ -323,8 +323,6 @@ void KLDocument::setActiveView( KLDocumentView * view )
     m_lastActiveView = view;
     if(m_project)   //the document is assigned to an project
         m_project->setActiveDocument( this );
-    //    else
-
 }
 
 
@@ -339,13 +337,13 @@ void KLDocument::setCursorToLine( int lineNr )
 
 void KLDocument::updateModified( )
 {
-    setCaptionOfAllViews( name() );
+    setWindowTitleOfAllViews( name() );
     bool mod = m_doc->isModified();
 
     foreach ( KLDocumentView* it, m_registeredViews)
     {
         qDebug() << it->objectName() << "modified?" << mod;
-        //it->setMDICaption( mod ? name() + " *" : name() );
+        it->setWindowTitle( mod ? name() + " *" : name() );
     }
 }
 

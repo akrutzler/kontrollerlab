@@ -25,9 +25,6 @@
 
 #include <kparts/factory.h> // KPart Factory
 #include <klibloader.h>     // LibLoader, contains factories
-//#include <kate/document.h>  // Katepart document
-#include <kate/kate.h>
-//#include <kate/view.h>      // Katepart view
 #include <kurl.h>           // For opening files
 #include <kio/netaccess.h>  // eventually via the network
 #include <qlistview.h>
@@ -132,7 +129,7 @@ public:
     bool revert();
 
 protected:
-    void setCaptionOfAllViews( const QString cap );
+    void setWindowTitleOfAllViews( const QString cap );
 
     int m_markedOnlyLine;
     KTextEditor::Document *m_doc;
