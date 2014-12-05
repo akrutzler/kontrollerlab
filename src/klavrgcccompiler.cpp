@@ -207,14 +207,13 @@ QString KLAVRGCCCompiler::getLinkerCommand( const QString& listOfObjectFiles )
 {
     QString retVal = m_project->m_settings[ PRJ_LINKER_COMMAND ];
 
-    KLDocument *it;
     // Check if there were object files defined outside the routine:
 
     if ( listOfObjectFiles.isEmpty() || listOfObjectFiles.isNull() )
     {
         QList< KLDocument* > list = m_project->getAllDocsOfType( KLDocType_Source );
         QListIterator<KLDocument *> i(list);
-        for ( it = list.first(); it; it = i.next() )
+        foreach (KLDocument *it, list )
         {
             retVal += " " + m_project->getObjectFileNameFor( it->url() );
         }
