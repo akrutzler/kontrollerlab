@@ -463,7 +463,7 @@ QString KLProject::getOUTFileName( )
 
 void KLProject::createDOMElement( QDomDocument & document, QDomElement & parent )
 {
-    /*QDomElement settings = document.createElement( "SETTINGS" );
+    QDomElement settings = document.createElement( "SETTINGS" );
     fromQMapToDOM( document, settings, m_settings );
     QDomElement dbg_settings = document.createElement( "DEBUGGER_SETTINGS" );
     fromQMapToDOM( document, dbg_settings, m_debuggerSettings );
@@ -472,33 +472,33 @@ void KLProject::createDOMElement( QDomDocument & document, QDomElement & parent 
     
     QDomElement files = document.createElement( "FILES" );
     KLDocument* it;
-    for (it=m_documents.first(); it; it=m_documents.next())
+    foreach (KLDocument *it, m_documents)
     {
         QDomElement curfile = document.createElement( "FILE" );
         QString relativePath = it->url().path();
         curfile.setAttribute( "NAME", it->hierarchyName() );
         curfile.setAttribute( "SHOWN", it->registeredViewsCount()>0 ? TRUE_STRING : FALSE_STRING );
+
         // To store the position and number of registered views
         QList< KLDocumentView*> views = it->registeredViews();
-        KLDocumentView* itView;
-        QListIterator<KLDocumentView*> i(&views);
         QString positions = "";
-        while(i.hasNext())
+
+        foreach(KLDocumentView *itView,views)
         {
-            itView = i.next();
+            //itView = i.next();
             // if ( !itView->isAttached() )
             //     continue;
             QRect geo;
-            if (itView->isAttached())
-                geo = itView->internalGeometry();
-            else
+            //if (itView->isAttached())
+                //geo = itView->internalGeometry();
+            //else
                 geo = itView->geometry();
             int state = 0;
             if ( itView->isMaximized() )
                 state = STATE_IS_MAXIMIZED;
             else if ( itView->isMinimized() )
                 state = STATE_IS_MINIMIZED;
-            if ( itView->isAttached() )
+            //if ( itView->isAttached() )
                 state |= STATE_IS_ATTACHED;
             positions += QString("%1,%2,%3,%4,%5,")
                     .arg(geo.x())
@@ -515,7 +515,7 @@ void KLProject::createDOMElement( QDomDocument & document, QDomElement & parent 
     parent.appendChild( files );
     parent.appendChild( settings );
     parent.appendChild( dbg_settings );
-    parent.appendChild( programmerConfig );*/
+    parent.appendChild( programmerConfig );
 }
 
 void KLProject::fromQMapToDOM( QDomDocument & document, QDomElement & parent,
