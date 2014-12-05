@@ -77,24 +77,25 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     a = m_view->actionCollection()->action( "edit_undo" );
     if (a)
         connect( a, SIGNAL(activated()), this, SLOT(slotCheckForModifiedFiles()) );
-    //     m_view->actionCollection()->take(a);
+    //m_view->actionCollection()->takeAction(a);
     a = m_view->actionCollection()->action( "edit_redo" );
     if (a)
         connect( a, SIGNAL(activated()), this, SLOT(slotCheckForModifiedFiles()) );
     // m_view->actionCollection()->take(a);
-    /*
+
     //because they are not implemented in VPL
+    //! \todo still in kde4?
     
     a = m_view->actionCollection()->action( "edit_copy" );
     if (a)
-        m_view->actionCollection()->take(a);
+        m_view->actionCollection()->takeAction(a);
     a = m_view->actionCollection()->action( "edit_cut" );
     if (a)
-        m_view->actionCollection()->take(a);
+        m_view->actionCollection()->takeAction(a);
     a = m_view->actionCollection()->action( "edit_paste" );
     if (a)
-        m_view->actionCollection()->take(a);
-    */
+        m_view->actionCollection()->takeAction(a);
+
     KActionMenu *bookmarkAction = dynamic_cast<KActionMenu*>(m_view->actionCollection()->action( "bookmarks" ));
     if (bookmarkAction)
     {
@@ -124,11 +125,10 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     }
 
     doc->registerKLDocumentView( this );
-    //QGridLayout *m_layout = new QGridLayout( this, 1, 1 );
-    //m_layout->addWidget( m_view, 1, 1 );
     m_view->show();
     show();
     //activate();
+
     connect( this,SIGNAL(aboutToActivate()),this,SLOT(mdiViewActivated()));
     connect( this, SIGNAL( gotFocus( KMdiChildView* ) ),
              this, SLOT( mdiViewActivated( KMdiChildView* ) ) );
@@ -137,9 +137,7 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     connect( m_view, SIGNAL( gotFocus( Kate::View* ) ) , this, SLOT( mdiViewActivated() ) );
     // connect( m_document->kateDoc(), SIGNAL(editorGotFocus()), this, SLOT( mdiViewActivated() ) );
     m_inhibitFocusRecursion = false;
-
-
-    //m_parent->m_editorWidget->addDocumentView(this);
+    mdiViewActivated(this);
 }
 
 
