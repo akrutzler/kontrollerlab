@@ -597,22 +597,21 @@ void KontrollerLab::slotActivePartChanged(KParts::Part *)
 {
     // Block adding the same part from two different sides twice:
     // Fixes bug #1652750 (Menu items appear twice sometimes)
-    //! \todo return here because the code after this causes blinking of toolbar&docks when changing mdisubwindows
-    //return;
 
     QWidget * activeWid = m_partManager->activeWidget();
-    
     // qDebug("start activeWid %d", (unsigned int) activeWid);
     if (!dynamic_cast<KTextEditor::View *>(activeWid))
         return;
 
-    qDebug() << "CHANGED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    //disable updates on a window to avoid toolbar flickering on xmlgui client change
+    setUpdatesEnabled(false);
 
     //If there is an old widget showing the document, delete the old view:
     if ( guiFactory()->clients().indexOf( m_oldKTextEditor ) >= 0 )
     {
         //qDebug("REMOVE: %d", m_oldKTextEditor);
         guiFactory()->removeClient( m_oldKTextEditor );
+        disconnect (m_oldKTextEditor, SIGNAL(destroyed(QObject*)), this, 0);
         //qDebug("remove %d", (unsigned int) m_oldKTextEditor );
     }
     //Activate the new one:
@@ -623,8 +622,6 @@ void KontrollerLab::slotActivePartChanged(KParts::Part *)
         {
             bl = true;
             guiFactory()->addClient(m_oldKTextEditor);
-            repaint();
-            //qApp->processEvents(QEventLoop::ExcludeUserInput);
             bl = false;
             //qDebug("added %d", (unsigned int) m_oldKTextEditor );
         }
@@ -632,6 +629,7 @@ void KontrollerLab::slotActivePartChanged(KParts::Part *)
             setWindowTitle( m_project->getDocumentForView(m_oldKTextEditor)->name() );
     }
     //qDebug("end activeWdg %d", (unsigned int) activeWid );
+    setUpdatesEnabled(true);
 }
 
 
