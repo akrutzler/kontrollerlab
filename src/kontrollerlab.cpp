@@ -194,11 +194,11 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     connect(this, SIGNAL(dockWidgetHasUndocked(KDockWidget *)), this, SLOT(slotDockWidgetHasUndocked(KDockWidget *)));
     // connect(tabWidget(), SIGNAL(initiateDrag(QWidget *)), this, SLOT(slotTabDragged(QWidget*)));
 
-    //connect(m_msgBox, SIGNAL(doubleClicked(Q3ListBoxItem *)), this, SLOT(slotMessageBoxDblClicked(Q3ListBoxItem *)));
+    connect(m_msgBox, SIGNAL(doubleClicked(Q3ListBoxItem *)), this, SLOT(slotMessageBoxDblClicked(Q3ListBoxItem *)));
     //connect(m_msgBox, SIGNAL(rightButtonPressed( QListBoxItem*, const QPoint& )), this,
     //        SLOT( rightButtonClickedOnMsgBox( Q3ListBoxItem*, const QPoint& ) ) );
     connect(this, SIGNAL(mdiModeHasBeenChangedTo(KMdi::MdiMode)), this, SLOT(slotMdiModeHasBeenChangedTo (KMdi::MdiMode)) );
-    connect( this, SIGNAL( activePartChanged( KParts::Part* ) ),this, SLOT( slotActivePartChanged( KParts::Part* ) ) );
+    //connect( this, SIGNAL( activePartChanged( KParts::Part* ) ),this, SLOT( slotActivePartChanged( KParts::Part* ) ) );
 
     //hideViewTaskBar();
     m_configProgrammerWidget = new KLProgrammerConfigWidget( this, "programmerConfigWdg" );
@@ -225,7 +225,6 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
              this, SLOT(delme( KLProcess* ) ) );
     proc->start();
     */
-    
     readProperties( KSharedConfig::openConfig());
 }
 
@@ -598,12 +597,16 @@ void KontrollerLab::slotActivePartChanged(KParts::Part *)
 {
     // Block adding the same part from two different sides twice:
     // Fixes bug #1652750 (Menu items appear twice sometimes)
+    //! \todo return here because the code after this causes blinking of toolbar&docks when changing mdisubwindows
+    //return;
 
     QWidget * activeWid = m_partManager->activeWidget();
     
     // qDebug("start activeWid %d", (unsigned int) activeWid);
     if (!dynamic_cast<KTextEditor::View *>(activeWid))
         return;
+
+    qDebug() << "CHANGED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
 
     //If there is an old widget showing the document, delete the old view:
     if ( guiFactory()->clients().indexOf( m_oldKTextEditor ) >= 0 )
@@ -618,11 +621,15 @@ void KontrollerLab::slotActivePartChanged(KParts::Part *)
     {
         if ( guiFactory()->clients().indexOf( m_oldKTextEditor ) < 0 )
         {
+            bl = true;
             guiFactory()->addClient(m_oldKTextEditor);
+            repaint();
+            //qApp->processEvents(QEventLoop::ExcludeUserInput);
+            bl = false;
             //qDebug("added %d", (unsigned int) m_oldKTextEditor );
         }
         if ( m_project && m_project->getDocumentForView(m_oldKTextEditor) )
-            setCaption( m_project->getDocumentForView(m_oldKTextEditor)->name() );
+            setWindowTitle( m_project->getDocumentForView(m_oldKTextEditor)->name() );
     }
     //qDebug("end activeWdg %d", (unsigned int) activeWid );
 }
@@ -800,8 +807,10 @@ void KontrollerLab::saveProperties( KSharedConfig::Ptr config )
     // qDebug("KontrollerLab::saveProperties( KConfig * conf )");
     KConfigGroup conf ( config, "KontrollerLab" );
 
-    conf.writeEntry("geometry",saveGeometry());
-    conf.writeEntry("windowState",saveState());
+    //! \todo: save dockWidgetGeometry
+
+    //conf.writeEntry("geometry",saveGeometry());
+    //conf.writeEntry("windowState",saveState());
     
     conf.writeEntry( "CURRENT_PROJECT_PATH", m_project->projectFileURL().url() );
     if ( m_project->activeDocument() )
@@ -815,17 +824,18 @@ void KontrollerLab::saveProperties( KSharedConfig::Ptr config )
     conf.sync();
 }
 
+
 void KontrollerLab::readProperties( KSharedConfig::Ptr config )
 {
 
     KConfigGroup conf ( config, "KontrollerLab" );
 
-    conf.name()
-    QVariant val =  conf.readEntry("geometry","");
-    qDebug() << val.toByteArray().data();
+    //! \todo: load dockWidgetGeometry
+    //QVariant val =  conf.readEntry("geometry","");
+    //qDebug() << val.toByteArray().data();
     //qDebug() << restoreGeometry(val.toByteArray());
-    val = conf.readEntry("windowState","");
-    qDebug() << val.toByteArray();
+    //val = conf.readEntry("windowState","");
+    //qDebug() << val.toByteArray();
     //qDebug() << restoreState(val.toByteArray());
 
 
@@ -935,6 +945,7 @@ void KontrollerLab::clearMessages( )
 
 void KontrollerLab::slotMessageBoxDblClicked( Q3ListBoxItem * item )
 {
+    qDebug() << item->text();
     // Find a file name in this line:
 
     QList<KLDocument*> list = m_project->documents();
@@ -1026,14 +1037,14 @@ void KontrollerLab::rightButtonClickedOnMsgBox( Q3ListBoxItem *, const QPoint & 
     m_msgBoxPopup->popup( pos );
 }
 
-void KontrollerLab::docIsChanged( )
+void KontrollerLab::docIsChanged( KTextEditor::Document* )
 {
     m_project->checkForModifiedFiles();
 }
 
 void KontrollerLab::beAwareOfChangesOf( KLDocument * doc )
 {
-    connect( doc->kateDoc(), SIGNAL( textChanged() ), this, SLOT( docIsChanged() ) );
+    connect( doc->kateDoc(), SIGNAL( modifiedChanged(KTextEditor::Document*) ), this, SLOT( docIsChanged(KTextEditor::Document*) ) );
 }
 
 void KontrollerLab::backannotateFuses( QMap< QString, QString > fuses )
@@ -1144,6 +1155,21 @@ void KontrollerLab::resizeEvent( QResizeEvent * e )
     KMainWindow::resizeEvent( e );
     //setSysButtonsAtMenuPosition();
 }
+
+/*
+void KontrollerLab::paintEvent(QPaintEvent *e)
+{
+
+    if(bl) {
+        qDebug() << e->type() << "ignore";
+        e->ignore();
+    }
+    else {
+        qDebug() << e->type() << "accept";
+        e->accept();
+    }
+}
+*/
 
 //void KontrollerLab::slotMdiModeHasBeenChangedTo( KMdi::MdiMode )
 //{

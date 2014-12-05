@@ -98,12 +98,14 @@ public:
     void setProgrammerBusy( bool val );
     KLProject* project() { return m_project; }
 private:
+    bool bl;
     void createActions();
 protected:
     virtual void saveProperties(KSharedConfig::Ptr config );
     virtual void readProperties(KSharedConfig::Ptr config );
     virtual void closeEvent( QCloseEvent* e );
     virtual void resizeEvent( QResizeEvent* e );
+    //virtual void paintEvent(QPaintEvent *e);
 public slots:
     void keyPressedOnDocument();
     // File ACTION SLOTS:
@@ -177,7 +179,7 @@ public slots:
     void slotHideShowSerialTerminal();
     void slotHideShowMemoryView();
     
-    void docIsChanged();
+    void docIsChanged(KTextEditor::Document *);
     void slotDocumentUrlChanged( KTextEditor::Document *document );
     
     //void slotMdiModeHasBeenChangedTo(KMdi::MdiMode mode);
