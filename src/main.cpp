@@ -65,12 +65,13 @@ int main(int argc, char **argv)
 
     KApplication app;
     KontrollerLab *mainWin = 0;
-    //if (app.isRestored())
-    //{
-        //RESTORE(KontrollerLab);
-    //}
-    //else
-    //{
+    if (app.isSessionRestored())
+    {
+        RESTORE(KontrollerLab);
+    }
+    else
+    {
+        kRestoreMainWindows<KontrollerLab>;
         // no session.. just start up normally
         KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
@@ -90,7 +91,7 @@ int main(int argc, char **argv)
             }
         }
         args->clear();
-    //}
+    }
 
     // mainWin has WDestructiveClose flag by default, so it will delete itself.
     return app.exec();
