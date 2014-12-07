@@ -19,6 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "klprojectconfigwidget.h"
 #include "klprojectmanagerwidget.h"
 #include <qlayout.h>
@@ -43,9 +44,9 @@ KLProjectConfigWidget::KLProjectConfigWidget(KLProject* project, QWidget *parent
     ui->setupUi(this);
     m_project = project;
     m_projectManagerInConfigWidget =
-            new KLProjectManagerWidget( project, ui->tab, "managerInConfig" );
+            new KLProjectManagerWidget( project, ui->tab_common, "managerInConfig" );
     m_projectManagerInConfigWidget->setConfigButtonVisible( false );
-    //layProjectManager->addWidget( m_projectManagerInConfigWidget );
+    ui->layProjectManager->addWidget( m_projectManagerInConfigWidget );
     ui->cbCPU->clear();
     // Add all the CPUs:
     ui->cbCPU->insertStringList( project->cpus() );
@@ -67,6 +68,11 @@ KLProjectConfigWidget::KLProjectConfigWidget(KLProject* project, QWidget *parent
     }
     updateGUIFromSettings();
     updateCPUInfo( ui->cbCPU->currentText() );
+
+    connect(ui->cbCPU,SIGNAL(currentIndexChanged(QString)),this,SLOT(slotCPUChanged(QString)));
+    connect(ui->pbOK,SIGNAL(clicked()),this,SLOT(slotOK()));
+    connect(ui->pbCancel,SIGNAL(clicked()),this,SLOT(slotCancel()));
+    connect(ui->pbSetDefault,SIGNAL(clicked()),this,SLOT(slotSetDefault()));
 
     /*ui->kisbStartOfText->setValidator(&m_validator);
     ui->kisbStartOfData->setValidator(&m_validator);
