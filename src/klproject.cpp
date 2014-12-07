@@ -66,7 +66,12 @@ KLProject::KLProject( KontrollerLab* parent )
     // READ THE CONFIGURATION:
 
     KStandardDirs *dirs = KGlobal::dirs();
+
+#ifndef QT_DEBUG
     QString resPathConf = dirs->findResource( "data", "kontrollerlab/cpu_config.xml" );
+#else
+    QString resPathConf = dirs->findResource( "data", QDir::currentDirPath() +"/cpu_config.xml" );
+#endif
     // Open it:
     if ( resPathConf.isNull() || resPathConf.isEmpty() )
     {
@@ -89,6 +94,7 @@ KLProject::KLProject( KontrollerLab* parent )
         m_cpuFeatures.readFromDOMElement( docConf, docElem );
     }
     
+    //qSort(m_cpuFeatures);
     //qHeapSort( m_cpuFeatures );
     QList<KLCPUFeatures>::iterator it;
     for (it=m_cpuFeatures.begin(); it!=m_cpuFeatures.end(); ++it)
