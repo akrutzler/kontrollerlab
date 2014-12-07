@@ -23,7 +23,6 @@
 #define KLPROJECTMANAGERWIDGET_H
 
 #include "ui_klprojectmanagerwidgetbase.h"
-#include <QDialog>
 #include <QDateTime>
 #include <q3listview.h>
 #include <qtoolbutton.h>
@@ -61,7 +60,7 @@ protected:
     KLDocument* m_doc;
 };
 
-class KLProjectManagerWidget: public QDialog {
+class KLProjectManagerWidget: public QWidget {
 Q_OBJECT
 public:
     KLProjectManagerWidget(KLProject* project, QWidget *parent = 0, const char* name = 0);

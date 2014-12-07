@@ -34,7 +34,7 @@
 
 
 KLProjectManagerWidget::KLProjectManagerWidget(KLProject* project, QWidget *parent, const char *name)
-    :QDialog(parent,name),
+    :QWidget(parent,name),
       ui(new Ui_KLProjectManagerWidgetBase)
 {
     ui->setupUi(this);
