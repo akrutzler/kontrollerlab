@@ -184,19 +184,15 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_partManager = new KParts::PartManager( this );
     m_partManager->addManagedTopLevelWidget( this );
     
-    //m_msgBoxPopup = new KPopupMenu(this,"msgBoxPopup");
+    m_msgBoxPopup = new KMenu("msgBoxPopup", this);
     KIconLoader kico;
-    //m_msgBoxPopup->insertItem( kico.loadIcon( "clear_left", KIcon::Toolbar ), i18n("Clear messages"), this, SLOT( clearMessages() ) );
+    m_msgBoxPopup->insertItem( kico.loadIcon( "clear_left", KIconLoader::Toolbar ), i18n("Clear messages"), this, SLOT( clearMessages() ) );
     
     connect(m_partManager, SIGNAL(activePartChanged(KParts::Part * )),this, SLOT(slotActivePartChanged(KParts::Part * )));
-    //    connect( m_partManager, SIGNAL( activePartChanged( KParts::Part * ) ),
-    //             this, SLOT( createGUI( KParts::Part * ) ) );
     connect(this, SIGNAL(dockWidgetHasUndocked(KDockWidget *)), this, SLOT(slotDockWidgetHasUndocked(KDockWidget *)));
-    // connect(tabWidget(), SIGNAL(initiateDrag(QWidget *)), this, SLOT(slotTabDragged(QWidget*)));
 
     connect(m_msgBox, SIGNAL(doubleClicked(Q3ListBoxItem *)), this, SLOT(slotMessageBoxDblClicked(Q3ListBoxItem *)));
-    //connect(m_msgBox, SIGNAL(rightButtonPressed( QListBoxItem*, const QPoint& )), this,
-    //        SLOT( rightButtonClickedOnMsgBox( Q3ListBoxItem*, const QPoint& ) ) );
+    connect(m_msgBox, SIGNAL(rightButtonPressed( Q3ListBoxItem*, const QPoint& )),this,SLOT( rightButtonClickedOnMsgBox( Q3ListBoxItem*, const QPoint& ) ) );
     connect(this, SIGNAL(mdiModeHasBeenChangedTo(KMdi::MdiMode)), this, SLOT(slotMdiModeHasBeenChangedTo (KMdi::MdiMode)) );
     //connect( this, SIGNAL( activePartChanged( KParts::Part* ) ),this, SLOT( slotActivePartChanged( KParts::Part* ) ) );
 
@@ -739,7 +735,7 @@ void KontrollerLab::slotProjectNew( )
             return;
     }
 
-    KUrl url( KFileDialog::getOpenFileName( KUrl("."), "*.kontrollerlab", this, i18n("New project") ) );
+    KUrl url( KFileDialog::getSaveFileName( KUrl("."), "*.kontrollerlab", this, i18n("New project") ) );
     if ((!url.isEmpty()) && url.isValid())
     {
         if (!url.path().endsWith( ".kontrollerlab" ))
