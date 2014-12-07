@@ -51,8 +51,8 @@ void KLProcessManager::processExited( KLProcess * who )
     if ( m_procs.count() > 0)
     {
         slotMessage( 0, m_procs.first()->cmd() );
-        m_procs.first()->start();
         m_currentlyRunningProc = m_procs.first();
+        m_procs.first()->start();
     }
     else
     {
@@ -75,8 +75,8 @@ void KLProcessManager::addProcess( const QString & cmd, KLProcessHandler * callB
     if ( m_procs.first() == proc )
     {
         slotMessage( 0, proc->cmd() );
-        proc->start();
         m_currentlyRunningProc = m_procs.first();
+        proc->start();
     }
 }
 
@@ -89,8 +89,8 @@ void KLProcessManager::addProcessImmediately( const QString & cmd, KLProcessHand
     connect( proc, SIGNAL( processExited( KLProcess* ) ),
              this, SLOT( processExited( KLProcess* ) ) );
     slotMessage( 0, cmd );
-    proc->start();
     m_currentlyRunningProc = m_procs.first();
+    proc->start();
 }
 
 void KLProcessManager::slotMessage( int exitVal, const QString & msg )
