@@ -496,16 +496,16 @@ void KLProject::createDOMElement( QDomDocument & document, QDomElement & parent 
             //     continue;
             QRect geo;
             //if (itView->isAttached())
-                //geo = itView->internalGeometry();
+            //geo = itView->internalGeometry();
             //else
-                geo = itView->geometry();
+            geo = itView->geometry();
             int state = 0;
             if ( itView->isMaximized() )
                 state = STATE_IS_MAXIMIZED;
             else if ( itView->isMinimized() )
                 state = STATE_IS_MINIMIZED;
             //if ( itView->isAttached() )
-                state |= STATE_IS_ATTACHED;
+            state |= STATE_IS_ATTACHED;
             positions += QString("%1,%2,%3,%4,%5,")
                     .arg(geo.x())
                     .arg(geo.y())
@@ -627,7 +627,6 @@ void KLProject::open( const KUrl & url )
     else
         qWarning("Could not open file.");
     m_currentlyOpeningProject = false;
-
 }
 
 
@@ -848,10 +847,11 @@ int KLProject::getHexFileSize( )
     int retVal = 0;
     QFile hexFile( getHEXURL().path() );
     
-    if ( hexFile.open( IO_ReadOnly ) )
+    if ( hexFile.open( QIODevice::ReadOnly ) )
     {
-        while ( hexFile.readLine( buffer.toLatin1().data(), 32768 ) >= 0 )
+        while ( !hexFile.atEnd() )
         {
+            buffer = hexFile.readLine(32786);
             if ( buffer.length() < 9 )
                 continue;
             if ( buffer.mid( 0, 1 ) != ":" )
@@ -864,6 +864,7 @@ int KLProject::getHexFileSize( )
             if ( ok1 && ok2 && (type==0) )
                 retVal += bCount;
         }
+        hexFile.close();
     }
     return retVal;
 }
@@ -893,7 +894,7 @@ void KLProject::checkForModifiedFiles( )
     // thread tries to access the document at the same time
     // when it was not yet created.
     //if (m_currentlyOpeningProject) TODO
-        //return;
+    //return;
     foreach ( KLProjectManagerWidget* itPM, m_projectManagerWidgets )
     {
         itPM->updateModified();
