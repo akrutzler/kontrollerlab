@@ -53,7 +53,8 @@ HEADERS += src/klasminstruction.h \
            src/klsourcecodetoasmrelation.h \
            src/klwizardheadersetting.h \
            src/klwizardheadersettings.h \
-           src/kontrollerlab.h
+           src/kontrollerlab.h \
+    src/klspinboxwidget.h
 FORMS += src/kldebuggerconfigwidgetbase.ui \
          src/kldotmatrixcharacterwizardbase.ui \
          src/kldotmatrixdisplaywizardbase.ui \
@@ -111,7 +112,8 @@ SOURCES += src/klasminstruction.cpp \
            src/klwizardheadersetting.cpp \
            src/klwizardheadersettings.cpp \
            src/kontrollerlab.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/klspinboxwidget.cpp
 
 TRANSLATIONS += german.ts
 
@@ -120,4 +122,8 @@ OBJECTS_DIR = /home/andreas/0_OBJ/deb
 MOC_DIR = /home/andreas/0_OBJ/moc
 UI_DIR  = /home/andreas/0_OBJ/ui
 
+#For KLSpinBoxWidget
+INCLUDEPATH += src
+
+#KDE
 LIBS += -lkdeui -lkdecore -lktexteditor -lkparts -lkio
