@@ -55,7 +55,7 @@ set(kontrollerlab_SRCS
            klwizardheadersettings.cpp 
            kontrollerlab.cpp 
            main.cpp 
-	   kleditorwidget.cpp
+	   klspinboxwidget.cpp
 )
 kde4_add_ui_files(
 	 kldebuggerconfigwidgetbase.ui 
