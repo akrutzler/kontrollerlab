@@ -10,6 +10,9 @@ KLSpinBoxWidget::KLSpinBoxWidget(QWidget *parent) :
 
 void KLSpinBoxWidget::setValidator(QRegExpValidator *validator)
 {
+    if(m_validator)
+        delete m_validator;
+
     m_validator = validator;
 }
 
