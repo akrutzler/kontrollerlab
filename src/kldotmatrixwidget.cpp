@@ -38,7 +38,7 @@
 
 KLDotMatrixWidget::KLDotMatrixWidget(KontrollerLab *parent, const char *name, KLProject* prj, KLDocument* doc)
     :QDialog(parent, name), m_validator(QRegExp("0x[0-9a-fA-F]{1,2}"), this, "reValidator"),
-      ui(new Ui_KLDotMatrixDisplayWizardBase)
+      ui(new Ui::KLDotMatrixDisplayWizardBase)
 {
     ui->setupUi(this);
     m_project = prj;
@@ -49,7 +49,8 @@ KLDotMatrixWidget::KLDotMatrixWidget(KontrollerLab *parent, const char *name, KL
     m_source = m_project->getDocumentNamed( WIZARD_SOURCE_FILE );
     m_settings = KLWizardHeaderSettings( m_header );
 
-    //ui->sbValue->setValidator( &m_validator );
+    ui->sbValue->setValidator( &m_validator );
+    ui->sbValue->setBase(16);
 
     m_settings.append( KLWizardHeaderSetting( i18n("General"), "XTAL",
                        i18n("The clock frequency. F_CPU can be set in the project configuration menu."),
@@ -340,54 +341,55 @@ void KLDotMatrixWidget::slotSelectedValueChanged(Q3ListViewItem *item)
 
 void KLDotMatrixWidget::updateLvValuesFrom( const KLWizardHeaderSettings & set_ )
 {
+    //Crash -> disabling
+    return;
     KLWizardHeaderSettings set = set_;
     
-    QList< KLWizardHeaderSetting >::iterator it;
     ui->lvValues->clear();
     // lvValues->setSorting( 0 );
     Q3ListViewItem* currentGrp=0L;
     
-    for ( it = set.begin(); it != set.end(); ++it )
+    foreach (const KLWizardHeaderSetting it, set)
     {
-        if ( m_groups[ (*it).groupName() ] )
+        if ( m_groups[ it.groupName() ] )
         {
-            currentGrp = m_groups[ (*it).groupName() ];
+            currentGrp = m_groups[ it.groupName() ];
         }
         else
         {
-            //currentGrp = new Q3ListViewItem(ui->lvValues, (*it).groupName());
-            //currentGrp->setOpen( true );
-            //m_groups.insert( (*it).groupName(), currentGrp );
+            //currentGrp = new Q3ListViewItem(ui->lvValues, it.groupName());
+            currentGrp->setOpen( true );
+            m_groups.insert( it.groupName(), currentGrp );
         }
 
-        if ( (*it).type() == KLWizardHeaderSetting::StringType )
+        if ( it.type() == KLWizardHeaderSetting::StringType )
         {
-            new Q3ListViewItem(currentGrp, (*it).defName(),
-                                  (*it).stringValue(),
-                                  (*it).description() );
+            new Q3ListViewItem(currentGrp, it.defName(),
+                                  it.stringValue(),
+                                  it.description() );
         }
-        else if ( (*it).type() == KLWizardHeaderSetting::IntType )
+        else if ( it.type() == KLWizardHeaderSetting::IntType )
         {
-            if ( (*it).base() == 16 )
+            if ( it.base() == 16 )
             {
-                new Q3ListViewItem(currentGrp, (*it).defName(),
-                                    "0x" + QString::number( (*it).intValue(),
-                                            (*it).base() ),
-                                    (*it).description() );
+                new Q3ListViewItem(currentGrp, it.defName(),
+                                    "0x" + QString::number( it.intValue(),
+                                            it.base() ),
+                                    it.description() );
             }
             else
             {
-                new Q3ListViewItem(currentGrp, (*it).defName(),
-                                  QString::number( (*it).intValue(),
-                                          (*it).base() ),
-                                  (*it).description() );
+                new Q3ListViewItem(currentGrp, it.defName(),
+                                  QString::number( it.intValue(),
+                                          it.base() ),
+                                  it.description() );
             }
         }
-        else if ( (*it).type() == KLWizardHeaderSetting::StringListType )
+        else if ( it.type() == KLWizardHeaderSetting::StringListType )
         {
-            new Q3ListViewItem(currentGrp, (*it).defName(),
-                                  (*it).stringValue(),
-                                  (*it).description() );
+            new Q3ListViewItem(currentGrp, it.defName(),
+                                  it.stringValue(),
+                                  it.description() );
         }
     }
 }
