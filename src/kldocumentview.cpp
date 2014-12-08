@@ -120,8 +120,10 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     // add the view's XML GUI Client
     if ( !m_parent->kateGuiClientAdded() )
     {
+        m_parent->setUpdatesEnabled(false);
         m_parent->guiFactory()->addClient( m_view );
         m_parent->setKateGuiClientAdded( (KXMLGUIClient*) m_view );
+        m_parent->setUpdatesEnabled(true);
     }
 
     doc->registerKLDocumentView( this );
