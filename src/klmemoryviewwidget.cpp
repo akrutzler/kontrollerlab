@@ -35,7 +35,7 @@
 
 KLMemoryViewWidget::KLMemoryViewWidget(KontrollerLab *parent, const char *name)
     :QDialog(parent,name), m_updateTimer( this, "timer" ),
-    ui(new Ui_KLMemoryViewWidgetBase())
+    ui(new Ui::KLMemoryViewWidgetBase())
 {
     ui->setupUi(this);
     m_parent = parent;

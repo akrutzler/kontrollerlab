@@ -31,7 +31,7 @@
 
 
 KLProgramFusesWidget::KLProgramFusesWidget(QWidget *parent, KLProject* project, const char *name)
-    :QDialog(parent, name), m_project( project ), ui(new Ui_KLProgramFusesWidgetBase)
+    :QDialog(parent, name), m_project( project ), ui(new Ui::KLProgramFusesWidgetBase)
 {
     ui->setupUi(this);
     m_fuses = m_project->getFusesFor( m_project->cpu() );
