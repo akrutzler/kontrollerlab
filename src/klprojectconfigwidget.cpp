@@ -74,11 +74,21 @@ KLProjectConfigWidget::KLProjectConfigWidget(KLProject* project, QWidget *parent
     connect(ui->pbCancel,SIGNAL(clicked()),this,SLOT(slotCancel()));
     connect(ui->pbSetDefault,SIGNAL(clicked()),this,SLOT(slotSetDefault()));
 
-    /*ui->kisbStartOfText->setValidator(&m_validator);
+    //Setup spinboxes with hex-in and output
+    ui->kisbStartOfText->setValidator(&m_validator);
+    ui->kisbStartOfText->setBase(16);
+
     ui->kisbStartOfData->setValidator(&m_validator);
+    ui->kisbStartOfData->setBase(16);
+
     ui->kisbStartOfBSS->setValidator(&m_validator);
+    ui->kisbStartOfBSS->setBase(16);
+
     ui->kisbStartOfHeap->setValidator(&m_validator);
-    ui->kisbEndOfHeap->setValidator(&m_validator);*/
+    ui->kisbStartOfHeap->setBase(16);
+
+    ui->kisbEndOfHeap->setValidator(&m_validator);
+    ui->kisbEndOfHeap->setBase(16);
 }
 
 void KLProjectConfigWidget::slotCancel()

@@ -595,10 +595,7 @@
        <item row="2" column="0" colspan="3">
         <layout class="QHBoxLayout" name="hl_flags">
          <item>
-          <layout class="QGridLayout">
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="kisbStartOfText"/>
-           </item>
+          <layout class="QGridLayout" name="gl_linkerOpt">
            <item row="4" column="0">
             <widget class="QCheckBox" name="cbEndOfHeap">
              <property name="text">
@@ -650,16 +647,57 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QSpinBox" name="kisbStartOfData"/>
+            <widget class="KLSpinBoxWidget" name="kisbStartOfData">
+             <property name="prefix">
+              <string>0x</string>
+             </property>
+             <property name="maximum">
+              <number>1000000</number>
+             </property>
+            </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QSpinBox" name="kisbStartOfBSS"/>
+            <widget class="KLSpinBoxWidget" name="kisbStartOfBSS">
+             <property name="prefix">
+              <string>0x</string>
+             </property>
+             <property name="maximum">
+              <number>1000000</number>
+             </property>
+            </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QSpinBox" name="kisbStartOfHeap"/>
+            <widget class="KLSpinBoxWidget" name="kisbStartOfHeap">
+             <property name="prefix">
+              <string>0x</string>
+             </property>
+             <property name="maximum">
+              <number>1000000</number>
+             </property>
+            </widget>
            </item>
            <item row="4" column="1">
-            <widget class="QSpinBox" name="kisbEndOfHeap"/>
+            <widget class="KLSpinBoxWidget" name="kisbEndOfHeap">
+             <property name="prefix">
+              <string>0x</string>
+             </property>
+             <property name="maximum">
+              <number>1000000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="KLSpinBoxWidget" name="kisbStartOfText">
+             <property name="suffix">
+              <string/>
+             </property>
+             <property name="prefix">
+              <string>0x</string>
+             </property>
+             <property name="maximum">
+              <number>1000000</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -940,6 +978,11 @@
    <class>Q3ListView</class>
    <extends>QWidget</extends>
    <header>q3listview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLSpinBoxWidget</class>
+   <extends>QSpinBox</extends>
+   <header location="global">klspinboxwidget.h</header>
   </customwidget>
  </customwidgets>
  <includes>
