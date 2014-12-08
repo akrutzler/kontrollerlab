@@ -30,3 +30,14 @@ Makefile*
 #QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
+
+#CMake
+
+CMakeCache.txt
+CMakeFiles
+CMakeTmp
+Makefile
+cmake_install.cmake
+cmake_uninstall.cmake
+install_manifest.txt
+*automoc.cpp*
