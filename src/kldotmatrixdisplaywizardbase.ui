@@ -73,7 +73,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="sbValue"/>
+          <widget class="KLSpinBoxWidget" name="sbValue"/>
          </item>
          <item>
           <widget class="QComboBox" name="cbValue">
@@ -169,6 +169,11 @@
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
+  <customwidget>
+   <class>KLSpinBoxWidget</class>
+   <extends>QSpinBox</extends>
+   <header location="global">klspinboxwidget.h</header>
+  </customwidget>
   <customwidget>
    <class>KUrlLabel</class>
    <extends>QWidget</extends>

@@ -37,7 +37,7 @@
 KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const char *name,
                 KLProject* project, KLDocument* doc)
     :QDialog(parent, name),
-      ui(new Ui_KLDotMatrixCharacterWizardBase)
+      ui(new Ui::KLDotMatrixCharacterWizardBase)
 {
     ui->setupUi(this);
     m_project = project;
@@ -58,7 +58,7 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
     // Now we search in the document for the start and the stop, if any:
     if ( m_document->lastActiveView() )
     {
-       /* if ( m_document->lastActiveView()->view() )
+        if ( m_document->lastActiveView()->view() )
         {
             int curLine = m_document->lastActiveView()->view()->cursor().pos().x();
             m_stopLine = m_startLine = curLine;
@@ -66,9 +66,9 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
             while ( m_startLine >= 0 )
             {
                 if ( m_startLine != curLine )
-                    if (m_document->editIf->textLine( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
+                    if (m_document->kateDoc()->line( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
                         break;
-                if (!m_document->editIf->textLine( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
+                if (!m_document->kateDoc()->line( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
                     m_startLine--;
                 else
                 {
@@ -76,12 +76,12 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
                     break;
                 }
             }
-            while ( m_stopLine < (int) m_document->editIf->numLines() )
+            while ( m_stopLine < (int) m_document->kateDoc()->lines() )
             {
                 if ( m_stopLine != curLine )
-                    if (m_document->editIf->textLine( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
+                    if (m_document->kateDoc()->line( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
                         break;
-                if (!m_document->editIf->textLine( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
+                if (!m_document->kateDoc()->line( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
                     m_stopLine++;
                 else
                 {
@@ -91,26 +91,26 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
             }
             if (!( foundStart && foundStop ))
                 m_startLine = m_stopLine = -1;
-        }*/
+        }
     }
 
     if ( underReedit() )
     {
-       /* // Seek the line with the // WIZARD SEVEN_SEGMENT_WIZARD in it.
+        // Seek the line with the // WIZARD SEVEN_SEGMENT_WIZARD in it.
         int curLine = m_startLine;
         bool ok;
         while ( curLine < m_stopLine )
         {
             curLine++;
-            if ( m_document->editIf->textLine( curLine ).upper().stripWhiteSpace().startsWith( "// WIZARD DOT_MATRIX_CHARACTER_WIZARD" ) )
+            if ( m_document->kateDoc()->line( curLine ).upper().stripWhiteSpace().startsWith( "// WIZARD DOT_MATRIX_CHARACTER_WIZARD" ) )
             {
-                QString charSizeString = m_document->editIf->textLine( curLine ).upper().stripWhiteSpace();
+                QString charSizeString = m_document->kateDoc()->line( curLine ).upper().stripWhiteSpace();
                 QStringList slist = QStringList::split( " ", charSizeString );
                 charSizeString = slist[3];
                 if ( charSizeString.upper() == "5X8" )
-                    rb5x8->setChecked( true );
+                    ui->rb5x8->setChecked( true );
                 else
-                    rb5x10->setChecked( true );
+                    ui->rb5x10->setChecked( true );
                 break;
             }
         }
@@ -119,7 +119,7 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
         while (curLine < m_stopLine)
         {
             int ws = 0;
-            QString current = m_document->editIf->textLine( curLine );
+            QString current = m_document->kateDoc()->line( curLine );
             if ( current.contains( "=" ) )
             {
                 ws = current.left( current.find("=")+1 ).length() -
@@ -131,10 +131,10 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
         }
         QString theName = allLinesBelow.mid( 0, allLinesBelow.find( "=" ) ).stripWhiteSpace();
         QString theType = theName.left( theName.findRev( " " ) ).stripWhiteSpace();
-        leVarType->setText( theType );
+        ui->leVarType->setText( theType );
         theName = theName.right( theName.length() - theName.findRev( " " ) );
         theName = theName.replace("[", "").replace("]", "");
-        leVarName->setText( theName.stripWhiteSpace() );
+        ui->leVarName->setText( theName.stripWhiteSpace() );
         allLinesBelow = allLinesBelow.mid( allLinesBelow.find( "{" )+1,
                                            allLinesBelow.findRev( "}" ) - allLinesBelow.find( "{" ) - 1 );
         allLinesBelow = allLinesBelow.replace( ",", " " );
@@ -159,10 +159,10 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
         }
         if ( masks.size() > 0 )
         {
-            lvCharacters->clear();
+            ui->lvCharacters->clear();
             KLDotMatrixCharacterListViewItem *item;
             int size=8;
-            if ( rb5x10->isChecked() )
+            if ( ui->rb5x10->isChecked() )
                 size=10;
             QList< int > oneChar;
             for ( unsigned int i=0; i<masks.size(); i++ )
@@ -170,13 +170,13 @@ KLDotMatrixCharacterWizard::KLDotMatrixCharacterWizard(QWidget *parent, const ch
                 oneChar.append( masks[i] );
                 if ( (i+1) % size == 0 )
                 {
-                    item = new KLDotMatrixCharacterListViewItem( i/size, oneChar, lvCharacters, "dmChar" );
+                    item = new KLDotMatrixCharacterListViewItem( i/size, oneChar, ui->lvCharacters, "dmChar" );
                     oneChar.clear();
                 }
             }
-            lvCharacters->setCurrentItem( lvCharacters->firstChild() );
-            slotSelectedCharacterChanged( lvCharacters->firstChild() );
-        }*/
+            ui->lvCharacters->setCurrentItem( ui->lvCharacters->firstChild() );
+            slotSelectedCharacterChanged( ui->lvCharacters->firstChild() );
+        }
     }
     else
     {
@@ -244,20 +244,20 @@ void KLDotMatrixCharacterWizard::slotOK()
     out += WIZARD_END;
     out += "\n";
     int line=0;
-    //if (m_document->lastActiveView())
-    //    if (m_document->lastActiveView()->view())
-    //        line=m_document->lastActiveView()->view()->cursorLine();
+    if (m_document->lastActiveView())
+        if (m_document->lastActiveView()->view())
+            line=m_document->lastActiveView()->view()->cursorPosition().line();
     QStringList lines;
     lines = lines.split( "\n", out );
     if ( underReedit() )
     {
-        //for ( int curLine=m_stopLine; curLine >= m_startLine; curLine-- )
-            //m_document->editIf->removeLine( curLine );
+        for ( int curLine=m_stopLine; curLine >= m_startLine; curLine-- )
+            m_document->kateDoc()->removeLine( curLine );
         line = m_startLine;
     }
     for (QStringList::Iterator it = lines.begin(); it != lines.end(); ++it )
     {
-        //m_document->editIf->insertLine( line, m_whiteSpace + (*it) );
+        m_document->kateDoc()->insertLine( line, m_whiteSpace + (*it) );
         line++;
     }
     close();
