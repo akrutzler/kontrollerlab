@@ -2148,4 +2148,4 @@
       <slot>slotCurrentItemChanged(Q3ListViewItem*)</slot>
     </connection>
   </connections>
-</ui>
+</ui> 

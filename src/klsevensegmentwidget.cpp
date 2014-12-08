@@ -125,17 +125,17 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
     // Now we search in the document for the start and the stop, if any:
     if ( m_document->lastActiveView() )
     {
-  /*      if ( m_document->lastActiveView()->view() )
+        if ( m_document->lastActiveView()->view() )
         {
-            int curLine = m_document->lastActiveView()->view()->cursorLine();
+            int curLine = m_document->lastActiveView()->view()->cursorPosition().line();
             m_stopLine = m_startLine = curLine;
             bool foundStart = false, foundStop = false;
             while ( m_startLine >= 0 )
             {
                 if ( m_startLine != curLine )
-                    if (m_document->editIf->textLine( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
+                    if (m_document->kateDoc()->line( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
                         break;
-                if (!m_document->editIf->textLine( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
+                if (!m_document->kateDoc()->line( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
                     m_startLine--;
                 else
                 {
@@ -143,12 +143,12 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
                     break;
                 }
             }
-            while ( m_stopLine < (int) m_document->editIf->numLines() )
+            while ( m_stopLine < (int) m_document->kateDoc()->lines() )
             {
                 if ( m_stopLine != curLine )
-                    if (m_document->editIf->textLine( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
+                    if (m_document->kateDoc()->line( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
                         break;
-                if (!m_document->editIf->textLine( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
+                if (!m_document->kateDoc()->line( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
                     m_stopLine++;
                 else
                 {
@@ -158,7 +158,7 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
             }
             if (!( foundStart && foundStop ))
                 m_startLine = m_stopLine = -1;
-        }*/
+        }
     }
     
     QRadioButton *bit;
@@ -191,9 +191,9 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
         while ( curLine < m_stopLine )
         {
             curLine++;
-            /*if ( m_document->editIf->textLine( curLine ).upper().stripWhiteSpace().startsWith( "// WIZARD SEVEN_SEGMENT_WIZARD" ) )
+            if ( m_document->kateDoc()->line( curLine ).upper().stripWhiteSpace().startsWith( "// WIZARD SEVEN_SEGMENT_WIZARD" ) )
             {
-                QString bitAssignmentString = m_document->editIf->textLine( curLine ).upper().stripWhiteSpace();
+                QString bitAssignmentString = m_document->kateDoc()->line( curLine ).upper().stripWhiteSpace();
                 QStringList slist = QStringList::split( " ", bitAssignmentString );
                 bitAssignmentString = slist[3];
                 for (int i=0; i<8; i++)
@@ -204,14 +204,14 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
                     m_segmentIsBit[segmentNr] = 1<<i;
                 }
                 break;
-            }*/
+            }
         }
         curLine++;
         QString allLinesBelow;
         while (curLine < m_stopLine)
         {
-            /*int ws = 0;
-            QString current = m_document->editIf->textLine( curLine );
+            int ws = 0;
+            QString current = m_document->kateDoc()->line( curLine );
             if ( current.contains( "=" ) )
             {
                 ws = current.left( current.find("=")+1 ).length() -
@@ -219,7 +219,7 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
                 m_whiteSpace = current.left( ws );
             }
             allLinesBelow += current.stripWhiteSpace();
-            curLine++;*/
+            curLine++;
         }
         QString theName = allLinesBelow.mid( 0, allLinesBelow.find( "=" ) ).stripWhiteSpace();
         theName = theName.right( theName.length() - theName.findRev( " " ) );
@@ -253,7 +253,7 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
             for ( int j=0; j<8; j++ )
             {
                 if ( segs[i] & m_segmentIsBit[j] )
-                        addMe |= 1<<j;
+                    addMe |= 1<<j;
             }
             sortedSegs.append( addMe );
         }
@@ -271,6 +271,7 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
             }
         }
     }
+
     m_prohibitRecursion=true;
     setRadiosFromBitSegmentAssignment( m_segmentIsBit );
     m_prohibitRecursion=false;
@@ -443,20 +444,20 @@ void KLSevenSegmentWidget::slotOK()
     out += WIZARD_END;
     out += "\n";
     int line=0;
-    /*if (m_document->lastActiveView())
+    if (m_document->lastActiveView())
         if (m_document->lastActiveView()->view())
-            line=m_document->lastActiveView()->view()->cursorLine();*/
+            line=m_document->lastActiveView()->view()->cursorPosition().line();
     QStringList lines;
     lines = lines.split( "\n", out );
     if ( underReedit() )
     {
-        //for ( int curLine=m_stopLine; curLine >= m_startLine; curLine-- )
-            //m_document->editIf->removeLine( curLine );
+        for ( int curLine=m_stopLine; curLine >= m_startLine; curLine-- )
+            m_document->kateDoc()->removeLine( curLine );
         line = m_startLine;
     }
     for (QStringList::Iterator it = lines.begin(); it != lines.end(); ++it )
     {
-        //m_document->editIf->insertLine( line, m_whiteSpace + (*it) );
+        m_document->kateDoc()->insertLine( line, m_whiteSpace + (*it) );
         line++;
     }
     close();
