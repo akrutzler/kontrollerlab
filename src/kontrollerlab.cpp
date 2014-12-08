@@ -189,12 +189,9 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_msgBoxPopup->insertItem( kico.loadIcon( "clear_left", KIconLoader::Toolbar ), i18n("Clear messages"), this, SLOT( clearMessages() ) );
     
     connect(m_partManager, SIGNAL(activePartChanged(KParts::Part * )),this, SLOT(slotActivePartChanged(KParts::Part * )));
-    connect(this, SIGNAL(dockWidgetHasUndocked(KDockWidget *)), this, SLOT(slotDockWidgetHasUndocked(KDockWidget *)));
 
     connect(m_msgBox, SIGNAL(doubleClicked(Q3ListBoxItem *)), this, SLOT(slotMessageBoxDblClicked(Q3ListBoxItem *)));
     connect(m_msgBox, SIGNAL(rightButtonPressed( Q3ListBoxItem*, const QPoint& )),this,SLOT( rightButtonClickedOnMsgBox( Q3ListBoxItem*, const QPoint& ) ) );
-    connect(this, SIGNAL(mdiModeHasBeenChangedTo(KMdi::MdiMode)), this, SLOT(slotMdiModeHasBeenChangedTo (KMdi::MdiMode)) );
-    //connect( this, SIGNAL( activePartChanged( KParts::Part* ) ),this, SLOT( slotActivePartChanged( KParts::Part* ) ) );
 
     //hideViewTaskBar();
     m_configProgrammerWidget = new KLProgrammerConfigWidget( this, "programmerConfigWdg" );
@@ -896,12 +893,6 @@ void KontrollerLab::readProperties( KSharedConfig::Ptr config )
     }
     m_serialTerminalWidget->readProperties( config );
 }
-
-void KontrollerLab::slotDockWidgetHasUndocked(K3DockWidget * )
-{
-    
-}
-
 
 void KontrollerLab::slotHideShowMessageBox( )
 {

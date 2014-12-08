@@ -121,7 +121,6 @@ public slots:
     /** connected to the part manager, activates a new part */
     void slotActivePartChanged(KParts::Part * );
 
-    void slotDockWidgetHasUndocked(K3DockWidget *);
     // void slotPartWillGetDeleted(KParts::Part * );
     
     // Project new, open, save:

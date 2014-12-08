@@ -130,12 +130,7 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     //activate();
 
     connect( this,SIGNAL(aboutToActivate()),this,SLOT(mdiViewActivated()));
-    connect( this, SIGNAL( gotFocus( KMdiChildView* ) ),
-             this, SLOT( mdiViewActivated( KMdiChildView* ) ) );
-    // connect( m_mdiView, SIGNAL( activated( KMdiChildView* ) ),
-    //          this, SLOT( mdiViewActivated( KMdiChildView* ) ) );
-    connect( m_view, SIGNAL( gotFocus( Kate::View* ) ) , this, SLOT( mdiViewActivated() ) );
-    // connect( m_document->kateDoc(), SIGNAL(editorGotFocus()), this, SLOT( mdiViewActivated() ) );
+
     m_inhibitFocusRecursion = false;
     mdiViewActivated(this);
 }
