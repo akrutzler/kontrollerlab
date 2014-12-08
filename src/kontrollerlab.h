@@ -214,8 +214,8 @@ public:
     class KLMemoryViewWidget* memoryViewWidget() const
     { return m_memoryViewWidget; }
 
-    //KAction* debugToggleBreakpoint() const
-    //{ return m_debugToggleBreakpoint; }
+    QAction* debugToggleBreakpoint() const
+    { return m_debugToggleBreakpoint; }
 
 signals:
     void activePartChanged( KParts::Part* );

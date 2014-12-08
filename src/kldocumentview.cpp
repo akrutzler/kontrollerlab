@@ -105,15 +105,19 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     }
     //    viewCursorIf = dynamic_cast<KTextEditor::ViewCursorInterface *>(m_view);
     codeCompletionIf = dynamic_cast<KTextEditor::CodeCompletionInterface *>(m_view);
-    
-    /* KTextEditor::PopupMenuInterface* popupIf = dynamic_cast<KTextEditor::PopupMenuInterface*>(m_view);
-    if (popupIf)
-    {
-        QPopupMenu *thePopup = (QPopupMenu*)parent->factory()->container("ktexteditor_popup", parent);
-        if ( !m_parent->debugToggleBreakpoint()->isPlugged( thePopup ) )
-            m_parent->debugToggleBreakpoint()->plug( thePopup );
-        popupIf->installPopup ( thePopup );
-    }*/
+
+    //get the context-menu of ktexteditor
+    if (parent->factory()) {
+        QList<QWidget*> conts = parent->factory()->containers("menu");
+        foreach (QWidget *w, conts) {
+            if (w->objectName() == "ktexteditor_popup") {
+                QMenu *men = dynamic_cast<QMenu*>(w);
+                men->addAction(parent->debugToggleBreakpoint());
+                break;
+            }
+        }
+    }
+
     setFocusProxy( m_view );
     m_view->setFocusPolicy(Qt::WheelFocus);
     m_parent->slotNewPart(doc->kateDoc(), true);

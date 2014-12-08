@@ -252,7 +252,7 @@ void KontrollerLab::createActions()
     m_closeProject->setText(i18n("Close project"));
     m_closeProject->setIcon(KIcon("document-close"));
 
-//
+//Project - Building
     m_compileAssemble = (QAction*) actionc->addAction("compile",this, SLOT( slotCompileAssemble() ));
     m_compileAssemble->setShortcut(QKeySequence("F7"));
     m_compileAssemble->setText(i18n("Compile file"));
