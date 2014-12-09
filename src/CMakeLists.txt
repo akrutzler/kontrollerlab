@@ -57,7 +57,7 @@ set(kontrollerlab_SRCS
            main.cpp 
 	   klspinboxwidget.cpp
 )
-kde4_add_ui_files(
+kde4_add_ui_files(kontrollerlab_SRCS
 	 kldebuggerconfigwidgetbase.ui 
          kldotmatrixcharacterwizardbase.ui 
          kldotmatrixdisplaywizardbase.ui 
@@ -71,6 +71,12 @@ kde4_add_ui_files(
          klsevensegmentwidgetbase.ui 
          kleditorwidgetbase.ui
 )
+#for klspinboxwidget
+include_directories("${PROJECT_SOURCE_DIR}")
  
 kde4_add_executable(kontrollerlab ${kontrollerlab_SRCS})
 target_link_libraries(kontrollerlab ${KDE4_KDEUI_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KPART_LIBS} ${QT_LIBRARIES})
+
+install(TARGETS kontrollerlab DESTINATION ${BIN_INSTALL_DIR})
+install(FILES kontrollerlabui.rc 
+        DESTINATION  ${DATA_INSTALL_DIR}/kontrollerlab)
