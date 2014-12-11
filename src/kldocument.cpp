@@ -319,7 +319,6 @@ void KLDocument::makeLastActiveViewVisible( )
 void KLDocument::setActiveView( KLDocumentView * view )
 {
     qDebug() << "ActiveView" << view->objectName();
-    //m_parent->slotActivePartChanged(0l);
     m_lastActiveView = view;
     if(m_project)   //the document is assigned to an project
         m_project->setActiveDocument( this );
