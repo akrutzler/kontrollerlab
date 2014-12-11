@@ -78,5 +78,8 @@ kde4_add_executable(kontrollerlab ${kontrollerlab_SRCS})
 target_link_libraries(kontrollerlab ${KDE4_KDEUI_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KPART_LIBS} ${QT_LIBRARIES})
 
 install(TARGETS kontrollerlab DESTINATION ${BIN_INSTALL_DIR})
-install(FILES kontrollerlabui.rc 
+install(FILES 
+	kontrollerlabui.rc
+	cpu_config.xml
         DESTINATION  ${DATA_INSTALL_DIR}/kontrollerlab)
+
