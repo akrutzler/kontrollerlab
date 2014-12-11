@@ -116,7 +116,11 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
 
     createActions();
     
-    setupGUI(KXmlGuiWindow::Default,QDir::currentDirPath() + "/kontrollerlabui.rc");    //absolut just for now
+    //setupGUI(KXmlGuiWindow::Default,QDir::currentDirPath() + "/kontrollerlabui.rc");    //absolut just for debug
+
+    //stored in ~/.kde4/share/apps/kontrollerlab/kontrollerlabui.rc or
+    //          /usr/local/share/apps/kontrollerlab/kontrollerlabui.rc  depends on version which one is taken(?)
+    setupGUI(Default, "kontrollerlabui.rc");
 
     // The procmanager must be set up before the project is built.
 
@@ -239,6 +243,7 @@ void KontrollerLab::createActions()
     m_newProject = (QAction*) actionc->addAction("new_project",this, SLOT( slotProjectNew() ));
     m_newProject->setText(i18n("New project"));
     m_newProject->setIcon(KIcon("document-new"));
+    qDebug() <<m_newProject->icon().themeSearchPaths();
 
     m_saveProject = (QAction*) actionc->addAction("save_project",this, SLOT( slotProjectSave() ));
     m_saveProject->setText(i18n("Save project"));
@@ -256,69 +261,69 @@ void KontrollerLab::createActions()
     m_compileAssemble = (QAction*) actionc->addAction("compile",this, SLOT( slotCompileAssemble() ));
     m_compileAssemble->setShortcut(QKeySequence("F7"));
     m_compileAssemble->setText(i18n("Compile file"));
-    m_compileAssemble->setIcon(KIcon("document-close"));
+    m_compileAssemble->setIcon(KIcon("run-build-file"));
 
     m_build = (QAction*) actionc->addAction("build",this, SLOT( slotBuild() ));
     m_build->setShortcut(QKeySequence("F9"));
     m_build->setText(i18n("Build project"));
-    m_build->setIcon(KIcon("document-close"));
+    m_build->setIcon(KIcon("run-build"));
 
     m_rebuildAll = (QAction*) actionc->addAction("rebuild",this, SLOT( slotRebuildAll() ));
     m_rebuildAll->setText(i18n("Rebuild all"));
-    m_rebuildAll->setIcon(KIcon("document-close"));
+    m_rebuildAll->setIcon(KIcon("run-build"));
 
     m_erase = (QAction*) actionc->addAction("erase",this, SLOT( slotErase() ));
     m_erase->setText(i18n("Erase device"));
-    m_erase->setIcon(KIcon("eraser"));
+    m_erase->setIcon(KIcon("run-build-clean"));
 
     m_upload = (QAction*) actionc->addAction("upload",this, SLOT( slotUpload() ));
     m_upload->setText(i18n("Upload"));
-    m_upload->setIcon(KIcon("document-close"));
+    m_upload->setIcon(KIcon("arrow-up"));
 
     m_uploadHex = (QAction*) actionc->addAction("uploadHex",this, SLOT( slotUploadHex() ));
     m_uploadHex->setText(i18n("Upload hex file"));
-    m_uploadHex->setIcon(KIcon("document-close"));
+    m_uploadHex->setIcon(KIcon("arrow-up"));
 
     m_verify = (QAction*) actionc->addAction("verify",this, SLOT( slotVerify() ));
     m_verify->setText(i18n("Verify"));
-    m_verify->setIcon(KIcon("document-close"));
+    m_verify->setIcon(KIcon("document-edit-verify"));
 
     m_download = (QAction*) actionc->addAction("download",this, SLOT( slotDownload() ));
     m_download->setText(i18n("Download"));
-    m_download->setIcon(KIcon("document-close"));
+    m_download->setIcon(KIcon("arrow-down"));
 
     m_download = (QAction*) actionc->addAction("ignite",this, SLOT( slotIgnite() ));
     m_download->setText(i18n("Ignite"));
-    m_download->setIcon(KIcon("document-close"));
+    m_download->setIcon(KIcon("arrow-up-double"));
 
     m_stopKillingProc = (QAction*) actionc->addAction("stop_programming",this, SLOT( slotStopProgrammer() ));
     m_stopKillingProc->setShortcut(QKeySequence("ESC"));
     m_stopKillingProc->setText(i18n("Stop"));
-    m_stopKillingProc->setIcon(KIcon("application-cancel"));
+    m_stopKillingProc->setIcon(KIcon("process-stop"));
 
     m_fuses = (QAction*) actionc->addAction("fuses",this, SLOT( slotFuses() ));
     m_fuses->setText(i18n("Fuses"));
-    m_fuses->setIcon(KIcon("application-cancel"));
+    m_fuses->setIcon(KIcon("configure"));
 
     m_configProgrammer = (QAction*) actionc->addAction("configProgrammer",this, SLOT( slotConfigProgrammer() ));
     m_configProgrammer->setText(i18n("Configure programmer"));
-    m_configProgrammer->setIcon(KIcon("application-cancel"));
+    m_configProgrammer->setIcon(KIcon("configure"));
 
     m_configProgrammer = (QAction*) actionc->addAction("configProject",this, SLOT( slotConfigProject() ));
     m_configProgrammer->setText(i18n("Configure project"));
-    m_configProgrammer->setIcon(KIcon("application-cancel"));
+    m_configProgrammer->setIcon(KIcon("run-build-configure"));
 // Wizards:
     m_sevenSegmentsWizardAction = (QAction*) actionc->addAction("seven_segment_wizard",this, SLOT( slotSevenSegmentsWizard() ));
     m_sevenSegmentsWizardAction->setText(i18n("Seven segments wizard"));
-    m_sevenSegmentsWizardAction->setIcon(KIcon("application-cancel"));
+    m_sevenSegmentsWizardAction->setIcon(KIcon("tools-wizard"));
 
     m_dotMatrixWizardAction = (QAction*) actionc->addAction("dot_matrix_wizard",this, SLOT( slotDotMatrixWizard() ));
     m_dotMatrixWizardAction->setText(i18n("Dot matrix display wizard"));
-    m_dotMatrixWizardAction->setIcon(KIcon("application-cancel"));
+    m_dotMatrixWizardAction->setIcon(KIcon("tools-wizard"));
 
     m_dotMatrixCharacterWizardAction = (QAction*) actionc->addAction("dot_matrix_character_wizard",this, SLOT( slotDotMatrixCharacterWizard() ));
     m_dotMatrixCharacterWizardAction->setText(i18n("Dot matrix character wizard"));
-    m_dotMatrixCharacterWizardAction->setIcon(KIcon("application-cancel"));
+    m_dotMatrixCharacterWizardAction->setIcon(KIcon("tools-wizard"));
 
 
     /*
@@ -387,31 +392,31 @@ void KontrollerLab::createActions()
 
     m_debugStart = (QAction*) actionc->addAction("debug_start",this, SLOT( slotDebugStart() ));
     m_debugStart->setText(i18n("Enable"));
-    m_debugStart->setIcon(KIcon("application-cancel"));
+    m_debugStart->setIcon(KIcon("debug-run"));
 
     m_debugStop = (QAction*) actionc->addAction("debug_stop",this, SLOT( slotDebugStop() ));
     m_debugStop->setText(i18n("Stop"));
-    m_debugStop->setIcon(KIcon("application-cancel"));
+    m_debugStop->setIcon(KIcon("media-playback-stop"));
 
     m_debugPause = (QAction*) actionc->addAction("debug_pause",this, SLOT( slotDebugPause() ));
     m_debugPause->setText(i18n("Pause"));
-    m_debugPause->setIcon(KIcon("application-cancel"));
+    m_debugPause->setIcon(KIcon("media-playback-pause"));
 
     m_debugRunToCursor = (QAction*) actionc->addAction("debug_run_to_cursor",this, SLOT( slotDebugRunToCursor() ));
     m_debugRunToCursor->setText(i18n("Run to cursor"));
-    m_debugRunToCursor->setIcon(KIcon("application-cancel"));
+    m_debugRunToCursor->setIcon(KIcon("debug-run-to-cursor"));
 
     m_debugStepOver = (QAction*) actionc->addAction("debug_step_over",this, SLOT( slotDebugStepOver() ));
     m_debugStepOver->setText(i18n("Step over"));
-    m_debugStepOver->setIcon(KIcon("application-cancel"));
+    m_debugStepOver->setIcon(KIcon("debug-step-over"));
 
     m_debugStepInto = (QAction*) actionc->addAction("debug_step_into",this, SLOT( slotDebugStepInto() ));
     m_debugStepInto->setText(i18n("Step into"));
-    m_debugStepInto->setIcon(KIcon("application-cancel"));
+    m_debugStepInto->setIcon(KIcon("debug-step-into"));
 
     m_debugStepOut = (QAction*) actionc->addAction("debug_step_out",this, SLOT( slotDebugStepOut() ));
     m_debugStepOut->setText(i18n("Step out"));
-    m_debugStepOut->setIcon(KIcon("application-cancel"));
+    m_debugStepOut->setIcon(KIcon("debug-step-out"));
 
     m_debugRestart = (QAction*) actionc->addAction("debug_restart",this, SLOT( slotDebugRestart() ));
     m_debugRestart->setText(i18n("Restart"));
@@ -419,7 +424,7 @@ void KontrollerLab::createActions()
 
     m_debugConfigureICD = (QAction*) actionc->addAction("debug_configure_icd",this, SLOT( slotDebugConfigureICD() ));
     m_debugConfigureICD->setText(i18n("Configure ICD"));
-    m_debugConfigureICD->setIcon(KIcon("application-cancel"));
+    m_debugConfigureICD->setIcon(KIcon("configure"));
 
     m_debugToggleBreakpoint = (QAction*) actionc->addAction("debug_toggle_breakpoint",this, SLOT( slotDebugToggleBreakpoint() ));
     m_debugToggleBreakpoint->setText(i18n("Toggle breakpoint"));
@@ -1313,11 +1318,11 @@ void KontrollerLab::slotDebugStop( )
     m_debugger->stopDebugger();
     if ( m_debugger->state() == DBG_Started )
     {
-        //m_debugPause->setIcon( "player_pause" );
+        m_debugPause->setIcon( KIcon("media-playback-pause") );
     }
     else
     {
-        //m_debugPause->setIcon( "player_play" );
+        m_debugPause->setIcon( KIcon("media-playback-start") );
     }
     m_directMemoryDebug->setEnabled( true );
 }
@@ -1328,7 +1333,7 @@ void KontrollerLab::slotDebugPause( )
     m_debugger->playpauseDebugger();
     if ( m_debugger->state() == DBG_Started )
     {
-        //m_debugPause->setIcon( "player_pause" );
+        m_debugPause->setIcon( KIcon("media-playback-pause") );
         m_debugPause->setText( i18n("Pause") );
     }
     else
@@ -1348,7 +1353,7 @@ void KontrollerLab::slotDebugRunToCursor( )
         KLDocumentView* view = doc->lastActiveView();
         if (!view)
             return;
-        //m_debugger->runToCLine( doc->url(), view->view()->cursorLine()+1 );
+        m_debugger->runToCLine( doc->url(), view->view()->cursorPosition().line() + 1 );
     }
 }
 
@@ -1422,8 +1427,8 @@ void KontrollerLab::slotDebugToggleBreakpoint( )
         KLDocument* doc = m_project->activeDocument();
         if ( doc && doc->lastActiveView() && m_debugger )
         {
-            //m_debugger->toggleBreakpoint( doc->url(),
-            //doc->lastActiveView()->view()->cursorLine()+1 );
+            m_debugger->toggleBreakpoint( doc->url(),
+            doc->lastActiveView()->view()->cursorPosition().line() +1 );
         }
     }
 }
@@ -1444,7 +1449,7 @@ void KontrollerLab::activateDebuggerActions( bool activate )
 
 void KontrollerLab::notifyDebuggerPaused( )
 {
-    //m_debugPause->setIcon( "player_play" );
+    m_debugPause->setIcon( KIcon("media-playback-start") );
     m_debugPause->setText( i18n("Start") );
 }
 
