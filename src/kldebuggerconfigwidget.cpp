@@ -34,7 +34,9 @@
 #include <qcheckbox.h>
 #include <ktempdir.h>
 #include <kglobal.h>
-//#include <kstddirs.h>
+#include <kstandarddirs.h>
+#include <kio/copyjob.h>
+#include <kconfiggroup.h>
 
 #include "kldebuggermemorymapping.h"
 #include "kldebuggermemmappinglistviewitem.h"
@@ -102,7 +104,7 @@ void KLDebuggerConfigWidget::slotBAUDRateChanged( const QString& value )
 
 void KLDebuggerConfigWidget::slotBuildAndDownload()
 {
-/*    KTempDir temp;
+    KTempDir temp;
     KUrl destURL( temp.name() );
     m_tempURL = destURL;
     // qDebug( "copying to %s", temp.name().ascii() );
@@ -115,13 +117,13 @@ void KLDebuggerConfigWidget::slotBuildAndDownload()
         QString("kontrollerlab/templates/%1").arg( "uart.h" ) );
 
     m_buildUrlList.clear();
-    m_buildUrlList.append( KURL( resPathMS ) );
-    m_buildUrlList.append( KURL( resPathUS ) );
-    m_buildUrlList.append( KURL( resPathUH ) );
+    m_buildUrlList.append( KUrl( resPathMS ) );
+    m_buildUrlList.append( KUrl( resPathUS ) );
+    m_buildUrlList.append( KUrl( resPathUH ) );
 
     KIO::CopyJob* job = KIO::copy( m_buildUrlList, destURL );
-    //connect( job, SIGNAL( copyingDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ),
-             //this, SLOT(copyMonitorFilesDone( KIO::Job *, const KURL &, const KURL &, bool, bool ) ) );*/
+    connect( job, SIGNAL( copyingDone( KIO::Job *, const KUrl &, const KUrl &, time_t, bool, bool ) ),
+             this, SLOT(copyMonitorFilesDone( KIO::Job *, const KUrl &, const KUrl &, time_t, bool, bool ) ) );
 }
 
 
@@ -132,7 +134,7 @@ void KLDebuggerConfigWidget::slotCheckState()
 
 void KLDebuggerConfigWidget::slotCancel()
 {
-    //close();
+    close();
 }
 
 
@@ -163,24 +165,26 @@ void KLDebuggerConfigWidget::slotOK()
 
 void KLDebuggerConfigWidget::slotSetDefault( )
 {
- /*   QMap<QString, QString>::Iterator it;
-    kapp->config()->setGroup("KontrollerLab");
+    KConfigGroup group( KSharedConfig::openConfig(), "KontrollerLab" );
+    QMap<QString, QString>::Iterator it;
+
     updateSettingsFromGUI();
 
-    kapp->config()->deleteEntry( DEBUGGER_OBJDUMP_COMMAND );
-    kapp->config()->deleteEntry( DEBUGGER_COM_PORT );
-    kapp->config()->deleteEntry( DEBUGGER_COM_BAUD );
-    kapp->config()->deleteEntry( DEBUGGER_COM_UBRR );
-    kapp->config()->deleteEntry( DEBUGGER_MONITOR_CATCH_INTERRUPTS );
-    kapp->config()->deleteEntry( DEBUGGER_INTERRUPT_COUNT );
-    kapp->config()->deleteEntry( DEBUGGER_MEMORY_VIEW_BYTECOUNT );
-    kapp->config()->deleteEntry( DEBUGGER_MAPPINGS );
+    group.deleteEntry( DEBUGGER_OBJDUMP_COMMAND );
+    group.deleteEntry( DEBUGGER_COM_PORT );
+    group.deleteEntry( DEBUGGER_COM_BAUD );
+    group.deleteEntry( DEBUGGER_COM_UBRR );
+    group.deleteEntry( DEBUGGER_MONITOR_CATCH_INTERRUPTS );
+    group.deleteEntry( DEBUGGER_INTERRUPT_COUNT );
+    group.deleteEntry( DEBUGGER_MEMORY_VIEW_BYTECOUNT );
+    group.deleteEntry( DEBUGGER_MAPPINGS );
+
     for ( it = m_settings.begin(); it != m_settings.end(); ++it )
     {
         // qDebug("%s = %s", it.key().ascii(), it.data().ascii() );
-        kapp->config()->writeEntry( it.key(), it.data() );
+        group.writeEntry( it.key(), it.data() );
     }
-    kapp->config()->sync();*/
+    group.sync();
 }
 
 void KLDebuggerConfigWidget::showEvent( QShowEvent * )
@@ -240,8 +244,8 @@ QString KLDebuggerConfigWidget::conf( const QString & confKey, const QString & d
     }
     else
     {
-        //kapp->config()->setGroup("KontrollerLab");
-        QString val = "";//kapp->config()->readEntry( confKey, "" );
+        KConfigGroup group( KSharedConfig::openConfig(), "KontrollerLab" );
+        QString val = group.readEntry( confKey, "" );
         if ( (!val.isEmpty()) && (!val.isNull()) )
         {
             // qDebug("%s = %s", confKey.ascii(), val.ascii());
@@ -268,7 +272,7 @@ void KLDebuggerConfigWidget::slotAdd( )
 }
 
 
-void KLDebuggerConfigWidget::copyMonitorFilesDone(KIO::Job *, const KUrl &from, const KUrl &, bool, bool )
+void KLDebuggerConfigWidget::copyMonitorFilesDone(KIO::Job *, const KUrl &from, const KUrl &, time_t, bool, bool )
 {
     if ( !m_parent )
         return;
