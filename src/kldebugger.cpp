@@ -48,9 +48,9 @@ KLDebugger::KLDebugger(KLSerialTerminalWidget* serTerm, KontrollerLab* parent,
     m_stopCallCounter = 0;
     m_serialTerminalWidget = serTerm;
 
-    //connect( m_serialTerminalWidget, SIGNAL(receivedICDData( const KLCharVector& ) ),
-    //         this, SLOT( slotControllerResponded( const KLCharVector& ) ) );
-    //connect( &m_requestTimeout, SIGNAL(timeout()), this, SLOT(requestTimeout()) );
+    connect( m_serialTerminalWidget, SIGNAL(receivedICDData( const KLCharVector& ) ),
+             this, SLOT( slotControllerResponded( const KLCharVector& ) ) );
+    connect( &m_requestTimeout, SIGNAL(timeout()), this, SLOT(requestTimeout()) );
 }
 
 
@@ -306,9 +306,9 @@ void KLDebugger::slotUserSetsMemoryCell( unsigned int adr, unsigned char val )
 void KLDebugger::setMemoryViewWidget( KLMemoryViewWidget * wdg )
 {
         m_memoryViewWidget = wdg;
-        //if ( wdg )
-            //connect( m_memoryViewWidget, SIGNAL( memoryCellSet( unsigned int, unsigned char ) ),
-               //this, SLOT( slotUserSetsMemoryCell( unsigned int, unsigned char ) ) );
+        if ( wdg )
+            connect( m_memoryViewWidget, SIGNAL( memoryCellSet( unsigned int, unsigned char ) ),
+               this, SLOT( slotUserSetsMemoryCell( unsigned int, unsigned char ) ) );
 
 }
 
@@ -363,7 +363,7 @@ void KLDebugger::setFlash( unsigned int adr, unsigned int value, unsigned int as
 
 void KLDebugger::setASMRelations( QList< KLSourceCodeToASMRelation > rlist )
 {
-    //qHeapSort( rlist );
+    qSort( rlist );
     if ( rlist.count() > 0 )
     {
         m_relationList = rlist;
@@ -869,7 +869,7 @@ int KLDebugger::seekToNextExecutableLine(const KUrl &url, int line )
             thisUrlOnly.append( addMe );
         }
     }
-    //qHeapSort( thisUrlOnly );
+    qSort( thisUrlOnly );
     for ( unsigned int i=0; i < thisUrlOnly.size(); i++ )
     {
         if ( thisUrlOnly[ i ].line() >= (unsigned int) line )
