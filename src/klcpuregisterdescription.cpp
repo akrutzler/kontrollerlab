@@ -124,6 +124,6 @@ void KLCPURegisterDescriptionList::readFromDOMElement(QDomDocument &, QDomElemen
         }
     }
     setForCPU( name );
-    //qHeapSort( *this );
+    qSort( *this );
 }
 

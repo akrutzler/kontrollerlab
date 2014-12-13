@@ -374,6 +374,6 @@ void KLCPUFeatures::readRegDefsFromDOMElement(QDomDocument &, QDomElement & elem
         }
     }
     m_registerDescriptions.setForCPU( m_name );
-    //qHeapSort( m_registerDescriptions );
+    qSort( m_registerDescriptions );
 }
 

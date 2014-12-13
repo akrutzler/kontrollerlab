@@ -47,7 +47,7 @@ public:
     unsigned int line() const { return m_line; }
     
     // bool operator < (const KLSourceCodeToASMRelation& other) {return m_line < other.line(); }
-    bool operator < (const KLSourceCodeToASMRelation& other)
+    bool operator < (const KLSourceCodeToASMRelation& other) const
     {
         if ( m_sortByASMAdress )
             return m_asmCommandAddress < other.asmCommandAddress();

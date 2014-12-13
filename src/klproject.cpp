@@ -91,8 +91,7 @@ KLProject::KLProject( KontrollerLab* parent )
         m_cpuFeatures.readFromDOMElement( docConf, docElem );
     }
     
-    //qSort(m_cpuFeatures);
-    //qHeapSort( m_cpuFeatures );
+    qSort( m_cpuFeatures );
     QList<KLCPUFeatures>::iterator it;
     for (it=m_cpuFeatures.begin(); it!=m_cpuFeatures.end(); ++it)
         m_cpus.append((*it).name());
