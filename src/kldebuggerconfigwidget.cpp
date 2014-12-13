@@ -160,7 +160,7 @@ void KLDebuggerConfigWidget::slotOK()
             m_parent->project()->setUnsaved();
         m_parent->project()->setDebuggerSettings( m_settings );
     }
-    //close();
+    close();
 }
 
 void KLDebuggerConfigWidget::slotSetDefault( )
