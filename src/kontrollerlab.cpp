@@ -34,11 +34,6 @@
 
 
 
-#include <ktexteditor/markinterface.h>
-
-#include <ktexteditor/document.h>
-#include <ktexteditor/view.h>
-#include <ktexteditor/editorchooser.h>
 
 #include <kparts/partmanager.h>
 #include <kparts/part.h>
@@ -255,7 +250,6 @@ void KontrollerLab::createActions()
     m_closeProject = (QAction*) actionc->addAction("close_project",this, SLOT( slotProjectClose() ));
     m_closeProject->setText(i18n("Close project"));
     m_closeProject->setIcon(KIcon("dialog-close"));
-
 //Project - Building
     m_compileAssemble = (QAction*) actionc->addAction("compile",this, SLOT( slotCompileAssemble() ));
     m_compileAssemble->setShortcut(QKeySequence("F7"));
@@ -324,49 +318,6 @@ void KontrollerLab::createActions()
     m_dotMatrixCharacterWizardAction->setText(i18n("Dot matrix character wizard"));
     m_dotMatrixCharacterWizardAction->setIcon(KIcon("tools-wizard"));
 
-
-    /*
-
-    m_compileAssemble = new QAction( i18n("Compile file"), "compfile",
-                                     KShortcut("F7"), this, SLOT( slotCompileAssemble() ),
-                                     actionCollection(), "compile" );
-    m_build = new QAction( i18n("Build project"), "gear",
-                           KShortcut("F9"), this, SLOT( slotBuild() ),
-                           actionCollection(), "build" );
-    m_rebuildAll = new QAction( i18n("Rebuild all"), "rebuild",
-                                KShortcut(), this, SLOT( slotRebuildAll() ),
-                                actionCollection(), "rebuild" );
-    m_erase = new QAction( i18n("Erase device"), "eraser",
-                           KShortcut(), this, SLOT( slotErase() ),
-                           actionCollection(), "erase" );
-    m_upload = new QAction( i18n("Upload"), "up",
-                            KShortcut(), this, SLOT( slotUpload() ),
-                            actionCollection(), "upload" );
-    m_uploadHex = new QAction( i18n("Upload hex file"), "up",
-                               KShortcut(), this, SLOT( slotUploadHex() ),
-                               actionCollection(), "uploadHex" );
-    m_verify = new QAction( i18n("Verify"), "viewmag1",
-                            KShortcut(), this, SLOT( slotVerify() ),
-                            actionCollection(), "verify" );
-    m_download = new QAction( i18n("Download"), "down",
-                              KShortcut(), this, SLOT( slotDownload() ),
-                              actionCollection(), "download" );
-    m_ignite = new QAction( i18n("Ignite"), "fork",
-                            KShortcut("Shift+F9"), this, SLOT( slotIgnite() ),
-                            actionCollection(), "ignite" );
-    m_stopKillingProc = new QAction( i18n("Stop"), "cancel",
-                                     KShortcut("ESC"), this, SLOT( slotStopProgrammer() ),
-                                     actionCollection(), "stop_programming" );
-    m_fuses = new QAction( i18n("Fuses"), "flag",
-                           KShortcut(), this, SLOT( slotFuses() ),
-                           actionCollection(), "fuses" );
-    m_configProgrammer = new QAction( i18n("Configure programmer"), "configure",
-                                      KShortcut(), this, SLOT( slotConfigProgrammer() ),
-                                      actionCollection(), "configProgrammer" );
-    m_configProgrammer = new QAction( i18n("Configure project"), "configure",
-                                      KShortcut(), this, SLOT( slotConfigProject() ),
-                                      actionCollection(), "configProject" );
-    //-----*/
     QActionGroup *debugMode = new QActionGroup(this);
     debugMode->setExclusive(true);
 
@@ -429,59 +380,7 @@ void KontrollerLab::createActions()
     m_debugToggleBreakpoint->setText(i18n("Toggle breakpoint"));
     m_debugToggleBreakpoint->setIcon(KIcon("tools-report-bug"));
     activateDebuggerActions(false);
-
-    /*
-    // Debug:
-    m_directMemoryDebug = new KRadioAction( i18n("Direct memory debugger"), "dbg_dm",
-                                            KShortcut(), this, SLOT( slotDirectMemoryDebug() ),
-                                            actionCollection(), "direct_memory_debug" );
-    m_directMemoryDebug->setExclusiveGroup( "debugMode" );
-    m_inCircuitDebugger = new KRadioAction( i18n("In circuit debugger"), "dbg_icd",
-                                            KShortcut(), this, SLOT( slotInCircuitDebugger() ),
-                                            actionCollection(), "in_circuit_debugger" );
-    m_inCircuitDebugger->setExclusiveGroup( "debugMode" );
-    m_PCOnlyDebug = new KRadioAction( i18n("PC only debugging"), "dbg_pco",
-                                      KShortcut(), this, SLOT( slotPCOnlyDebug() ),
-                                      actionCollection(), "pc_only_debug" );
-    m_PCOnlyDebug->setChecked( true );
-    m_PCOnlyDebug->setExclusiveGroup( "debugMode" );
-
-    m_debugStart = new QAction( i18n("Enable"), "dbgrun",
-                                KShortcut(), this, SLOT( slotDebugStart() ),
-                                actionCollection(), "debug_start" );
-    m_debugStop = new QAction( i18n("Stop"), "stop",
-                               KShortcut(), this, SLOT( slotDebugStop() ),
-                               actionCollection(), "debug_stop" );
-    m_debugPause = new QAction( i18n("Start"), "player_play",
-                                KShortcut(), this, SLOT( slotDebugPause() ),
-                                actionCollection(), "debug_pause" );
-    m_debugRunToCursor = new QAction( i18n("Run to cursor"), "dbgrunto",
-                                      KShortcut(), this, SLOT( slotDebugRunToCursor() ),
-                                      actionCollection(), "debug_run_to_cursor" );
-    m_debugStepOver = new QAction( i18n("Step over"), "dbgnext",
-                                   KShortcut(), this, SLOT( slotDebugStepOver() ),
-                                   actionCollection(), "debug_step_over" );
-    m_debugStepInto = new QAction( i18n("Step into"), "dbgstep",
-                                   KShortcut(), this, SLOT( slotDebugStepInto() ),
-                                   actionCollection(), "debug_step_into" );
-    m_debugStepOut = new QAction( i18n("Step out"), "dbgstepout",
-                                  KShortcut(), this, SLOT( slotDebugStepOut() ),
-                                  actionCollection(), "debug_step_out" );
-    m_debugRestart = new QAction( i18n("Restart"), "reload",
-                                  KShortcut(), this, SLOT( slotDebugRestart() ),
-                                  actionCollection(), "debug_restart" );
-    m_debugConfigureICD = new QAction( i18n("Configure ICD"), "configure",
-                                       KShortcut(), this, SLOT( slotDebugConfigureICD() ),
-                                       actionCollection(), "debug_configure_icd" );
-    m_debugToggleBreakpoint = new QAction( i18n("Toggle breakpoint"), "player_pause",
-                                         KShortcut(), this, SLOT( slotDebugToggleBreakpoint() ),
-                                         actionCollection(), "debug_toggle_breakpoint" );
-
-    activateDebuggerActions( false );
-*/
-
-    // new view:
-
+// new view:
     m_hideShowMessageBox = (QAction*) actionc->addAction("showmessagebox",this, SLOT( slotHideShowMessageBox() ));
     m_hideShowMessageBox->setText(i18n("Show message box"));
     m_hideShowMessageBox->setIcon(KIcon("application-cancel"));
@@ -501,31 +400,6 @@ void KontrollerLab::createActions()
     m_hideShowMemoryView->setText(i18n("Show memory terminal"));
     m_hideShowMemoryView->setIcon(KIcon("application-cancel"));
     m_hideShowMemoryView->setCheckable(true);
-
-    /*
-    m_newViewForDocument = new QAction( i18n("New view for document"), "contents",
-                                        KShortcut(), this, SLOT( slotNewViewForDocument() ),
-                                        actionCollection(), "view_new_view" );
-
-    // Message box:
-    m_hideShowMessageBox = new KToggleAction( i18n("Show message box"), "",
-                                              KShortcut::KShortcut( "" ), this,
-            SLOT(slotHideShowMessageBox()), actionCollection(), "showmessagebox" );
-    m_hideShowProjectManager = new KToggleAction( i18n("Show project manager"), "",
-                                              KShortcut::KShortcut( "" ), this,
-                                              SLOT(slotHideShowProjectManager()),
-                                              actionCollection(), "showprojectmanager" );
-    m_hideShowSerialTerminal = new KToggleAction( i18n("Show serial terminal"), "",
-            KShortcut::KShortcut( "" ), this,
-            SLOT(slotHideShowSerialTerminal()),
-            actionCollection(), "showserialterminal" );
-
-    m_hideShowMemoryView = new KToggleAction( i18n("Show memory view"), "dbgmemview",
-                                              KShortcut::KShortcut( "" ), this,
-                                              SLOT(slotHideShowMemoryView()),
-                                              actionCollection(), "showmemoryview" );
-
-*/
 }
 
 KontrollerLab::~KontrollerLab()
@@ -1145,27 +1019,11 @@ void KontrollerLab::resizeEvent( QResizeEvent * e )
     //setSysButtonsAtMenuPosition();
 }
 
-/*
-void KontrollerLab::paintEvent(QPaintEvent *e)
-{
-
-    if(bl) {
-        qDebug() << e->type() << "ignore";
-        e->ignore();
-    }
-    else {
-        qDebug() << e->type() << "accept";
-        e->accept();
-    }
-}
-*/
-
 //void KontrollerLab::slotMdiModeHasBeenChangedTo( KMdi::MdiMode )
 //{
 //    setMenuForSDIModeSysButtons( menuBar() );
 //    hideViewTaskBar();
 //}
-
 
 void KontrollerLab::slotSevenSegmentsWizard( )
 {

@@ -94,9 +94,6 @@ KLDocument::KLDocument( KontrollerLab* parent ) : QObject(parent)
             // This is allows user to set breakpoints and bookmarks by clicking or rightclicking on the icon border.
             markIf->setEditableMarks(KTextEditor::MarkInterface::markType01 + KTextEditor::MarkInterface::markType02);
         }
-
-        QObject::connect(m_doc,SIGNAL(modifiedChanged(KTextEditor::Document*)),this,SLOT(slotModified(KTextEditor::Document*)));
-        //connect(m_parent->m_editorWidget,SIGNAL(tabChanged(KLDocumentView*)),this,SLOT(slotTabChanged(KLDocumentView*)));
     }
 
     m_parent = parent;
@@ -139,21 +136,6 @@ KLDocument::~KLDocument()
         // delete m_listViewItem;
     }
 }
-
-void KLDocument::slotModified(KTextEditor::Document* doc )
-{
-    return;
-    foreach(KLDocumentView *it, m_registeredViews)
-    {
-        it->setWindowTitle(doc->isModified()?name() + "*":name());
-    }
-}
-
-void KLDocument::slotTabChanged(KLDocumentView *tab)
-{
-    //setActiveView(tab);
-}
-
 
 void KLDocument::activateCHighlighting( )
 {

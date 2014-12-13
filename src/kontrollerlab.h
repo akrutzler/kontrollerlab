@@ -28,7 +28,6 @@
 #include <config.h>
 #endif
 
-//#include <kmdimainfrm.h>
 #include <kmainwindow.h>
 #include <kstandardaction.h>
 #include <kparts/partmanager.h>
@@ -37,17 +36,13 @@
 #include <kate/kate.h>
 #include <Q3ListBox>
 #include <kxmlguiwindow.h>
-#include <k3dockwidget.h>
 #include <ksharedconfig.h>
 #include <kmenubar.h>
 
 #include <QAction>
-#include <QSettings>
 #include <ktoolbar.h>
 
 #include <QMdiArea>
-
-
 
 class KLEditorWidget;
 class KXMLGUIClient;
@@ -105,7 +100,6 @@ protected:
     virtual void readProperties(KSharedConfig::Ptr config );
     virtual void closeEvent( QCloseEvent* e );
     virtual void resizeEvent( QResizeEvent* e );
-    //virtual void paintEvent(QPaintEvent *e);
 public slots:
     void keyPressedOnDocument();
     // File ACTION SLOTS:
@@ -269,8 +263,6 @@ protected:
 
     QAction *m_newViewForDocument;
 
-    //QSignalMapper *windowMapper;
-
     KToolBar *fileToolBar;
     KToolBar *editToolBar;
 
@@ -291,7 +283,6 @@ protected:
     class KLProject* m_project;
     class KLDebugger* m_debugger;
     Q3ListBox* m_msgBox;
-    //KMdiToolViewAccessor* m_tvaMsg, *m_tvaProjectManager, *m_tvaSerialTerminal, *m_tvaMemoryView;
     QDockWidget* m_tvaMsg, *m_tvaProjectManager, *m_tvaSerialTerminal, *m_tvaMemoryView;
     KParts::PartManager* m_partManager;
     KXMLGUIClient* m_kateGuiClientAdded;

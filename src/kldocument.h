@@ -141,11 +141,8 @@ protected:
     // QString m_name;
     KUrl m_url;
 
-    //bool m_unsaved;
+    // bool m_unsaved;
     // QListViewItem* m_listViewItem;
-private slots:
-    void slotModified(KTextEditor::Document* doc );
-    void slotTabChanged(KLDocumentView *tab);
 };
 
 #endif
