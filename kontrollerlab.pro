@@ -117,6 +117,8 @@ SOURCES += src/klasminstruction.cpp \
 
 TRANSLATIONS += german.ts
 
+OTHER_FILES += src/CMakeLists.txt
+
 DESTDIR = /home/andreas/0_OBJ/
 OBJECTS_DIR = /home/andreas/0_OBJ/deb
 MOC_DIR = /home/andreas/0_OBJ/moc
