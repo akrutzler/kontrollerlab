@@ -243,7 +243,6 @@ void KontrollerLab::createActions()
     m_newProject = (QAction*) actionc->addAction("new_project",this, SLOT( slotProjectNew() ));
     m_newProject->setText(i18n("New project"));
     m_newProject->setIcon(KIcon("document-new"));
-    qDebug() <<m_newProject->icon().themeSearchPaths();
 
     m_saveProject = (QAction*) actionc->addAction("save_project",this, SLOT( slotProjectSave() ));
     m_saveProject->setText(i18n("Save project"));
@@ -255,7 +254,7 @@ void KontrollerLab::createActions()
 
     m_closeProject = (QAction*) actionc->addAction("close_project",this, SLOT( slotProjectClose() ));
     m_closeProject->setText(i18n("Close project"));
-    m_closeProject->setIcon(KIcon("document-close"));
+    m_closeProject->setIcon(KIcon("dialog-close"));
 
 //Project - Building
     m_compileAssemble = (QAction*) actionc->addAction("compile",this, SLOT( slotCompileAssemble() ));
@@ -373,19 +372,19 @@ void KontrollerLab::createActions()
 
     m_directMemoryDebug = (QAction*) actionc->addAction("direct_memory_debug",this, SLOT( slotDirectMemoryDebug() ));
     m_directMemoryDebug->setText(i18n("Direct memory debugger"));
-    m_directMemoryDebug->setIcon(KIcon("application-cancel"));
+    //m_directMemoryDebug->setIcon(KIcon("application-cancel"));
     m_directMemoryDebug->setCheckable(true);
     debugMode->addAction(m_directMemoryDebug);
 
     m_inCircuitDebugger = (QAction*) actionc->addAction("in_circuit_debugger",this, SLOT( slotInCircuitDebugger() ));
     m_inCircuitDebugger->setText(i18n("In circuit debugger"));
-    m_inCircuitDebugger->setIcon(KIcon("application-cancel"));
+    //m_inCircuitDebugger->setIcon(KIcon("application-cancel"));
     m_inCircuitDebugger->setCheckable(true);
     debugMode->addAction(m_inCircuitDebugger);
 
     m_PCOnlyDebug = (QAction*) actionc->addAction("pc_only_debug",this, SLOT( slotPCOnlyDebug() ));
     m_PCOnlyDebug->setText(i18n("PC only debugging"));
-    m_PCOnlyDebug->setIcon(KIcon("application-cancel"));
+    //m_PCOnlyDebug->setIcon(KIcon("application-cancel"));
     m_PCOnlyDebug->setCheckable(true);
     m_PCOnlyDebug->setChecked(true);
     debugMode->addAction(m_PCOnlyDebug);
@@ -420,7 +419,7 @@ void KontrollerLab::createActions()
 
     m_debugRestart = (QAction*) actionc->addAction("debug_restart",this, SLOT( slotDebugRestart() ));
     m_debugRestart->setText(i18n("Restart"));
-    m_debugRestart->setIcon(KIcon("application-cancel"));
+    m_debugRestart->setIcon(KIcon("appointment-recurring"));
 
     m_debugConfigureICD = (QAction*) actionc->addAction("debug_configure_icd",this, SLOT( slotDebugConfigureICD() ));
     m_debugConfigureICD->setText(i18n("Configure ICD"));
@@ -428,7 +427,7 @@ void KontrollerLab::createActions()
 
     m_debugToggleBreakpoint = (QAction*) actionc->addAction("debug_toggle_breakpoint",this, SLOT( slotDebugToggleBreakpoint() ));
     m_debugToggleBreakpoint->setText(i18n("Toggle breakpoint"));
-    m_debugToggleBreakpoint->setIcon(KIcon("application-cancel"));
+    m_debugToggleBreakpoint->setIcon(KIcon("tools-report-bug"));
     activateDebuggerActions(false);
 
     /*
