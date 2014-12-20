@@ -35,6 +35,7 @@
 #include <ktexteditor/view.h>
 
 #include <ktexteditor/codecompletioninterface.h>
+// #include <ktexteditor/sessionconfiginterface.h>
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/editor.h>
 #include <ktexteditor/annotationinterface.h>
@@ -45,9 +46,8 @@
 #include <ktexteditor/markinterface.h>
 #include <ktexteditor/cursor.h>
 
-
+#include <kconfiggroup.h>
 #include <kmessagebox.h>
-
 #include <kxmlguifactory.h>
 
 KLDocument::KLDocument( KontrollerLab* parent ) : QObject(parent)
@@ -61,23 +61,28 @@ KLDocument::KLDocument( KontrollerLab* parent ) : QObject(parent)
 
     // The library was found, so create the Kate::Document
     KLibFactory* factory = KLibLoader::self()->factory("katepart");
+
     KTextEditor::Factory* kte_factory = qobject_cast<KTextEditor::Factory*>(factory);
 
     if(kte_factory) {
         // valid editor factory, it is possible to access the editor now
-        KTextEditor::Editor *editor = kte_factory->editor();
+        m_editor = kte_factory->editor();
 
-
-        m_doc = editor->createDocument(NULL);
-
-        m_doc->setText("#include <io.h>\n");
+        m_doc = m_editor->createDocument(NULL);
+        // m_doc->setText("#include <io.h>\n");
         m_doc->setModified(false);
 
-        //selectionIf = dynamic_cast<KTextEditor::SelectionInterface *>(m_doc);
-        //selectionIfExt = dynamic_cast<KTextEditor::SelectionInterfaceExt *>(m_doc); //TODO: is in view
-        configIf = dynamic_cast<KTextEditor::Editor*>(m_doc);
-        if (configIf)
-            configIf->readConfig();
+        m_editor->readConfig();
+
+        /* object is of type KTextEditor::Document* or View* or Plugin*
+        sessionConfigIf = qobject_cast<KTextEditor::SessionConfigInterface*>( m_doc );
+
+        if( sessionConfigIf ) {
+
+            KConfigGroup group( KSharedConfig::openConfig(), "KontrollerLab" );
+            sessionConfigIf->readSessionConfig(group);
+        }
+        */
         markIf = dynamic_cast<KTextEditor::MarkInterface *>(m_doc);
 
         m_parent = parent;
@@ -86,7 +91,7 @@ KLDocument::KLDocument( KontrollerLab* parent ) : QObject(parent)
 
         if (markIf) {
             markIf->setMarkPixmap(KTextEditor::MarkInterface::markType07, SmallIcon("stop"));
-            markIf->setMarkPixmap(KTextEditor::MarkInterface::markType02, SmallIcon("debug_breakpoint"));
+            markIf->setMarkPixmap(KTextEditor::MarkInterface::markType02, SmallIcon("tools-report-bug"));
             markIf->setMarkDescription(KTextEditor::MarkInterface::markType02, i18n("Breakpoint"));
             markIf->setMarkPixmap(KTextEditor::MarkInterface::markType05, SmallIcon("debug_currentline"));
             markIf->setMarkDescription(KTextEditor::MarkInterface::markType08, i18n("Annotation"));
@@ -104,8 +109,13 @@ KLDocument::KLDocument( KontrollerLab* parent ) : QObject(parent)
 
 KLDocument::~KLDocument()
 {
-    if (configIf)
-        configIf->writeConfig();
+    /*
+    if (sessionConfigIf)
+    {
+        KConfigGroup group( KSharedConfig::openConfig(), "KontrollerLab" );
+        sessionConfigIf->writeSessionConfig(group);
+    }
+    */
 
     foreach (KLDocumentView *it,m_registeredViews)
     {
@@ -188,7 +198,7 @@ bool KLDocument::open( const KUrl& url )
     
     KIO::NetAccess::removeTempFile(localFileName);
 
-    //m_name = url.fileName();
+    // m_name = url.fileName();
     m_url = url;
     setWindowTitleOfAllViews( name() );
     m_type = typeForName( name() );
@@ -288,7 +298,7 @@ void KLDocument::makeLastActiveViewVisible( )
         KLDocumentView *vi = m_registeredViews.at( 0 );
         if ( m_registeredViews.indexOf( m_lastActiveView ) >= 0 )
             vi = m_registeredViews.at( m_registeredViews.indexOf( m_lastActiveView ) );
-            vi->setFocus();
+        vi->setFocus();
     }
     else
     {

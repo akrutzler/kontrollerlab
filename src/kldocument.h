@@ -34,13 +34,12 @@
 #include <ktexteditor/factory.h>
 #include <klibloader.h>
 
-//#include <ktexteditor/markinterfaceextension.h>
-
 #define BREAKPOINT_MARK 2
 #define STEP_MARK 1
 
 namespace KTextEditor
 {
+// class SessionConfigInterface;
 class CodeCompletionInterface;
 class CompletionEntry;
 class Document;
@@ -117,7 +116,7 @@ public:
     void markOnlyLine( int lineNr, unsigned int markType );
     void markBreakpoint( int lineNr, bool setMark=true );
 
-    KTextEditor::Editor* configIf;
+    // KTextEditor::SessionConfigInterface* sessionConfigIf;
     KTextEditor::MarkInterface* markIf;
 
     unsigned int registeredViewsCount() const { return m_registeredViews.count(); }
@@ -132,6 +131,7 @@ protected:
     void setWindowTitleOfAllViews( const QString cap );
 
     int m_markedOnlyLine;
+    KTextEditor::Editor *m_editor;
     KTextEditor::Document *m_doc;
     KontrollerLab* m_parent;
     QList< KLDocumentView* > m_registeredViews;
