@@ -117,7 +117,8 @@ SOURCES += src/klasminstruction.cpp \
 
 TRANSLATIONS += german.ts
 
-OTHER_FILES += src/CMakeLists.txt
+OTHER_FILES += src/CMakeLists.txt \
+            += src/kontrollerlabui.rc
 
 DESTDIR = /home/andreas/0_OBJ/
 OBJECTS_DIR = /home/andreas/0_OBJ/deb
