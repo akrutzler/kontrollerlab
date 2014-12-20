@@ -170,7 +170,7 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
 
     m_tvaMemoryView = new QDockWidget(i18n("Memory View"), this);
 
-    m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryView");
+    m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryViewWidget");
     m_tvaMemoryView->setWidget(m_memoryViewWidget);
     m_tvaMemoryView->setObjectName("memoryViewDock");
     addDockWidget(Qt::LeftDockWidgetArea, m_tvaMemoryView );
@@ -396,7 +396,7 @@ void KontrollerLab::createActions()
     m_hideShowSerialTerminal->setIcon(KIcon("application-cancel"));
     m_hideShowSerialTerminal->setCheckable(true);
 
-    m_hideShowMemoryView = (QAction*) actionc->addAction("showmemoryterminal",this, SLOT( slotHideShowMemoryView() ));
+    m_hideShowMemoryView = (QAction*) actionc->addAction("showmemoryview",this, SLOT( slotHideShowMemoryView() ));
     m_hideShowMemoryView->setText(i18n("Show memory terminal"));
     m_hideShowMemoryView->setIcon(KIcon("application-cancel"));
     m_hideShowMemoryView->setCheckable(true);
