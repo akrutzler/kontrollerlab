@@ -35,7 +35,7 @@
 #include "klprocessmanager.h"
 #include <kate/kate.h>
 #include <Q3ListBox>
-#include <kxmlguiwindow.h>
+#include <kparts/mainwindow.h>
 #include <ksharedconfig.h>
 #include <kmenubar.h>
 
@@ -64,7 +64,7 @@ class KRadioAction;
  * @author Martin Strasser <strasser@kontrollerlab.org>
  * @version 0.1
  */
-class KontrollerLab : public KXmlGuiWindow
+class KontrollerLab : public KParts::MainWindow
 {
     Q_OBJECT
 public:

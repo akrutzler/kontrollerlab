@@ -26,14 +26,8 @@
 #include <qlabel.h>
 
 #include <klocale.h>
-#include <kstdaction.h>
-
-#include <khelpmenu.h>
 
 #include <QActionGroup>
-
-
-
 
 #include <kparts/partmanager.h>
 #include <kparts/part.h>
@@ -83,7 +77,6 @@
 
 
 KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
-    : KXmlGuiWindow( 0 )
 {
     setStandardToolBarMenuEnabled( true );
     createStandardStatusBarAction();
@@ -98,18 +91,17 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_mdiArea->setTabsMovable(true);
     m_mdiArea->setTabsClosable(true);
 
-    setCentralWidget(m_mdiArea);
-
     m_oldKTextEditor = 0L;
     m_viewToBeOpened = 0L;
     m_doNotOpenProjectFromSession = doNotOpenProjectFromSession;
 
     // Settings menu*/
 
-    KStandardAction::configureToolbars(this, SLOT(slotConfToolbar()), actionCollection());
+    //KStandardAction::configureToolbars(this, SLOT(slotConfToolbar()), actionCollection());
     //KStandardAction::keyBindings(this, SLOT(configureShortcuts()), actionCollection());
 
     createActions();
+    setCentralWidget(m_mdiArea);
     
     //setupGUI(KXmlGuiWindow::Default,QDir::currentDirPath() + "/kontrollerlabui.rc");    //absolut just for debug
 
@@ -118,8 +110,6 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     setupGUI(Default, "kontrollerlabui.rc");
 
     // The procmanager must be set up before the project is built.
-
-
     m_procManager = new KLProcessManager( this, "processManager" );
     
     m_project = new KLProject( this );
@@ -131,19 +121,12 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_programmerInterface[ UISP ] = new KLProgrammerUISP( m_procManager, m_project );
     m_programmerInterface[ AVRDUDE ] = new KLProgrammerAVRDUDE( m_procManager, m_project );
 
-    //KLDocument* doc = new KLDocument(this);
-    //doc->activateCHighlighting();
-    //doc->setUrl(KUrl("unnamed"));
-    //new KLDocumentView( doc, this );
-
-    //m_project->addDocument( doc );
     m_project->setProgrammerInterface( getProgrammer( UISP ) );
 
     m_kateGuiClientAdded = 0L;
     m_sevenSegmentWizardWidget = 0L;
     m_dotMatrixWizardWidget = 0L;
     m_dotMatrixCharacterWizardWidget = 0L;
-
 
     m_msgBox = new Q3ListBox(this, "msgBox");
     // m_msgBox->setReadOnly( true );
@@ -166,7 +149,7 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_tvaSerialTerminal->setWidget(m_serialTerminalWidget);
     m_tvaSerialTerminal->setObjectName("serialTerminalDock");
     addDockWidget (Qt::LeftDockWidgetArea,m_tvaSerialTerminal );
-    m_tvaSerialTerminal->hide();
+    //m_tvaSerialTerminal->hide();
 
     m_tvaMemoryView = new QDockWidget(i18n("Memory View"), this);
 
@@ -174,11 +157,10 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_tvaMemoryView->setWidget(m_memoryViewWidget);
     m_tvaMemoryView->setObjectName("memoryViewDock");
     addDockWidget(Qt::LeftDockWidgetArea, m_tvaMemoryView );
-    m_tvaMemoryView->hide();
+    //m_tvaMemoryView->hide();
     
     m_debugger = new KLDebugger( m_serialTerminalWidget, this, "debugger" );
     m_debugger->setMemoryViewWidget( m_memoryViewWidget );
-
 
     m_partManager = new KParts::PartManager( this );
     m_partManager->addManagedTopLevelWidget( this );
@@ -205,12 +187,6 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     // This is the fuse bit programmer:
     m_fuseConfigWidget = new KLProgramFusesWidget( this, m_project, "programFuses" );
     
-    //dockManager->finishReadDockConfig();
-    //dockManager->readConfig( KGlobal::config(), "kontrollerlab_dockinfo" );
-
-    m_hideShowMessageBox->setChecked( !m_tvaMsg->isHidden() );
-    m_hideShowProjectManager->setChecked( !m_tvaProjectManager->isHidden() );
-    m_hideShowSerialTerminal->setChecked( !m_tvaSerialTerminal->isHidden() );
     /*
     KLProcess* proc = new KLProcess("uisp --help");
     connect( proc, SIGNAL(processExited( KLProcess* )),
@@ -218,6 +194,11 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     proc->start();
     */
     readProperties( KSharedConfig::openConfig());
+
+    m_hideShowMessageBox->setChecked( !m_tvaMsg->isHidden() );
+    m_hideShowProjectManager->setChecked( !m_tvaProjectManager->isHidden() );
+    m_hideShowSerialTerminal->setChecked( !m_tvaSerialTerminal->isHidden() );
+    m_hideShowMemoryView->setChecked( !m_tvaMemoryView->isHidden() );
 }
 
 void KontrollerLab::createActions()
@@ -405,7 +386,6 @@ void KontrollerLab::createActions()
 KontrollerLab::~KontrollerLab()
 {
     saveProperties( KSharedConfig::openConfig() );
-    //dockManager->writeConfig( KGlobal::config(), "kontrollerlab_dockinfo" );
     foreach(KLDocument *it, m_project->documents())
         delete it;
 }
@@ -673,14 +653,12 @@ QString KontrollerLab::config( const QString & key, const QString & defVal )
 
 void KontrollerLab::saveProperties( KSharedConfig::Ptr config )
 {
-    // qDebug("KontrollerLab::saveProperties( KConfig * conf )");
     KConfigGroup conf ( config, "KontrollerLab" );
+    KConfigGroup dockConf ( config, "MainWindow" );
 
-    //! \todo: save dockWidgetGeometry
+    dockConf.writeEntry("Geometry",saveGeometry().toBase64());
+    dockConf.writeEntry("State",saveState().toBase64());
 
-    //conf.writeEntry("geometry",saveGeometry());
-    //conf.writeEntry("windowState",saveState());
-    
     conf.writeEntry( "CURRENT_PROJECT_PATH", m_project->projectFileURL().url() );
     if ( m_project->activeDocument() )
     {
@@ -698,16 +676,10 @@ void KontrollerLab::readProperties( KSharedConfig::Ptr config )
 {
 
     KConfigGroup conf ( config, "KontrollerLab" );
+    KConfigGroup dockConf ( config, "MainWindow" );
 
-    //! \todo: load dockWidgetGeometry
-    //QVariant val =  conf.readEntry("geometry","");
-    //qDebug() << val.toByteArray().data();
-    //qDebug() << restoreGeometry(val.toByteArray());
-    //val = conf.readEntry("windowState","");
-    //qDebug() << val.toByteArray();
-    //qDebug() << restoreState(val.toByteArray());
-
-
+    restoreGeometry(QByteArray::fromBase64(dockConf.readEntry("Geometry","").toLatin1()));
+    restoreState(QByteArray::fromBase64(dockConf.readEntry("State","").toLatin1()));
 
     // restore MDI mode (toplevel, childframe, tabpage)
 
