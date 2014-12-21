@@ -114,9 +114,6 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     
     m_project = new KLProject( this );
 
-    // Add the tool window for the project manager
-    //m_tvaProjectManager = addToolWindow( m_projectManager, KDockWidget::DockRight,
-    //                      getMainDockWidget(), 80 );
     // ADD NEW PROGRAMMERS HERE:
     m_programmerInterface[ UISP ] = new KLProgrammerUISP( m_procManager, m_project );
     m_programmerInterface[ AVRDUDE ] = new KLProgrammerAVRDUDE( m_procManager, m_project );
@@ -128,37 +125,8 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_dotMatrixWizardWidget = 0L;
     m_dotMatrixCharacterWizardWidget = 0L;
 
-    m_msgBox = new Q3ListBox(this, "msgBox");
-    // m_msgBox->setReadOnly( true );
-    m_msgBox->setWindowTitle(i18n("Messages"));
-    m_tvaMsg = new QDockWidget(tr("Messages"), this);
-    m_tvaMsg->setWidget(m_msgBox);
-    addDockWidget( Qt::BottomDockWidgetArea, m_tvaMsg );
-    m_tvaMsg->setName("messageBox");
+    createDocks();
 
-    //Setting up UI, TODO -> inline func
-
-    m_tvaProjectManager = new QDockWidget(i18n("Project Manager"), this);
-    m_projectManager = new KLProjectManagerWidget( m_project, this, "projectManager" );
-    m_tvaProjectManager->setWidget(m_projectManager);
-    m_tvaProjectManager->setObjectName("projectManagerDock");
-    addDockWidget (Qt::LeftDockWidgetArea,m_tvaProjectManager );
-
-    m_tvaSerialTerminal = new QDockWidget(i18n("Serial terminal"), this);
-    m_serialTerminalWidget = new KLSerialTerminalWidget( this, "serialTerminalWidget" );
-    m_tvaSerialTerminal->setWidget(m_serialTerminalWidget);
-    m_tvaSerialTerminal->setObjectName("serialTerminalDock");
-    addDockWidget (Qt::LeftDockWidgetArea,m_tvaSerialTerminal );
-    //m_tvaSerialTerminal->hide();
-
-    m_tvaMemoryView = new QDockWidget(i18n("Memory View"), this);
-
-    m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryViewWidget");
-    m_tvaMemoryView->setWidget(m_memoryViewWidget);
-    m_tvaMemoryView->setObjectName("memoryViewDock");
-    addDockWidget(Qt::LeftDockWidgetArea, m_tvaMemoryView );
-    //m_tvaMemoryView->hide();
-    
     m_debugger = new KLDebugger( m_serialTerminalWidget, this, "debugger" );
     m_debugger->setMemoryViewWidget( m_memoryViewWidget );
 
@@ -199,6 +167,13 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     m_hideShowProjectManager->setChecked( !m_tvaProjectManager->isHidden() );
     m_hideShowSerialTerminal->setChecked( !m_tvaSerialTerminal->isHidden() );
     m_hideShowMemoryView->setChecked( !m_tvaMemoryView->isHidden() );
+}
+
+KontrollerLab::~KontrollerLab()
+{
+    saveProperties( KSharedConfig::openConfig() );
+    foreach(KLDocument *it, m_project->documents())
+        delete it;
 }
 
 void KontrollerLab::createActions()
@@ -383,13 +358,40 @@ void KontrollerLab::createActions()
     m_hideShowMemoryView->setCheckable(true);
 }
 
-KontrollerLab::~KontrollerLab()
+void KontrollerLab::createDocks()
 {
-    saveProperties( KSharedConfig::openConfig() );
-    foreach(KLDocument *it, m_project->documents())
-        delete it;
-}
+    m_msgBox = new Q3ListBox(this, "msgBox");
+    // m_msgBox->setReadOnly( true );
+    m_msgBox->setWindowTitle(i18n("Messages"));
+    m_tvaMsg = new QDockWidget(tr("Messages"), this);
+    m_tvaMsg->setWidget(m_msgBox);
+    addDockWidget( Qt::BottomDockWidgetArea, m_tvaMsg );
+    m_tvaMsg->setName("messageBox");
 
+    //Setting up UI, TODO -> inline func
+
+    // Add the dock window for the project manager
+    m_tvaProjectManager = new QDockWidget(i18n("Project Manager"), this);
+    m_projectManager = new KLProjectManagerWidget( m_project, this, "projectManager" );
+    m_tvaProjectManager->setWidget(m_projectManager);
+    m_tvaProjectManager->setObjectName("projectManagerDock");
+    addDockWidget (Qt::LeftDockWidgetArea,m_tvaProjectManager );
+
+    m_tvaSerialTerminal = new QDockWidget(i18n("Serial terminal"), this);
+    m_serialTerminalWidget = new KLSerialTerminalWidget( this, "serialTerminalWidget" );
+    m_tvaSerialTerminal->setWidget(m_serialTerminalWidget);
+    m_tvaSerialTerminal->setObjectName("serialTerminalDock");
+    addDockWidget (Qt::LeftDockWidgetArea,m_tvaSerialTerminal );
+    //m_tvaSerialTerminal->hide();
+
+    m_tvaMemoryView = new QDockWidget(i18n("Memory View"), this);
+
+    m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryViewWidget");
+    m_tvaMemoryView->setWidget(m_memoryViewWidget);
+    m_tvaMemoryView->setObjectName("memoryViewDock");
+    addDockWidget(Qt::LeftDockWidgetArea, m_tvaMemoryView );
+    //m_tvaMemoryView->hide();
+}
 
 void KontrollerLab::slotNewPart(KParts::Part *newPart, bool setActiv)
 {
@@ -471,9 +473,7 @@ void KontrollerLab::slotActivePartChanged(KParts::Part *)
     {
         if ( guiFactory()->clients().indexOf( m_oldKTextEditor ) < 0 )
         {
-            bl = true;
             guiFactory()->addClient(m_oldKTextEditor);
-            bl = false;
             //qDebug("added %d", (unsigned int) m_oldKTextEditor );
         }
         if ( m_project && m_project->getDocumentForView(m_oldKTextEditor) )
@@ -1227,6 +1227,8 @@ void KontrollerLab::setProgrammerBusy( bool val )
 }
 
 
+
+
 void KontrollerLab::notifyDebuggerReady( )
 {
     activateDebuggerActions( true );
@@ -1261,7 +1263,6 @@ void KontrollerLab::slotDebugToggleBreakpoint( )
         }
     }
 }
-
 
 void KontrollerLab::activateDebuggerActions( bool activate )
 {

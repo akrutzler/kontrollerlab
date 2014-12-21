@@ -93,8 +93,8 @@ public:
     void setProgrammerBusy( bool val );
     KLProject* project() { return m_project; }
 private:
-    bool bl;
-    void createActions();
+    inline void createDocks();
+    inline void createActions();
 protected:
     virtual void saveProperties(KSharedConfig::Ptr config );
     virtual void readProperties(KSharedConfig::Ptr config );
