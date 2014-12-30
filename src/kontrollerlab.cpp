@@ -186,7 +186,7 @@ void KontrollerLab::createActions()
     m_closeFile     =   (QAction*) actionc->addAction(KStandardAction::Close,"file_close",this,SLOT(slotCloseFile()));
 
     m_closeProgram  =   (QAction*) actionc->addAction(KStandardAction::Quit,"file_quit",this,SLOT(close()));
-//Project
+    //Project
     m_openProject = (QAction*) actionc->addAction("open_project",this, SLOT( slotProjectOpen() ));
     m_openProject->setText(i18n("Open project"));
     m_openProject->setIcon(KIcon("document-open"));
@@ -206,7 +206,7 @@ void KontrollerLab::createActions()
     m_closeProject = (QAction*) actionc->addAction("close_project",this, SLOT( slotProjectClose() ));
     m_closeProject->setText(i18n("Close project"));
     m_closeProject->setIcon(KIcon("dialog-close"));
-//Project - Building
+    //Project - Building
     m_compileAssemble = (QAction*) actionc->addAction("compile",this, SLOT( slotCompileAssemble() ));
     m_compileAssemble->setShortcut(QKeySequence("F7"));
     m_compileAssemble->setText(i18n("Compile file"));
@@ -261,7 +261,7 @@ void KontrollerLab::createActions()
     m_configProgrammer = (QAction*) actionc->addAction("configProject",this, SLOT( slotConfigProject() ));
     m_configProgrammer->setText(i18n("Configure project"));
     m_configProgrammer->setIcon(KIcon("run-build-configure"));
-// Wizards:
+    // Wizards:
     m_sevenSegmentsWizardAction = (QAction*) actionc->addAction("seven_segment_wizard",this, SLOT( slotSevenSegmentsWizard() ));
     m_sevenSegmentsWizardAction->setText(i18n("Seven segments wizard"));
     m_sevenSegmentsWizardAction->setIcon(KIcon("tools-wizard"));
@@ -336,25 +336,25 @@ void KontrollerLab::createActions()
     m_debugToggleBreakpoint->setText(i18n("Toggle breakpoint"));
     m_debugToggleBreakpoint->setIcon(KIcon("tools-report-bug"));
     activateDebuggerActions(false);
-// new view:
+    // new view:
     m_hideShowMessageBox = (QAction*) actionc->addAction("showmessagebox",this, SLOT( slotHideShowMessageBox() ));
     m_hideShowMessageBox->setText(i18n("Show message box"));
-    m_hideShowMessageBox->setIcon(KIcon("application-cancel"));
+    //m_hideShowMessageBox->setIcon(KIcon("application-cancel"));
     m_hideShowMessageBox->setCheckable(true);
 
     m_hideShowProjectManager = (QAction*) actionc->addAction("showprojectmanager",this, SLOT( slotHideShowProjectManager() ));
     m_hideShowProjectManager->setText(i18n("Show project manager"));
-    m_hideShowProjectManager->setIcon(KIcon("application-cancel"));
+    //m_hideShowProjectManager->setIcon(KIcon("application-cancel"));
     m_hideShowProjectManager->setCheckable(true);
 
     m_hideShowSerialTerminal = (QAction*) actionc->addAction("showserialterminal",this, SLOT( slotHideShowSerialTerminal() ));
     m_hideShowSerialTerminal->setText(i18n("Show serial terminal"));
-    m_hideShowSerialTerminal->setIcon(KIcon("application-cancel"));
+    //m_hideShowSerialTerminal->setIcon(KIcon("application-cancel"));
     m_hideShowSerialTerminal->setCheckable(true);
 
     m_hideShowMemoryView = (QAction*) actionc->addAction("showmemoryview",this, SLOT( slotHideShowMemoryView() ));
     m_hideShowMemoryView->setText(i18n("Show memory terminal"));
-    m_hideShowMemoryView->setIcon(KIcon("application-cancel"));
+    //m_hideShowMemoryView->setIcon(KIcon("application-cancel"));
     m_hideShowMemoryView->setCheckable(true);
 }
 
@@ -368,8 +368,6 @@ void KontrollerLab::createDocks()
     addDockWidget( Qt::BottomDockWidgetArea, m_tvaMsg );
     m_tvaMsg->setName("messageBox");
 
-    //Setting up UI, TODO -> inline func
-
     // Add the dock window for the project manager
     m_tvaProjectManager = new QDockWidget(i18n("Project Manager"), this);
     m_projectManager = new KLProjectManagerWidget( m_project, this, "projectManager" );
@@ -381,7 +379,7 @@ void KontrollerLab::createDocks()
     m_serialTerminalWidget = new KLSerialTerminalWidget( this, "serialTerminalWidget" );
     m_tvaSerialTerminal->setWidget(m_serialTerminalWidget);
     m_tvaSerialTerminal->setObjectName("serialTerminalDock");
-    addDockWidget (Qt::LeftDockWidgetArea,m_tvaSerialTerminal );
+    addDockWidget (Qt::RightDockWidgetArea,m_tvaSerialTerminal );
     //m_tvaSerialTerminal->hide();
 
     m_tvaMemoryView = new QDockWidget(i18n("Memory View"), this);
@@ -389,8 +387,11 @@ void KontrollerLab::createDocks()
     m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryViewWidget");
     m_tvaMemoryView->setWidget(m_memoryViewWidget);
     m_tvaMemoryView->setObjectName("memoryViewDock");
-    addDockWidget(Qt::LeftDockWidgetArea, m_tvaMemoryView );
+    addDockWidget(Qt::RightDockWidgetArea, m_tvaMemoryView );
     //m_tvaMemoryView->hide();
+
+    tabifyDockWidget(m_tvaSerialTerminal,m_tvaMemoryView);
+    m_tvaSerialTerminal->raise();
 }
 
 void KontrollerLab::slotNewPart(KParts::Part *newPart, bool setActiv)
@@ -1259,7 +1260,7 @@ void KontrollerLab::slotDebugToggleBreakpoint( )
         if ( doc && doc->lastActiveView() && m_debugger )
         {
             m_debugger->toggleBreakpoint( doc->url(),
-            doc->lastActiveView()->view()->cursorPosition().line() +1 );
+                                          doc->lastActiveView()->view()->cursorPosition().line() +1 );
         }
     }
 }
