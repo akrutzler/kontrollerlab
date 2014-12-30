@@ -68,11 +68,12 @@ KLDocument::KLDocument( KontrollerLab* parent ) : QObject(parent)
         // valid editor factory, it is possible to access the editor now
         m_editor = kte_factory->editor();
 
+        //hide some advanced stuff from the user -> can be changed in "Configure editor" -> Power user mode
+        m_editor->setSimpleMode(true);
+
         m_doc = m_editor->createDocument(NULL);
         // m_doc->setText("#include <io.h>\n");
         m_doc->setModified(false);
-
-        m_editor->readConfig();
 
         /* object is of type KTextEditor::Document* or View* or Plugin*
         sessionConfigIf = qobject_cast<KTextEditor::SessionConfigInterface*>( m_doc );
