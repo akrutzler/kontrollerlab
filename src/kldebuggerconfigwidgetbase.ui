@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
+    <width>560</width>
     <height>387</height>
    </rect>
   </property>
@@ -31,6 +31,32 @@
      </property>
      <property name="shortcut">
       <string>Alt+C</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <spacer name="spacer7">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>90</width>
+       <height>31</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="pbDefault">
+     <property name="text">
+      <string>Se&amp;t current settings as default</string>
+     </property>
+     <property name="shortcut">
+      <string>Alt+T</string>
      </property>
     </widget>
    </item>
@@ -418,7 +444,7 @@
        <string>ICD - Memor&amp;y mapping</string>
       </attribute>
       <layout class="QGridLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="pixmapLabel1">
          <property name="maximumSize">
           <size>
@@ -438,6 +464,22 @@
         </widget>
        </item>
        <item row="2" column="0">
+        <spacer name="spacer9">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>41</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="0">
         <widget class="QLabel" name="tlWarning">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -456,37 +498,24 @@
 &lt;br&gt;&lt;br&gt;
 See the documentation for details!</string>
          </property>
-         <property name="wordWrap">
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="scaledContents">
           <bool>false</bool>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <spacer name="spacer9">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>41</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="1" rowspan="3">
+       <item row="3" column="1">
         <widget class="Q3GroupBox" name="groupBox3" native="true">
          <property name="title" stdset="0">
           <string>Define mappings to microcontroller</string>
          </property>
          <layout class="QGridLayout">
-          <item row="0" column="0" colspan="4">
-           <widget class="Q3ListView" name="lvMappings" native="true"/>
-          </item>
-          <item row="1" column="0">
+          <item row="0" column="0">
            <widget class="QLabel" name="textLabel2">
             <property name="text">
              <string>Map from</string>
@@ -496,7 +525,7 @@ See the documentation for details!</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="1" column="2">
            <widget class="QPushButton" name="pbAdd">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -518,7 +547,7 @@ See the documentation for details!</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="3">
+          <item row="1" column="3">
            <widget class="QPushButton" name="pbRemove">
             <property name="maximumSize">
              <size>
@@ -534,7 +563,7 @@ See the documentation for details!</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="KIntSpinBox" name="sbFrom" native="true">
             <property name="prefix" stdset="0">
              <string>0x</string>
@@ -547,7 +576,7 @@ See the documentation for details!</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="1">
            <widget class="KIntSpinBox" name="sbTo" native="true">
             <property name="prefix" stdset="0">
              <string>0x</string>
@@ -560,7 +589,7 @@ See the documentation for details!</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" colspan="2">
+          <item row="0" column="1" colspan="2">
            <widget class="QLabel" name="textLabel2_2">
             <property name="text">
              <string>to</string>
@@ -573,35 +602,12 @@ See the documentation for details!</string>
          </layout>
         </widget>
        </item>
+       <item row="0" column="1" rowspan="3">
+        <widget class="Q3ListView" name="lvMappings" native="true"/>
+       </item>
       </layout>
      </widget>
     </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="pbDefault">
-     <property name="text">
-      <string>Se&amp;t current settings as default</string>
-     </property>
-     <property name="shortcut">
-      <string>Alt+T</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <spacer name="spacer7">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>90</width>
-       <height>31</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
@@ -788,22 +794,6 @@ See the documentation for details!</string>
     <hint type="sourcelabel">
      <x>341</x>
      <y>247</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lvMappings</sender>
-   <signal>selectionChanged(Q3ListViewItem*)</signal>
-   <receiver>KLDebuggerConfigWidgetBase</receiver>
-   <slot>slotSelectedMappingChanged(Q3ListViewItem*)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>245</x>
-     <y>64</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

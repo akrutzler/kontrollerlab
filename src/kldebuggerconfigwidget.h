@@ -64,7 +64,7 @@ protected:
     bool m_noCallback;
     QMap< QString, QString > m_settings;
 private:
-    Ui_KLDebuggerConfigWidgetBase *ui;
+    Ui::KLDebuggerConfigWidgetBase *ui;
 };
 
 #endif

@@ -45,9 +45,13 @@
 
 
 KLDebuggerConfigWidget::KLDebuggerConfigWidget(KontrollerLab *parent, const char *name)
-    :QDialog(parent,name), ui(new Ui_KLDebuggerConfigWidgetBase)
+    :QDialog(parent,name), ui(new Ui::KLDebuggerConfigWidgetBase)
 {
     ui->setupUi(this);
+
+    ui->lvMappings->addColumn(i18n("From"));
+    ui->lvMappings->addColumn(i18n("To"));
+
     m_noCallback = false;
     m_parent = parent;
     if (m_parent)
@@ -57,6 +61,7 @@ KLDebuggerConfigWidget::KLDebuggerConfigWidget(KontrollerLab *parent, const char
         KLMemoryViewWidget* memView = m_parent->memoryViewWidget();
         ui->sbMemoryViewByteCount->setValue( memView->ramEnd() );
     }
+
     updateGUIFromSettings();
 }
 
@@ -228,9 +233,9 @@ void KLDebuggerConfigWidget::updateGUIFromSettings( )
     QString mappings = m_settings[ DEBUGGER_MAPPINGS ];
     KLDebuggerMemoryMappingList lst;
     lst.fromString( mappings );
-    for ( KLDebuggerMemoryMappingList::iterator it = lst.begin(); it != lst.end(); ++it )
+    foreach ( const KLDebuggerMemoryMapping it , lst )
     {
-        lv->insertItem( new KLDebuggerMemMappingListViewItem( lv, (*it).from(), (*it).to() ) );
+        lv->insertItem( new KLDebuggerMemMappingListViewItem( lv, it.from(), it.to() ) );
     }
 }
 
@@ -259,16 +264,17 @@ QString KLDebuggerConfigWidget::conf( const QString & confKey, const QString & d
     }
 }
 
-
 void KLDebuggerConfigWidget::slotAdd( )
 {
     Q3ListView *lv = ui->lvMappings;
     lv->insertItem( new KLDebuggerMemMappingListViewItem( lv, ui->sbFrom->value(), ui->sbTo->value() ) );
+
     /*
-    lv->insertItem( new QListViewItem( lv,
-                    "0x" + QString::number( sbFrom->value(), 16 ),
-                    "0x" + QString::number( sbTo->value(), 16 ) ) );
+    lv->insertItem( new Q3ListViewItem( lv,
+                    "0x" + QString::number( ui->sbFrom->value(), 16 ),
+                    "0x" + QString::number( ui->sbTo->value(), 16 ) ) );
     */
+
 }
 
 
