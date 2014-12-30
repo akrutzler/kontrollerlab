@@ -25,6 +25,7 @@
 #include <qapplication.h>
 #include <kglobal.h>
 
+#include <unistd.h>     // UNIX standard function definitions
 
 KLSerialPortListener::KLSerialPortListener(KLSerialTerminalWidget *parent, KLSerialPort* spInstance, const char *name)
     : QThread()
@@ -51,7 +52,6 @@ void KLSerialPortListener::setReceiverActive( bool theValue )
     }
 }
 
-
 void KLSerialPortListener::run( )
 {
     char buffer[256];
@@ -64,7 +64,7 @@ void KLSerialPortListener::run( )
         // qDebug("sleeping");
         msleep( 10 );
         // qDebug("woke up");
-        size = 0;//::read(sp->m_fd, buffer, 255);
+        size = ::read(sp->m_fd, buffer, 255);
         // qDebug("read %d bytes", size);
         if (size > 0)
         {
