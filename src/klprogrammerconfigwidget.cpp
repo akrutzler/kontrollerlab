@@ -38,9 +38,22 @@
 
 
 KLProgrammerConfigWidget::KLProgrammerConfigWidget(KontrollerLab *parent, const char *name)
-    :QDialog(parent, name), ui(new Ui_KLProgrammerConfigWidgetBase)
+    :QDialog(parent, name), ui(new Ui::KLProgrammerConfigWidgetBase)
 {
     ui->setupUi(this);
+
+    connect(ui->cbAVRDUDESpecifyBitClock,SIGNAL(toggled(bool)),ui->cbBitClockPeriodUS,SLOT(setEnabled(bool)));
+    connect(ui->cbAVRDUDEOverrideBaudRate, SIGNAL(toggled(bool)), ui->cbBAUDRate, SLOT(setEnabled(bool)));
+    connect(ui->cbAVRDUDESpecifyProgrammerType, SIGNAL(toggled(bool)), ui->cbAVRDUDEProgrammerType, SLOT(setEnabled(bool)));
+    connect(ui->cbAVRDUDESpecifyConnectionPort, SIGNAL(toggled(bool)), ui->cbAVRDUDEConnectionPort, SLOT(setEnabled(bool)));
+    connect(ui->cbAVRDUDESpecifyExternalConfigFile, SIGNAL(toggled(bool)), ui->kurlExternalConfigFile, SLOT(setEnabled(bool)));
+    connect(ui->pbOK, SIGNAL(clicked()), this, SLOT(slotOK()));
+    connect(ui->pbCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
+    connect(ui->pbSetDefault, SIGNAL(clicked()), this, SLOT(slotSetDefault()));
+    connect(ui->pbSetEraseCount, SIGNAL(clicked()), this, SLOT(slotSetEraseCounter()));
+    connect(ui->pbUISPReadValues, SIGNAL(clicked()), this, SLOT(slotReadSTK500()));
+    connect(ui->pbUISPWriteValues, SIGNAL(clicked()), this, SLOT(slotWriteSTK500()));
+
     m_parent = parent;
     setModal( true );
 

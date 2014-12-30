@@ -36,7 +36,7 @@ public:
     void updateConfigFromGUI();
     void backannotateSTK500( const QString & stdout );
 private:
-    Ui_KLProgrammerConfigWidgetBase *ui;
+    Ui::KLProgrammerConfigWidgetBase *ui;
 public slots:
     virtual void slotCancel();
     virtual void slotOK();
