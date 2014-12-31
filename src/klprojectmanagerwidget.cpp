@@ -79,22 +79,22 @@ void KLProjectManagerWidget::addDocument( KLDocument * doc )
     if ( doc->type() == KLDocType_Source )
     {
         item = new KLQListViewDocumentItem( getSourceParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadIcon( "source_c", KIconLoader::Small ) );
+        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "text/x-csrc",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     else if ( doc->type() == KLDocType_Header )
     {
         item = new KLQListViewDocumentItem( getHeaderParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadIcon( "source_h", KIconLoader::Small ) );
+        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "text/x-chdr",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     else if ( doc->type() == KLDocType_Note )
     {
         item = new KLQListViewDocumentItem( getNotesParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadIcon( "txt", KIconLoader::Small ) );
+        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "text/plain",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     else
     {
         item = new KLQListViewDocumentItem( getOthersParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadIcon( "unknown", KIconLoader::Small ) );
+        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "all/all",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     item->setDoc( doc );
     item->updateFileInfo();
