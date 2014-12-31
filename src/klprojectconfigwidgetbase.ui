@@ -119,17 +119,26 @@
               </item>
               <item>
                <widget class="QDoubleSpinBox" name="kdsClock">
-                <property name="accelerated">
+                <property name="wrapping">
                  <bool>false</bool>
                 </property>
+                <property name="specialValueText">
+                 <string/>
+                </property>
+                <property name="accelerated">
+                 <bool>true</bool>
+                </property>
                 <property name="showGroupSeparator" stdset="0">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="suffix">
                  <string>Hz</string>
                 </property>
                 <property name="maximum">
-                 <double>16000000.000000000000000</double>
+                 <double>20000000.000000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.000000000000000</double>
                 </property>
                </widget>
               </item>

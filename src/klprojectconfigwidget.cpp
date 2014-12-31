@@ -52,6 +52,9 @@ KLProjectConfigWidget::KLProjectConfigWidget(KLProject* project, QWidget *parent
     ui->cbCPU->insertStringList( project->cpus() );
     // Update the project files list:
     project->update();
+    // Add linker flags columns
+    ui->lvLinkerFlags->addColumn(i18n("Purpose"));
+    ui->lvLinkerFlags->addColumn(i18n("Flags"));
     // Fill the linker flags list:
     m_possibleLinkerFlags["-Wl,-lm"] = i18n("Link with math library");
     m_possibleLinkerFlags["-Wl,-lprintf"] = i18n("Link with printf library");
