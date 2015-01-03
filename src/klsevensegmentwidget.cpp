@@ -35,6 +35,9 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
     :QDialog(parent, name), ui(new Ui_KLSevenSegmentWidgetBase)
 {
     ui->setupUi(this);
+
+    fillSegmentList();
+
     QList< QRadioButton*> helper;
     helper.append( ui->rbA0 );
     helper.append( ui->rbA1 );
@@ -523,6 +526,158 @@ void KLSevenSegmentWidget::slotAdd()
     item->setPixmap( 0, generatePixmapFor( getSegmentsForListItem( item ) ) );
     ui->lvSegments->insertItem( item );
     ui->lvSegments->setSelected( item, true );
+}
+
+void KLSevenSegmentWidget::fillSegmentList()
+{
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "Item", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "A", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "B", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "C", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "D", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "E", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "F", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "G", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "DP", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
+    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
+
+    ui->lvSegments->header()->setLabel(0, QApplication::translate("KLSevenSegmentWidgetBase", "Item", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(1, QApplication::translate("KLSevenSegmentWidgetBase", "A", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(2, QApplication::translate("KLSevenSegmentWidgetBase", "B", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(3, QApplication::translate("KLSevenSegmentWidgetBase", "C", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(4, QApplication::translate("KLSevenSegmentWidgetBase", "D", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(5, QApplication::translate("KLSevenSegmentWidgetBase", "E", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(6, QApplication::translate("KLSevenSegmentWidgetBase", "F", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(7, QApplication::translate("KLSevenSegmentWidgetBase", "G", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->header()->setLabel(8, QApplication::translate("KLSevenSegmentWidgetBase", "DP", 0, QApplication::UnicodeUTF8));
+    ui->lvSegments->clear();
+
+    Q3ListViewItem *__item = new Q3ListViewItem(ui->lvSegments);
+    __item->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x00", 0, QApplication::UnicodeUTF8));
+    __item->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item1 = new Q3ListViewItem(ui->lvSegments);
+    __item1->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x01", 0, QApplication::UnicodeUTF8));
+    __item1->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item1->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item1->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item1->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item1->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item1->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item1->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item1->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item2 = new Q3ListViewItem(ui->lvSegments);
+    __item2->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x02", 0, QApplication::UnicodeUTF8));
+    __item2->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item2->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item2->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item2->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item2->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item2->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item2->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item2->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item3 = new Q3ListViewItem(ui->lvSegments);
+    __item3->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x03", 0, QApplication::UnicodeUTF8));
+    __item3->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item3->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item3->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item3->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item3->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item3->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item3->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item3->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item4 = new Q3ListViewItem(ui->lvSegments);
+    __item4->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x04", 0, QApplication::UnicodeUTF8));
+    __item4->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item4->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item4->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item4->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item4->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item4->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item4->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item4->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item5 = new Q3ListViewItem(ui->lvSegments);
+    __item5->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x05", 0, QApplication::UnicodeUTF8));
+    __item5->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item5->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item5->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item5->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item5->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item5->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item5->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item5->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item6 = new Q3ListViewItem(ui->lvSegments);
+    __item6->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x06", 0, QApplication::UnicodeUTF8));
+    __item6->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item6->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item6->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item6->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item6->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item6->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item6->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item6->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item7 = new Q3ListViewItem(ui->lvSegments);
+    __item7->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x07", 0, QApplication::UnicodeUTF8));
+    __item7->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item7->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item7->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item7->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item7->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item7->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item7->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item7->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item8 = new Q3ListViewItem(ui->lvSegments);
+    __item8->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x08", 0, QApplication::UnicodeUTF8));
+    __item8->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item8->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item8->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item8->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item8->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item8->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item8->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item8->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    Q3ListViewItem *__item9 = new Q3ListViewItem(ui->lvSegments);
+    __item9->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x09", 0, QApplication::UnicodeUTF8));
+    __item9->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item9->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item9->setText(3, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item9->setText(4, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item9->setText(5, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+    __item9->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item9->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
+    __item9->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 }
 
 void KLSevenSegmentWidget::slotCurrentItemChanged(Q3ListViewItem *cur )

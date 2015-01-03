@@ -55,6 +55,7 @@ public slots:
     virtual void slotRemove();
     virtual void slotAdd();
 protected:
+    inline void fillSegmentList();
     bool underReedit() const { return (m_startLine>=0)&&(m_stopLine>=0); }
     QString formStr( int nr ) const;
     QPixmap generatePixmapFor( int segs );
