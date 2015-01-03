@@ -305,8 +305,8 @@ void KontrollerLab::createActions()
     m_debugStop->setIcon(KIcon("media-playback-stop"));
 
     m_debugPause = (QAction*) actionc->addAction("debug_pause",this, SLOT( slotDebugPause() ));
-    m_debugPause->setText(i18n("Pause"));
-    m_debugPause->setIcon(KIcon("media-playback-pause"));
+    m_debugPause->setText(i18n("Start"));
+    m_debugPause->setIcon(KIcon("media-playback-start"));
 
     m_debugRunToCursor = (QAction*) actionc->addAction("debug_run_to_cursor",this, SLOT( slotDebugRunToCursor() ));
     m_debugRunToCursor->setText(i18n("Run to cursor"));
@@ -383,11 +383,11 @@ void KontrollerLab::createDocks()
     //m_tvaSerialTerminal->hide();
 
     m_tvaMemoryView = new QDockWidget(i18n("Memory View"), this);
-
     m_memoryViewWidget = new KLMemoryViewWidget(this, "memoryViewWidget");
     m_tvaMemoryView->setWidget(m_memoryViewWidget);
     m_tvaMemoryView->setObjectName("memoryViewDock");
     addDockWidget(Qt::RightDockWidgetArea, m_tvaMemoryView );
+    m_memoryViewWidget->setEnabled( false );
     //m_tvaMemoryView->hide();
 
     tabifyDockWidget(m_tvaSerialTerminal,m_tvaMemoryView);
@@ -1148,10 +1148,12 @@ void KontrollerLab::slotDebugStop( )
     m_debugger->stopDebugger();
     if ( m_debugger->state() == DBG_Started )
     {
+        m_debugPause->setText(i18n("Stop"));
         m_debugPause->setIcon( KIcon("media-playback-pause") );
     }
     else
     {
+        m_debugPause->setText(i18n("Start"));
         m_debugPause->setIcon( KIcon("media-playback-start") );
     }
     m_directMemoryDebug->setEnabled( true );
@@ -1233,6 +1235,7 @@ void KontrollerLab::setProgrammerBusy( bool val )
 void KontrollerLab::notifyDebuggerReady( )
 {
     activateDebuggerActions( true );
+    m_memoryViewWidget->setEnabled( true );
     m_memoryViewWidget->updateGUI();
 }
 
@@ -1240,6 +1243,7 @@ void KontrollerLab::notifyDebuggerReady( )
 void KontrollerLab::notifyDebuggerStopped( )
 {
     activateDebuggerActions( false );
+    m_memoryViewWidget->setEnabled( false );
 }
 
 
