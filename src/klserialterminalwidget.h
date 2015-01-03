@@ -75,7 +75,7 @@ public:
     QStringList ports() const;
 
 private:
-    Ui_KLSerialTerminalWidgetBase *ui;
+    Ui::KLSerialTerminalWidgetBase *ui;
 
 
 public slots:

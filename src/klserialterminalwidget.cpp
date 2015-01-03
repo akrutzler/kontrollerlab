@@ -37,7 +37,7 @@
 
 KLSerialTerminalWidget::KLSerialTerminalWidget(KontrollerLab *parent, const char *name)
     :QDialog(parent, name),
-      ui(new Ui_KLSerialTerminalWidgetBase)
+      ui(new Ui::KLSerialTerminalWidgetBase)
 {
     ui->setupUi(this);
     m_parent = parent;
@@ -111,9 +111,9 @@ KLSerialTerminalWidget::KLSerialTerminalWidget(KontrollerLab *parent, const char
     ui->cbDevice->insertStringList( ports );
     
     KIconLoader ico;
-    ui->tbOpenClose->setIconSet( ico.loadIcon( "connect_no", KIconLoader::Panel ) );
+    ui->tbOpenClose->setIconSet( ico.loadIcon( "document-open", KIconLoader::Panel ) );
     
-    ui->tbClear->setIconSet( ico.loadIcon( "clear_left", KIconLoader::Panel ) );
+    ui->tbClear->setIconSet( ico.loadIcon( "edit-clear-list", KIconLoader::Panel ) );
     
     m_listener = 0L;
     m_displayIsHEX = false;
