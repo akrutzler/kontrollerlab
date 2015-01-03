@@ -32,7 +32,6 @@
 #include "klproject.h"
 #include "kldocumentview.h"
 
-
 KLMemoryViewWidget::KLMemoryViewWidget(KontrollerLab *parent, const char *name)
     :QDialog(parent,name), m_updateTimer( this, "timer" ),
     ui(new Ui::KLMemoryViewWidgetBase())
@@ -46,6 +45,33 @@ KLMemoryViewWidget::KLMemoryViewWidget(KontrollerLab *parent, const char *name)
     // By default, don't allow a memory cell to be set.
     allowSetMemoryCell( true );
     connect( &m_updateTimer, SIGNAL(timeout()), this, SLOT(timeoutOfTimer()) );
+    connect( ui->lbMemory, SIGNAL(currentChanged(Q3ListBoxItem*)), this, SLOT(slotCurrentItemChanged(Q3ListBoxItem*)));
+
+    connect(ui->pbRefresh, SIGNAL(clicked()), this, SLOT(slotUpdate()));
+    connect(ui->cbUpdateRegularly, SIGNAL(toggled(bool)), this, SLOT(slotUpdateEnable(bool)));
+    connect(ui->tniUpdateRegularly,SIGNAL(valueChanged(int)),this,SLOT(slotUpdateEveryChanged(int)));
+    connect(ui->leName, SIGNAL(textChanged(QString)), this, SLOT(slotNameChanged(QString)));
+    connect(ui->leChar, SIGNAL(textChanged(QString)), this, SLOT(slotCharChanged(QString)));
+    connect(ui->kisBinary, SIGNAL(valueChanged(int)), this, SLOT(slotBinaryChanged(int)));
+    connect(ui->cbBit7, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->cbBit6, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->cbBit5, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->cbBit4, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->cbBit3, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->cbBit2, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->cbBit1, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->cbBit0, SIGNAL(toggled(bool)), this, SLOT(slotBinaryCBChanged()));
+    connect(ui->tbSet, SIGNAL(clicked()), this, SLOT(slotSetMemoryCell()));
+
+    connect(ui->kisHex,SIGNAL(valueChanged(int)),this,SLOT(slotHexChanged(int)));
+    connect(ui->kisDec,SIGNAL(valueChanged(int)),this,SLOT(slotDecChanged(int)));
+    connect(ui->kisBinary,SIGNAL(valueChanged(int)),this,SLOT(slotBinaryChanged(int)));
+
+    ui->kisBinary->setValidator(new QRegExpValidator(QRegExp("[0-1]{1,4}")));
+    ui->kisBinary->setBase(2);
+
+    ui->kisHex->setValidator(new QRegExpValidator(QRegExp("0x[0-9a-fA-F]{1,4}")));
+    ui->kisHex->setBase(16);
 }
 
 void KLMemoryViewWidget::slotSelectionChanged()
@@ -127,6 +153,8 @@ void KLMemoryViewWidget::slotUpdate()
     // simply do nothing instead of violating the segment:
     if ( m_parent && m_parent->debugger() && item )
         m_parent->debugger()->readMemoryCell( item->address() );
+
+    updateGUI();
 }
 
 
@@ -225,6 +253,7 @@ void KLMemoryViewWidget::timeoutOfTimer( )
     m_nextUpdateIn = 0;
     if ( m_parent->debugger()->requestCount() != 0 )
         return;
+
     for ( unsigned int i=0; i < (unsigned int) m_ramEnd; i++ )
     {
         if ( ui->lbMemory->isSelected( i ) )

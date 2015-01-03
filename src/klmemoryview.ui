@@ -22,7 +22,7 @@
         <string>Refresh selected memory cell</string>
        </property>
        <property name="text">
-        <string/>
+        <string>Refresh</string>
        </property>
        <property name="shortcut">
         <string/>
@@ -31,6 +31,9 @@
      </item>
      <item>
       <widget class="QCheckBox" name="cbUpdateRegularly">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Update e&amp;very:</string>
        </property>
@@ -40,18 +43,18 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="tniUpdateRegularly"/>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="spinBox"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="tlUpdateMS">
-       <property name="text">
-        <string>ms</string>
-       </property>
-       <property name="wordWrap">
+      <widget class="QSpinBox" name="tniUpdateRegularly">
+       <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="suffix">
+        <string> ms</string>
+       </property>
+       <property name="maximum">
+        <number>100000</number>
+       </property>
+       <property name="value">
+        <number>1000</number>
        </property>
       </widget>
      </item>
@@ -86,12 +89,15 @@
          </widget>
         </item>
         <item>
-         <widget class="KIntSpinBox" name="kisBinary" native="true">
-          <property name="maxValue" stdset="0">
-           <number>255</number>
+         <widget class="KLSpinBoxWidget" name="kisBinary">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="base" stdset="0">
-           <number>2</number>
+          <property name="maximum">
+           <number>255</number>
           </property>
          </widget>
         </item>
@@ -434,11 +440,7 @@
          <string>Write the value to the memory cell</string>
         </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>image1</normaloff>image1</iconset>
+         <string>W</string>
         </property>
        </widget>
       </item>
@@ -499,18 +501,26 @@
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QSpinBox" name="kisHex"/>
+         <widget class="KLSpinBoxWidget" name="kisHex">
+          <property name="prefix">
+           <string>0x</string>
+          </property>
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QSpinBox" name="kisDec"/>
+         <widget class="QSpinBox" name="kisDec">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
      </layout>
     </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="Q3ListBox" name="lbMemory" native="true"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="tlDescription">
@@ -522,19 +532,22 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="0">
+    <widget class="Q3ListBox" name="lbMemory" native="true"/>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>KLSpinBoxWidget</class>
+   <extends>QSpinBox</extends>
+   <header location="global">klspinboxwidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>Q3GroupBox</class>
    <extends>QWidget</extends>
    <header>q3groupbox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QWidget</extends>
-   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>Q3ListBox</class>
@@ -550,262 +563,5 @@
   <include location="local">knuminput.h</include>
  </includes>
  <resources/>
- <connections>
-  <connection>
-   <sender>pbRefresh</sender>
-   <signal>clicked()</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotUpdate()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbUpdateRegularly</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotUpdateEnable(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leName</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotNameChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leChar</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotCharChanged(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>kisBinary</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit7</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit6</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit5</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit4</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit3</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit2</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit1</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbBit0</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotBinaryCBChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tbSet</sender>
-   <signal>clicked()</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotSetMemoryCell()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lbMemory</sender>
-   <signal>selectionChanged()</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotSelectionChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lbMemory</sender>
-   <signal>currentChanged(Q3ListBoxItem*)</signal>
-   <receiver>KLMemoryViewWidgetBase</receiver>
-   <slot>slotCurrentItemChanged(Q3ListBoxItem*)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
