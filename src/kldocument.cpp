@@ -141,7 +141,7 @@ KLDocument::~KLDocument()
         m_doc->closeUrl(false); //TODO: Workaround for a Kate bug. Remove when KDE < 3.2.0 support is dropped.
 
         //m_parent->slotPartWillGetDeleted( m_doc );
-        m_parent->slotActivePartChanged( 0L );
+        // m_parent->slotActivePartChanged( 0L );
         delete m_doc;
         // delete m_editInt;
         // delete m_listViewItem;
@@ -311,7 +311,7 @@ void KLDocument::makeLastActiveViewVisible( )
 
 void KLDocument::setActiveView( KLDocumentView * view )
 {
-    qDebug() << "ActiveView" << view->objectName();
+    // qDebug() << "ActiveView" << view->objectName();
     m_lastActiveView = view;
     if(m_project)   //the document is assigned to an project
         m_project->setActiveDocument( this );
@@ -334,7 +334,7 @@ void KLDocument::updateModified( )
 
     foreach ( KLDocumentView* it, m_registeredViews)
     {
-        qDebug() << it->objectName() << "modified?" << mod;
+        // qDebug() << it->objectName() << "modified?" << mod;
         it->setWindowTitle( mod ? name() + " *" : name() );
     }
 }
