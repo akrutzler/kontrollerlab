@@ -27,6 +27,7 @@
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 
+#include <ktexteditor/configinterface.h>
 #include <ktexteditor/cursor.h>
 #include <kmessagebox.h>
 
@@ -36,7 +37,6 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
 {
     // Store the document for this view:
     setObjectName(doc->name());
-    //setWindowState(Qt::WindowMaximized);
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_document = doc;
@@ -48,12 +48,18 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
 
     m_view = (KTextEditor::View *) doc->kateDoc()->createView( this);
 
+    KTextEditor::ConfigInterface *configIf = qobject_cast<KTextEditor::ConfigInterface*>( m_view );
+
+
+
     setWidget(m_view);
 
     parent->m_mdiArea->addSubWindow( this );
     setWindowTitle(doc->name());
 
     // remove the unwanted actions
+
+    // qDebug() << m_view->actionCollection()->actions();
 
     QAction *a = m_view->actionCollection()->action( "file_export" );
 
@@ -78,14 +84,18 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     if (a)
         connect( a, SIGNAL(activated()), this, SLOT(slotCheckForModifiedFiles()) );
     //m_view->actionCollection()->takeAction(a);
-    a = m_view->actionCollection()->action( "edit_redo" );
+/*
+    a = m_view->actionCollection()->action( "view_folding_markers" );
     if (a)
-        connect( a, SIGNAL(activated()), this, SLOT(slotCheckForModifiedFiles()) );
-    // m_view->actionCollection()->take(a);
+        m_view->actionCollection()->removeAction(a);
 
+    a = m_view->actionCollection()->action( "switch_to_cmd_line" );
+    if (a)
+        m_view->actionCollection()->removeAction(a);
+*/
     //because they are not implemented in VPL
     //! \todo still in kde4?
-    
+    /*
     a = m_view->actionCollection()->action( "edit_copy" );
     if (a)
         m_view->actionCollection()->takeAction(a);
@@ -95,6 +105,17 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     a = m_view->actionCollection()->action( "edit_paste" );
     if (a)
         m_view->actionCollection()->takeAction(a);
+
+    a = m_view->actionCollection()->action( "edit_paste" );
+    if (a)
+        m_view->actionCollection()->takeAction(a);
+        */
+
+    if( configIf )
+    {
+        configIf->setConfigValue("line-numbers",true);
+        configIf->setConfigValue("icon-bar",true);
+    }
 
     KActionMenu *bookmarkAction = dynamic_cast<KActionMenu*>(m_view->actionCollection()->action( "bookmarks" ));
     if (bookmarkAction)
@@ -133,7 +154,6 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
     doc->registerKLDocumentView( this );
     m_view->show();
     show();
-    //activate();
 
     connect( this,SIGNAL(aboutToActivate()),this,SLOT(mdiViewActivated()));
 
@@ -144,7 +164,7 @@ KLDocumentView::KLDocumentView( KLDocument *doc, KontrollerLab* parent ) : QMdiS
 
 KLDocumentView::~KLDocumentView()
 {
-    qDebug() << "removing" << this;
+    // qDebug() << "removing" << this;
 
     if ( m_parent->oldKTextEditor() == m_view )
     {
