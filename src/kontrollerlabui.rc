@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="kwrite" version="33">
+<kpartgui name="KontrollerLab" version="33">
 
 <MenuBar>
   <Menu name="file" noMerge="1"><text>&amp;File</text>
