@@ -54,19 +54,21 @@ HEADERS += src/klasminstruction.h \
            src/klwizardheadersetting.h \
            src/klwizardheadersettings.h \
            src/kontrollerlab.h \
-    src/klspinboxwidget.h
-FORMS += src/kldebuggerconfigwidgetbase.ui \
-         src/kldotmatrixcharacterwizardbase.ui \
-         src/kldotmatrixdisplaywizardbase.ui \
-         src/klfilenewdialogbase.ui \
-         src/klmemoryview.ui \
-         src/klprogramfuseswidgetbase.ui \
-         src/klprogrammerconfigwidgetbase.ui \
-         src/klprojectconfigwidgetbase.ui \
-         src/klprojectmanagerwidgetbase.ui \
-         src/klserialterminalwidgetbase.ui \
-         src/klsevensegmentwidgetbase.ui \
-    src/kleditorwidgetbase.ui
+           src/klspinboxwidget.h
+
+FORMS +=   src/kldebuggerconfigwidgetbase.ui \
+           src/kldotmatrixcharacterwizardbase.ui \
+           src/kldotmatrixdisplaywizardbase.ui \
+           src/klfilenewdialogbase.ui \
+           src/klmemoryview.ui \
+           src/klprogramfuseswidgetbase.ui \
+           src/klprogrammerconfigwidgetbase.ui \
+           src/klprojectconfigwidgetbase.ui \
+           src/klprojectmanagerwidgetbase.ui \
+           src/klserialterminalwidgetbase.ui \
+           src/klsevensegmentwidgetbase.ui \
+           src/kleditorwidgetbase.ui
+
 SOURCES += src/klasminstruction.cpp \
            src/klavrcpu.cpp \
            src/klavrflash.cpp \
@@ -112,13 +114,13 @@ SOURCES += src/klasminstruction.cpp \
            src/klwizardheadersetting.cpp \
            src/klwizardheadersettings.cpp \
            src/kontrollerlab.cpp \
-    src/main.cpp \
-    src/klspinboxwidget.cpp
-
-TRANSLATIONS += german.ts
+           src/main.cpp \
+           src/klspinboxwidget.cpp
 
 OTHER_FILES += src/CMakeLists.txt \
-            += src/kontrollerlabui.rc
+               src/kontrollerlabui.rc \
+               src/cpu_config.xml \
+               src/registers.xml
 
 DESTDIR = /home/andreas/0_OBJ/
 OBJECTS_DIR = /home/andreas/0_OBJ/deb
