@@ -41,9 +41,12 @@ int main(int argc, char **argv)
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-
-    KAboutData about(QByteArray("kontrollerlab"), QByteArray("KontrollerLab"), ki18n(version), QByteArray(description), ki18n(""),
-                 KAboutData::License_GPL, ki18n("(C) 2006 - 2008 cadManiac.org"), ki18n(""), QByteArray(""), QByteArray("help@cadmaniac.org"));
+    KAboutData about("kontrollerlab", 0,
+                         ki18nc("@title", "KontrollerLab"),
+                         version,
+                         ki18nc("@title", description),
+                         KAboutData::License_GPL,
+                         ki18nc("@info:credit", "(C) 2014 Andreas Krutzler\n(C) 2006-2008 cadManiac.org"));
 
     about.addAuthor( ki18n("Martin Strasser"),
                      ki18n(""), "strasser@cadmaniac.org" );
