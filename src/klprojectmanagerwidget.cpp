@@ -31,12 +31,11 @@
 #include "kontrollerlab.h"
 #include "kldocumentview.h"
 
-
-
 KLProjectManagerWidget::KLProjectManagerWidget(KLProject* project, QWidget *parent, const char *name)
-    :QWidget(parent,name),
-      ui(new Ui_KLProjectManagerWidgetBase)
+    :QWidget(parent), ui(new Ui::KLProjectManagerWidgetBase)
 {
+    setObjectName(name);
+
     ui->setupUi(this);
     m_project = project;
     m_project->registerProjectManager( this );
@@ -46,21 +45,36 @@ KLProjectManagerWidget::KLProjectManagerWidget(KLProject* project, QWidget *pare
     setProjectName( project->name() );
     m_projectManagerPopup = new KMenu( "projectManagerPopup", this);
     KIconLoader kico;
-    m_projectManagerPopup->insertItem( kico.loadIcon( "contents", KIconLoader::Toolbar ), i18n("Create new view"),
+    m_projectManagerPopup->insertItem( kico.loadIcon( "quickopen-file", KIconLoader::Toolbar ), i18n("Create new view"),
                                        this, SLOT( slotCreateNewView() ) );
-    m_projectManagerPopup->insertItem( kico.loadIcon( "edittrash", KIconLoader::Toolbar ), i18n("Remove from project"),
+    m_projectManagerPopup->insertItem( kico.loadIcon( "edit-delete", KIconLoader::Toolbar ), i18n("Remove from project"),
                                        this, SLOT( slotTrash() ) );
-    
-    connect( ui->lvFiles, SIGNAL( rightButtonPressed( Q3ListViewItem*, const QPoint& , int ) ),
-             this, SLOT(slotShowPopupMenu( Q3ListViewItem*, const QPoint& , int )  ) );
 
+    ui->tbConfigure->setIcon(kico.loadIcon("configure", KIconLoader::Toolbar));
+    ui->tbTrash->setIcon(kico.loadIcon("edit-delete", KIconLoader::Toolbar));
+
+
+    ui->lvFiles->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->lvFiles, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(slotShowPopupMenu(const QPoint &)));
+    
+    connect( ui->lvFiles, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+               this, SLOT(slotDoubleClicked(QTreeWidgetItem*,int)));
+
+    connect( ui->tbTrash, SIGNAL(clicked()), this, SLOT(slotTrash()));
+    connect( ui->tbConfigure, SIGNAL(clicked()), this, SLOT(slotConfigure()));
+
+    ui->lvFiles->setIndentation(10);
+
+    ui->lvFiles->setColumnWidth(0,160);
+    ui->lvFiles->setColumnWidth(1,50);
 }
 
-void KLProjectManagerWidget::slotDoubleClicked( Q3ListViewItem* item )
+void KLProjectManagerWidget::slotDoubleClicked( QTreeWidgetItem* item, int column )
 {
+    Q_UNUSED(column)
     if ( !item )
         return;
-    if ( item->rtti() == KLQListViewDocumentItem_RTTI )
+    if ( item->type() == KLQListViewDocumentItem_RTTI )
     {
         KLQListViewDocumentItem *itemCast = (KLQListViewDocumentItem*) item;
         itemCast->doc()->makeLastActiveViewVisible();
@@ -79,22 +93,22 @@ void KLProjectManagerWidget::addDocument( KLDocument * doc )
     if ( doc->type() == KLDocType_Source )
     {
         item = new KLQListViewDocumentItem( getSourceParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "text/x-csrc",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
+        item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "text/x-csrc",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     else if ( doc->type() == KLDocType_Header )
     {
         item = new KLQListViewDocumentItem( getHeaderParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "text/x-chdr",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
+        item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "text/x-chdr",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     else if ( doc->type() == KLDocType_Note )
     {
         item = new KLQListViewDocumentItem( getNotesParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "text/plain",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
+        item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "text/plain",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     else
     {
         item = new KLQListViewDocumentItem( getOthersParentFor( doc ), doc->name() );
-        item->setPixmap( 0, m_iconLoader->loadMimeTypeIcon( "all/all",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
+        item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "all/all",KIconLoader::Desktop, KIconLoader::SizeSmall ) );
     }
     item->setDoc( doc );
     item->updateFileInfo();
@@ -117,28 +131,28 @@ void KLProjectManagerWidget::update( )
         if ( it->type() == KLDocType_Source )
         {
             item = new KLQListViewDocumentItem( getSourceParentFor( it ), it->name() );
-            item->setPixmap( 0, m_iconLoader->loadIcon( "source_c", KIconLoader::Small ) );
+            item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "text/x-csrc", KIconLoader::Desktop, KIconLoader::SizeSmall ) );
         }
         else if ( it->type() == KLDocType_Header )
         {
             item = new KLQListViewDocumentItem( getHeaderParentFor( it ), it->name() );
-            item->setPixmap( 0, m_iconLoader->loadIcon( "source_h", KIconLoader::Small ) );
+            item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "text/x-chdr", KIconLoader::Desktop, KIconLoader::SizeSmall ) );
         }
         else if ( it->type() == KLDocType_Note )
         {
             item = new KLQListViewDocumentItem( getNotesParentFor( it ), it->name() );
-            item->setPixmap( 0, m_iconLoader->loadIcon( "txt", KIconLoader::Small ) );
+            item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "text/plain", KIconLoader::Desktop, KIconLoader::SizeSmall ) );
         }
         else
         {
             item = new KLQListViewDocumentItem( getOthersParentFor( it ), it->name() );
-            item->setPixmap( 0, m_iconLoader->loadIcon( "unknown", KIconLoader::Small ) );
+            item->setIcon( 0, m_iconLoader->loadMimeTypeIcon( "all/all", KIconLoader::Desktop, KIconLoader::SizeSmall ) );
         }
         // it->setListViewItem( item );
         item->setDoc( it );
         item->updateFileInfo();
     }
-    m_rootNode->setOpen( true );
+    m_rootNode->setExpanded( true );
 }
 
 
@@ -159,32 +173,23 @@ void KLQListViewDocumentItem::updateFileInfo( )
 
 void KLProjectManagerWidget::update( KLDocument * doc )
 {
-    Q3ListViewItem *item = 0, *outerItem = m_rootNode->firstChild();
-
-    while ( outerItem )
-    {
-        item = outerItem->firstChild();
-        while( item )
-        {
-            if ( (item->rtti() == KLQListViewDocumentItem_RTTI) &&
-                  (((KLQListViewDocumentItem*)item)->doc() == doc) )
-                break;
-            item = item->nextSibling();
-        }
-        if ( item )
-            break;
-        outerItem = outerItem->nextSibling();
+    QTreeWidgetItemIterator it(m_rootNode);
+    while (*it) {
+        if ((*it)->type() == KLQListViewDocumentItem_RTTI &&
+                (((KLQListViewDocumentItem*)*it)->doc() == doc) )
+               break;
+        ++it;
     }
 
-    if ( item && doc )
+    if ( *it && doc )
     {
-        item->setText( 0, doc->name() );
-        ((KLQListViewDocumentItem*)item)->updateFileInfo();
+        (*it)->setText( 0, doc->name() );
+        ((KLQListViewDocumentItem*)*it)->updateFileInfo();
     }
 }
 
-KLQListViewDocumentItem::KLQListViewDocumentItem(Q3ListViewItem *parent, const QString & name )
-    : Q3ListViewItem( parent, name )
+KLQListViewDocumentItem::KLQListViewDocumentItem(QTreeWidgetItem *parent, const QString & name )
+    : QTreeWidgetItem( parent, QStringList() << name, KLQListViewDocumentItem_RTTI )
 {
     m_doc = 0L;
 }
@@ -197,21 +202,21 @@ void KLProjectManagerWidget::slotConfigure()
 
 void KLProjectManagerWidget::slotTrash()
 {
-    Q3ListViewItem *item = ui->lvFiles->selectedItem();
+    QTreeWidgetItem *item = ui->lvFiles->currentItem();
     if ( !item )
         return;
-    if (item->rtti() == KLQListViewDocumentItem_RTTI)
+    if (item->type() == KLQListViewDocumentItem_RTTI)
     {
         KLQListViewDocumentItem *castItem = (KLQListViewDocumentItem*) item;
         int retVal = KMessageBox::questionYesNo( this, i18n( "Do you really want "
-                "to remove %1 from the project?" ).arg( castItem->doc()->name() ) );
+                                                             "to remove %1 from the project?" ).arg( castItem->doc()->name() ) );
         int saveRetVal = KMessageBox::No;
         if ( retVal == KMessageBox::Yes )
         {
             if ( castItem->doc()->kateDoc()->isModified() )
             {
                 saveRetVal = KMessageBox::questionYesNoCancel( this, i18n( "The file %1 has been modified.\n"
-                        "Shall it be saved now?").arg( castItem->doc()->name() ) );
+                                                                           "Shall it be saved now?").arg( castItem->doc()->name() ) );
                 if ( saveRetVal == KMessageBox::Yes )
                     castItem->doc()->save();
                 else if ( retVal == KMessageBox::Cancel )
@@ -221,7 +226,7 @@ void KLProjectManagerWidget::slotTrash()
             if ( KMessageBox::No == saveRetVal )
             {
                 retVal = KMessageBox::questionYesNoCancel( this, i18n( "Do you want "
-                        "to remove %1 from disk too?" ).arg( castItem->doc()->name() ) );
+                                                                       "to remove %1 from disk too?" ).arg( castItem->doc()->name() ) );
                 if ( retVal == KMessageBox::Yes )
                 {
                     QFile file( castItem->doc()->url().path() );
@@ -239,19 +244,11 @@ void KLProjectManagerWidget::slotTrash()
 
 void KLProjectManagerWidget::updateModified()
 {
-    Q3ListViewItem *item = 0, *outerItem = m_rootNode->firstChild();
-
-    while ( outerItem )
-    {
-        item = outerItem->firstChild();
-        while( item )
-        {
-            if ( (item->rtti() == KLQListViewDocumentItem_RTTI) )
-                ((KLQListViewDocumentItem*)item)->updateModified();
-
-            item = item->nextSibling();
-        }
-        outerItem = outerItem->nextSibling();
+    QTreeWidgetItemIterator it(m_rootNode);
+    while (*it) {
+        if ((*it)->type() == KLQListViewDocumentItem_RTTI )
+            ((KLQListViewDocumentItem*)*it)->updateModified();
+        ++it;
     }
 }
 
@@ -267,12 +264,14 @@ void KLQListViewDocumentItem::updateModified( )
         setText( 0, m_doc->name() );
 }
 
-void KLProjectManagerWidget::slotShowPopupMenu( Q3ListViewItem * item, const QPoint & pt, int )
+void KLProjectManagerWidget::slotShowPopupMenu( const QPoint & point)
 {
+    QTreeWidgetItem *item = ui->lvFiles->itemAt(point);
+
     if ( !item )
         return;
-    if ( item->rtti() == KLQListViewDocumentItem_RTTI )
-        m_projectManagerPopup->popup( pt );
+    if ( item->type() == KLQListViewDocumentItem_RTTI )
+        m_projectManagerPopup->popup( ui->lvFiles->mapToGlobal(point) );
 }
 
 
@@ -280,7 +279,7 @@ void KLProjectManagerWidget::slotShowPopupMenu( Q3ListViewItem * item, const QPo
 void KLProjectManagerWidget::clear( )
 {
     ui->lvFiles->clear();
-    m_rootNode = new Q3ListViewItem( ui->lvFiles, m_project->name() );
+    m_rootNode = new QTreeWidgetItem( ui->lvFiles, QStringList() << m_project->name() );
     delete m_sourcesNode;
     m_sourcesNode = 0L;
     delete m_headersNode;
@@ -289,13 +288,13 @@ void KLProjectManagerWidget::clear( )
     m_notesNode = 0L;
     delete m_othersNode;
     m_othersNode = 0L;
-    m_rootNode->setOpen( true );
+    m_rootNode->setExpanded( true );
 }
 
 
-Q3ListViewItem * KLProjectManagerWidget::getDirectoryListViewItem(const KUrl & dir)
+QTreeWidgetItem * KLProjectManagerWidget::getDirectoryListViewItem(const KUrl & dir)
 {
-    Q3ListViewItem* parent=0L;
+    QTreeWidgetItem* parent=0L;
     if ( m_project->projectBaseURL() == dir )
     {
         // Dir is the root
@@ -312,44 +311,44 @@ Q3ListViewItem * KLProjectManagerWidget::getDirectoryListViewItem(const KUrl & d
         parent = getDirectoryListViewItem( KUrl( dir.directory(KUrl::ObeyTrailingSlash ) ) );
     }
 
-    for ( Q3ListViewItem* it = parent->firstChild(); it; it = it->nextSibling() )
-    {
-        if ( it->text( 0 ) == dir.fileName() )
-            return it;
+    QTreeWidgetItemIterator it(parent);
+    while (*it) {
+        if ((*it)->text( 0 ) == dir.fileName() )
+            return *it;
+        ++it;
     }
+
     // No matching item was found!
     // Create one as child of m_rootNode
-    Q3ListViewItem* newItem = new Q3ListViewItem( parent, dir.fileName() );
-    newItem->setPixmap(0, m_iconLoader->loadIcon( "folder", KIconLoader::Small ) );
+    QTreeWidgetItem* newItem = new QTreeWidgetItem( parent, QStringList() << dir.fileName() );
+    newItem->setIcon(0, m_iconLoader->loadIcon( "folder", KIconLoader::Small ) );
     return newItem;
 }
 
 
-Q3ListViewItem * KLProjectManagerWidget::getParentNamedFor(KLDocument * doc, const QString & name)
+QTreeWidgetItem * KLProjectManagerWidget::getParentNamedFor(KLDocument * doc, const QString & name)
 {
     KUrl dUrl = doc->url();
-    Q3ListViewItem *lvi = getDirectoryListViewItem( KUrl( dUrl.directory( KUrl::ObeyTrailingSlash ) ) );
-    
-    Q3ListViewItem *it = lvi->firstChild();
-    while (it)
-    {
-        if ( it->text(0) == name )
-        {
-            return it;
-        }
-        it = it->nextSibling();
+    QTreeWidgetItem *lvi = getDirectoryListViewItem( KUrl( dUrl.directory( KUrl::ObeyTrailingSlash ) ) );
+       
+    QTreeWidgetItemIterator it(lvi);
+    while (*it) {
+        if ((*it)->text( 0 ) == name )
+            return *it;
+        ++it;
     }
+
     // Create a new item
-    return new Q3ListViewItem( lvi, name );
+    return new QTreeWidgetItem( lvi, QStringList() << name );
 }
 
 
 void KLProjectManagerWidget::slotCreateNewView()
 {
-    Q3ListViewItem *item = ui->lvFiles->selectedItem();
+    QTreeWidgetItem *item = ui->lvFiles->currentItem();
     if ( !item )
         return;
-    if (item->rtti() == KLQListViewDocumentItem_RTTI)
+    if (item->type() == KLQListViewDocumentItem_RTTI)
     {
         KLQListViewDocumentItem *castItem = (KLQListViewDocumentItem*) item;
         new KLDocumentView( castItem->doc(), m_project->parent() );

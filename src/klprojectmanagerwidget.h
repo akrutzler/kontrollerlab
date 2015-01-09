@@ -24,13 +24,9 @@
 
 #include "ui_klprojectmanagerwidgetbase.h"
 #include <QDateTime>
-#include <q3listview.h>
-#include <qtoolbutton.h>
-#include <qlabel.h>
 #include <klocale.h>
 #include <kurl.h>
 #include <kmenu.h>
-
 
 #define KLQListViewDocumentItem_RTTI 1001
 
@@ -39,21 +35,17 @@
 #define OTHERS_TXT "Others"
 #define NOTES_TXT "Notes"
 
-
 class KLProject;
 class KLDocument;
 class KIconLoader;
 class KMenu;
 
-
-
-class KLQListViewDocumentItem : public Q3ListViewItem
+class KLQListViewDocumentItem : public QTreeWidgetItem
 {
 public:
-    KLQListViewDocumentItem( Q3ListViewItem* parent, const QString& name );
+    KLQListViewDocumentItem(QTreeWidgetItem *parent, const QString& name );
     void setDoc(KLDocument* theValue) { m_doc = theValue; }
     KLDocument* doc() const { return m_doc; }
-    virtual int rtti() const { return KLQListViewDocumentItem_RTTI; }
     void updateFileInfo();
     void updateModified();
 protected:
@@ -69,7 +61,6 @@ public:
     void removeDocument( KLDocument* doc );
     void update();
     void update( KLDocument* doc );
-    void addFileInfo( KLDocument* doc, Q3ListViewItem* item );
     void setConfigButtonVisible( bool val ) { val?ui->tbConfigure->show():ui->tbConfigure->hide(); }
     void setProjectName( const QString& name )
     {
@@ -88,27 +79,27 @@ public:
     void clear();
 
 private:
-    Ui_KLProjectManagerWidgetBase *ui;
+    Ui::KLProjectManagerWidgetBase *ui;
 public slots:
-    virtual void slotDoubleClicked( Q3ListViewItem* item );
+    virtual void slotDoubleClicked(QTreeWidgetItem *item , int column);
     virtual void slotConfigure();
     virtual void slotTrash();
     virtual void slotCreateNewView();
-    virtual void slotShowPopupMenu( Q3ListViewItem* item, const QPoint& pt, int col );
+    virtual void slotShowPopupMenu(const QPoint &point );
 protected:
-    Q3ListViewItem* getSourceParentFor( KLDocument* doc )
+    QTreeWidgetItem* getSourceParentFor( KLDocument* doc )
     { return getParentNamedFor(doc, SOURCES_TXT); }
-    Q3ListViewItem* getHeaderParentFor( KLDocument* doc )
+    QTreeWidgetItem* getHeaderParentFor( KLDocument* doc )
     { return getParentNamedFor(doc, HEADERS_TXT); }
-    Q3ListViewItem* getNotesParentFor( KLDocument* doc )
+    QTreeWidgetItem* getNotesParentFor( KLDocument* doc )
     { return getParentNamedFor(doc, NOTES_TXT); }
-    Q3ListViewItem* getOthersParentFor( KLDocument* doc )
+    QTreeWidgetItem* getOthersParentFor( KLDocument* doc )
     { return getParentNamedFor(doc, OTHERS_TXT); }
-    Q3ListViewItem* getParentNamedFor( KLDocument* doc, const QString& name );
+    QTreeWidgetItem* getParentNamedFor( KLDocument* doc, const QString& name );
 
     // void registerDocHierarchically( KLDocument* doc );
-    Q3ListViewItem* getDirectoryListViewItem( const KUrl& dir );
-    Q3ListViewItem *m_rootNode, *m_sourcesNode, *m_headersNode, *m_notesNode, *m_othersNode;
+    QTreeWidgetItem* getDirectoryListViewItem( const KUrl& dir );
+    QTreeWidgetItem *m_rootNode, *m_sourcesNode, *m_headersNode, *m_notesNode, *m_othersNode;
     KLProject* m_project;
     KIconLoader *m_iconLoader;
     int m_curHexSize;
