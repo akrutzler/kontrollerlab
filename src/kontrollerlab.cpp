@@ -269,10 +269,12 @@ void KontrollerLab::createActions()
     m_dotMatrixWizardAction = (QAction*) actionc->addAction("dot_matrix_wizard",this, SLOT( slotDotMatrixWizard() ));
     m_dotMatrixWizardAction->setText(i18n("Dot matrix display wizard"));
     m_dotMatrixWizardAction->setIcon(KIcon("tools-wizard"));
+    m_dotMatrixWizardAction->setEnabled(false);
 
     m_dotMatrixCharacterWizardAction = (QAction*) actionc->addAction("dot_matrix_character_wizard",this, SLOT( slotDotMatrixCharacterWizard() ));
     m_dotMatrixCharacterWizardAction->setText(i18n("Dot matrix character wizard"));
     m_dotMatrixCharacterWizardAction->setIcon(KIcon("tools-wizard"));
+    m_dotMatrixCharacterWizardAction->setEnabled(false);
 
     QActionGroup *debugMode = new QActionGroup(this);
     debugMode->setExclusive(true);
