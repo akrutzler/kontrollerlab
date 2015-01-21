@@ -111,7 +111,7 @@ KLSerialTerminalWidget::KLSerialTerminalWidget(KontrollerLab *parent, const char
     ui->cbDevice->insertStringList( ports );
     
     KIconLoader ico;
-    ui->tbOpenClose->setIconSet( ico.loadIcon( "document-open", KIconLoader::Panel ) );
+    ui->tbOpenClose->setIconSet( ico.loadIcon( "network-disconnect", KIconLoader::Panel ) );
     
     ui->tbClear->setIconSet( ico.loadIcon( "edit-clear-list", KIconLoader::Panel ) );
     
@@ -270,7 +270,7 @@ void KLSerialTerminalWidget::slotOpenClose()
     // Check again if it is open now:
     if ( m_serialPort->isOpen() )
     {
-        ui->tbOpenClose->setIconSet( ico.loadIcon( "connect_established", KIconLoader::Panel ) );
+        ui->tbOpenClose->setIconSet( ico.loadIcon( "network-connect", KIconLoader::Panel ) );
         ui->cbDevice->setEnabled(false);
         ui->cbBaud->setEnabled(false);
         ui->pbSend->setEnabled(true);
@@ -281,7 +281,7 @@ void KLSerialTerminalWidget::slotOpenClose()
     }
     else
     {
-        ui->tbOpenClose->setIconSet( ico.loadIcon( "connect_no", KIconLoader::Panel ) );
+        ui->tbOpenClose->setIconSet( ico.loadIcon( "network-disconnect", KIconLoader::Panel ) );
         ui->cbDevice->setEnabled(true);
         ui->cbBaud->setEnabled(true);
         ui->pbSend->setEnabled(false);
