@@ -6,6 +6,8 @@ The KontrollerLab is an IDE for developing software for Atmel(r) AVR(c) microcon
 Introduction
 -------------
 
+This is an KDE4/Qt4 port of KontrollerLab developed by cadManiac.org.
+
 Resources
 -------------
 - KontrollerLab on github:
