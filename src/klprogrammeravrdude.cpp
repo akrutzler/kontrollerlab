@@ -22,6 +22,7 @@
 #include "klprogrammeravrdude.h"
 #include "klproject.h"
 #include <klocale.h>
+#include <QFileInfo>
 
 
 KLProgrammerAVRDUDE::KLProgrammerAVRDUDE(KLProcessManager* processManager, KLProject* project)
@@ -200,54 +201,54 @@ KLProgrammerAVRDUDE::KLProgrammerAVRDUDE(KLProcessManager* processManager, KLPro
     m_serialPorts["/dev/ttyUSB0"] = i18n("Serial port /dev/ttyUSB0");
     m_serialPortsKeyList.append("/dev/ttyUSB0");
 
-    m_mmcuLookup[QString("ATtiny84").upper()] = "t84";
-    m_mmcuLookup[QString("ATtiny44").upper()] = "t44";
-    m_mmcuLookup[QString("ATtiny24").upper()] = "t24";
-    m_mmcuLookup[QString("ATMEGA1281").upper()] = "m1281";
-    m_mmcuLookup[QString("ATMEGA1280").upper()] = "m1280";
-    m_mmcuLookup[QString("ATMEGA640").upper()] = "m640";
-    m_mmcuLookup[QString("ATtiny85").upper()] = "t85";
-    m_mmcuLookup[QString("ATtiny45").upper()] = "t45";
-    m_mmcuLookup[QString("ATtiny25").upper()] = "t25";
-    m_mmcuLookup[QString("AT90PWM3").upper()] = "pwm3";
-    m_mmcuLookup[QString("AT90PWM2").upper()] = "pwm2";
-    m_mmcuLookup[QString("ATtiny2313").upper()] = "t2313";
-    m_mmcuLookup[QString("ATMEGA168").upper()] = "m168";
-    m_mmcuLookup[QString("ATMEGA88").upper()] = "m88";
-    m_mmcuLookup[QString("ATMEGA48").upper()] = "m48";
-    m_mmcuLookup[QString("ATTINY26").upper()] = "t26";
-    m_mmcuLookup[QString("ATMEGA8535").upper()] = "m8535";
-    m_mmcuLookup[QString("ATMEGA8515").upper()] = "m8515";
-    m_mmcuLookup[QString("ATMEGA8").upper()] = "m8";
-    m_mmcuLookup[QString("ATMEGA161").upper()] = "m161";
-    m_mmcuLookup[QString("ATMEGA32").upper()] = "m32";
-    m_mmcuLookup[QString("ATMEGA6490").upper()] = "m6490";
-    m_mmcuLookup[QString("ATMEGA649").upper()] = "m649";
-    m_mmcuLookup[QString("ATMEGA3290").upper()] = "m3290";
-    m_mmcuLookup[QString("ATMEGA329").upper()] = "m329";
-    m_mmcuLookup[QString("ATMEGA169").upper()] = "m169";
-    m_mmcuLookup[QString("ATMEGA163").upper()] = "m163";
-    m_mmcuLookup[QString("ATMEGA162").upper()] = "m162";
-    m_mmcuLookup[QString("ATMEGA644").upper()] = "m644";
-    m_mmcuLookup[QString("ATMEGA324").upper()] = "m324";
-    m_mmcuLookup[QString("ATMEGA164").upper()] = "m164";
-    m_mmcuLookup[QString("ATMEGA16").upper()] = "m16";
-    m_mmcuLookup[QString("AT90CAN128").upper()] = "c128";
-    m_mmcuLookup[QString("ATMEGA128").upper()] = "m128";
-    m_mmcuLookup[QString("ATMEGA64").upper()] = "m64";
-    m_mmcuLookup[QString("ATMEGA103").upper()] = "m103";
-    m_mmcuLookup[QString("AT90S8535").upper()] = "8535";
-    m_mmcuLookup[QString("AT90S8515").upper()] = "8515";
-    m_mmcuLookup[QString("AT90S4434").upper()] = "4434";
-    m_mmcuLookup[QString("AT90S4433").upper()] = "4433";
-    m_mmcuLookup[QString("AT90S2343").upper()] = "2343";
-    m_mmcuLookup[QString("AT90S2333").upper()] = "2333";
-    m_mmcuLookup[QString("AT90S2313").upper()] = "2313";
-    m_mmcuLookup[QString("AT90S4414").upper()] = "4414";
-    m_mmcuLookup[QString("AT90S1200").upper()] = "1200";
-    m_mmcuLookup[QString("ATtiny15").upper()] = "t15";
-    m_mmcuLookup[QString("ATtiny13").upper()] = "t13";
-    m_mmcuLookup[QString("ATtiny12").upper()] = "t12";
+    m_mmcuLookup[QString("ATtiny84").toUpper()] = "t84";
+    m_mmcuLookup[QString("ATtiny44").toUpper()] = "t44";
+    m_mmcuLookup[QString("ATtiny24").toUpper()] = "t24";
+    m_mmcuLookup[QString("ATMEGA1281").toUpper()] = "m1281";
+    m_mmcuLookup[QString("ATMEGA1280").toUpper()] = "m1280";
+    m_mmcuLookup[QString("ATMEGA640").toUpper()] = "m640";
+    m_mmcuLookup[QString("ATtiny85").toUpper()] = "t85";
+    m_mmcuLookup[QString("ATtiny45").toUpper()] = "t45";
+    m_mmcuLookup[QString("ATtiny25").toUpper()] = "t25";
+    m_mmcuLookup[QString("AT90PWM3").toUpper()] = "pwm3";
+    m_mmcuLookup[QString("AT90PWM2").toUpper()] = "pwm2";
+    m_mmcuLookup[QString("ATtiny2313").toUpper()] = "t2313";
+    m_mmcuLookup[QString("ATMEGA168").toUpper()] = "m168";
+    m_mmcuLookup[QString("ATMEGA88").toUpper()] = "m88";
+    m_mmcuLookup[QString("ATMEGA48").toUpper()] = "m48";
+    m_mmcuLookup[QString("ATTINY26").toUpper()] = "t26";
+    m_mmcuLookup[QString("ATMEGA8535").toUpper()] = "m8535";
+    m_mmcuLookup[QString("ATMEGA8515").toUpper()] = "m8515";
+    m_mmcuLookup[QString("ATMEGA8").toUpper()] = "m8";
+    m_mmcuLookup[QString("ATMEGA161").toUpper()] = "m161";
+    m_mmcuLookup[QString("ATMEGA32").toUpper()] = "m32";
+    m_mmcuLookup[QString("ATMEGA6490").toUpper()] = "m6490";
+    m_mmcuLookup[QString("ATMEGA649").toUpper()] = "m649";
+    m_mmcuLookup[QString("ATMEGA3290").toUpper()] = "m3290";
+    m_mmcuLookup[QString("ATMEGA329").toUpper()] = "m329";
+    m_mmcuLookup[QString("ATMEGA169").toUpper()] = "m169";
+    m_mmcuLookup[QString("ATMEGA163").toUpper()] = "m163";
+    m_mmcuLookup[QString("ATMEGA162").toUpper()] = "m162";
+    m_mmcuLookup[QString("ATMEGA644").toUpper()] = "m644";
+    m_mmcuLookup[QString("ATMEGA324").toUpper()] = "m324";
+    m_mmcuLookup[QString("ATMEGA164").toUpper()] = "m164";
+    m_mmcuLookup[QString("ATMEGA16").toUpper()] = "m16";
+    m_mmcuLookup[QString("AT90CAN128").toUpper()] = "c128";
+    m_mmcuLookup[QString("ATMEGA128").toUpper()] = "m128";
+    m_mmcuLookup[QString("ATMEGA64").toUpper()] = "m64";
+    m_mmcuLookup[QString("ATMEGA103").toUpper()] = "m103";
+    m_mmcuLookup[QString("AT90S8535").toUpper()] = "8535";
+    m_mmcuLookup[QString("AT90S8515").toUpper()] = "8515";
+    m_mmcuLookup[QString("AT90S4434").toUpper()] = "4434";
+    m_mmcuLookup[QString("AT90S4433").toUpper()] = "4433";
+    m_mmcuLookup[QString("AT90S2343").toUpper()] = "2343";
+    m_mmcuLookup[QString("AT90S2333").toUpper()] = "2333";
+    m_mmcuLookup[QString("AT90S2313").toUpper()] = "2313";
+    m_mmcuLookup[QString("AT90S4414").toUpper()] = "4414";
+    m_mmcuLookup[QString("AT90S1200").toUpper()] = "1200";
+    m_mmcuLookup[QString("ATtiny15").toUpper()] = "t15";
+    m_mmcuLookup[QString("ATtiny13").toUpper()] = "t13";
+    m_mmcuLookup[QString("ATtiny12").toUpper()] = "t12";
 }
 
 
@@ -356,7 +357,7 @@ QString KLProgrammerAVRDUDE::attribute( const QString & attr, const QString conf
 QString KLProgrammerAVRDUDE::formBaseCommand( ) const
 {
     QString cmd = m_configuration[ PROGRAMMER_COMMAND ] + " ";
-    QString mmcu = m_mmcuLookup[m_project->currentCpuFeatures().name().upper()];
+    QString mmcu = m_mmcuLookup[m_project->currentCpuFeatures().name().toUpper()];
     if ( (!mmcu.isEmpty()) && (!mmcu.isNull()) )
         cmd += " -p " + mmcu;
     cmd += attribute( "-b ", AVRDUDE_OVERRIDE_BAUD_RATE );
@@ -465,9 +466,10 @@ void KLProgrammerAVRDUDE::readFromFile( QFile & file, const QString & key, QMap<
     if ( file.exists() && (finfo.size()==1) )
     {
         // qDebug("EXISTS: %s", file.name().ascii());
-        if (file.open( IO_ReadOnly ))
+        if (file.open( QIODevice::ReadOnly ))
         {
-            int ch = file.getch();
+            int ch;
+            file.getChar((char*)&ch);
             if ( ch >= 0 )
                 map[ key ] = QString("0x%1").arg( ch, 0, 16 );
             // qDebug("%s is %s", key.ascii(), map[key].ascii());

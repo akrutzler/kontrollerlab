@@ -64,36 +64,31 @@ KLCPUFuses::KLCPUFuses(const QString & mcuName,
 
 KLCPUFuses::KLCPUFuses(QDomDocument &, QDomElement & parent)
 {
-    if ( parent.nodeName().upper() == "FUSES" )
+    if ( parent.nodeName().toUpper() == "FUSES" )
     {
         for( QDomNode n = parent.firstChild(); !n.isNull(); n = n.nextSibling() )
         {
             if ( n.isElement() )
             {
                 QDomElement ele = n.toElement();
-                if ( n.nodeName().upper() == "LOW_CAN_BE_CHANGED" )
+                if ( n.nodeName().toUpper() == "LOW_CAN_BE_CHANGED" )
                     m_lowCanBeChanged = stringToBoolValList( ele.text() );
-                else if ( n.nodeName().upper() == "LOW_NAMES" )
+                else if ( n.nodeName().toUpper() == "LOW_NAMES" )
                 {
-                    QStringList list;
-                    list = list.split(",", ele.text());
-                    m_lowNames = list;
+                    m_lowNames = ele.text().split(",");
                 }
-                else if ( n.nodeName().upper() == "HIGH_CAN_BE_CHANGED" )
+                else if ( n.nodeName().toUpper() == "HIGH_CAN_BE_CHANGED" )
                     m_highCanBeChanged = stringToBoolValList( ele.text() );
-                else if ( n.nodeName().upper() == "HIGH_NAMES" )
+                else if ( n.nodeName().toUpper() == "HIGH_NAMES" )
                 {
-                    QStringList list;
-                    list = list.split(",", ele.text());
-                    m_highNames = list;
+
+                    m_highNames = ele.text().split(",");
                 }
-                else if ( n.nodeName().upper() == "EXT_CAN_BE_CHANGED" )
+                else if ( n.nodeName().toUpper() == "EXT_CAN_BE_CHANGED" )
                     m_extCanBeChanged = stringToBoolValList( ele.text() );
-                else if ( n.nodeName().upper() == "EXT_NAMES" )
+                else if ( n.nodeName().toUpper() == "EXT_NAMES" )
                 {
-                    QStringList list;
-                    list = list.split(",", ele.text());
-                    m_extNames = list;
+                    m_extNames = ele.text().split(",");;
                 }
             }
         }
@@ -152,11 +147,11 @@ QList< bool > KLCPUFuses::stringToBoolValList(const QString & boolList) const
     QStringList list;
     QList< bool > retVal;
 
-    list = list.split( ",", boolList );
+    list =  boolList.split(",");
     for (QStringList::iterator it = list.begin(); it != list.end(); ++it)
     {
-        if ( (*it).stripWhiteSpace().length() != 0 )
-            retVal.append( (*it).stripWhiteSpace().upper() == TRUE_STRING );
+        if ( (*it).trimmed().length() != 0 )
+            retVal.append( (*it).trimmed().toUpper() == TRUE_STRING );
     }
     return retVal;
 }

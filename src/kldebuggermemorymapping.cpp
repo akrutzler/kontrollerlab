@@ -58,13 +58,13 @@ QString KLDebuggerMemoryMappingList::toString( )
 
 void KLDebuggerMemoryMappingList::fromString( const QString & val )
 {
-    QStringList lst = QStringList::split( ",", val, false );
+    QStringList lst = val.split(",",QString::SkipEmptyParts);
     for ( unsigned int i=0; i+1<lst.count(); i+=2 )
     {
-        QString fromStr_ = lst[ i ].lower();
+        QString fromStr_ = lst[ i ].toLower();
         QString fromStr = fromStr_;
         fromStr = fromStr.replace( "0x", "" );
-        QString toStr_ = lst[ i+1 ].lower();
+        QString toStr_ = lst[ i+1 ].toLower();
         QString toStr = toStr_;
         toStr = toStr.replace( "0x", "" );
         bool ok1, ok2;

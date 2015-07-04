@@ -83,7 +83,7 @@ int main(int argc, char **argv)
             mainWin = new KontrollerLab( args->url(0).isValid() );
         else
             mainWin = new KontrollerLab();
-        app.setMainWidget( mainWin );
+        //app.setMainWidget( mainWin ); //TODO
         mainWin->show();
         if ( args->count() > 0 && args->url(0).isValid() )
         {

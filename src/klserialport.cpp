@@ -48,7 +48,7 @@ bool KLSerialPort::open( const QString & file, int baudRate )
 {
     close();
 
-    m_fd = ::open( file, O_RDWR | O_NOCTTY | O_NONBLOCK );
+    m_fd = ::open( file.toLatin1(), O_RDWR | O_NOCTTY | O_NONBLOCK );
 
     if (m_fd == -1)
         return false;

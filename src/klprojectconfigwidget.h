@@ -28,7 +28,6 @@
 
 
 class KLProject;
-class Q3CheckListItem;
 class KLProjectManagerWidget;
 
 class KLProjectConfigWidget: public  QDialog {
@@ -39,7 +38,7 @@ public:
     void updateGUIFromSettings();
     QMap< QString, QString > settings() const { return m_settings; }
 private:
-    Ui_KLProjectConfigWidgetBase *ui;
+    Ui::KLProjectConfigWidgetBase *ui;
 public slots:
     virtual void slotCPUChanged( const QString& name );
     virtual void slotCancel();
@@ -55,7 +54,7 @@ protected:
     KLProjectManagerWidget* m_projectManagerInConfigWidget;
     QMap< QString, QString > m_settings;
     QMap< QString, QString > m_possibleLinkerFlags;
-    QList< Q3CheckListItem*> m_linkerFlagsCBs;
+    QList< QTableWidgetItem*> m_linkerFlagsCBs;
 };
 
 #endif

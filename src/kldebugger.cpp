@@ -29,15 +29,15 @@
 #include "kldebuggerbreakpoint.h"
 #include <vector>
 #include "kldocumentview.h"
-#include <Qt3Support>
 
 
 KLDebugger::KLDebugger(KLSerialTerminalWidget* serTerm, KontrollerLab* parent, 
                        const char *name)
- : QObject(parent, name), m_requestTimeout(this, "timeoutTimer"),
+ : QObject(parent),
            m_flash(this, "FlashMemory"), m_ram(this, "RAMMemory"),
            m_cpu(this, "CPU of " + QString(name))
 {
+    setObjectName(name);
     m_parent = parent;
     m_state = DBG_Off;
     m_atLeastOneSrcLine = false;
@@ -48,6 +48,8 @@ KLDebugger::KLDebugger(KLSerialTerminalWidget* serTerm, KontrollerLab* parent,
     m_stopCallCounter = 0;
     m_serialTerminalWidget = serTerm;
 
+    m_requestTimeout.setObjectName("timeoutTimer");
+    m_requestTimeout.setSingleShot(true);
     connect( m_serialTerminalWidget, SIGNAL(receivedICDData( const KLCharVector& ) ),
              this, SLOT( slotControllerResponded( const KLCharVector& ) ) );
     connect( &m_requestTimeout, SIGNAL(timeout()), this, SLOT(requestTimeout()) );
@@ -261,7 +263,7 @@ void KLDebugger::sendNextRequest( )
                     .arg(QChar(cur.address()&0xff)) );
             */
             m_serialTerminalWidget->slotSendICDData( data );
-            m_requestTimeout.start( REQUEST_TIMEOUT, TRUE );
+            m_requestTimeout.start( REQUEST_TIMEOUT );
         }
         else if ( cur.writeRequest() )
         {
@@ -278,7 +280,7 @@ void KLDebugger::sendNextRequest( )
                     .arg(QChar(cur.writeValue())) );
             */
             m_serialTerminalWidget->slotSendICDData( data );
-            m_requestTimeout.start( REQUEST_TIMEOUT, TRUE );
+            m_requestTimeout.start( REQUEST_TIMEOUT );
         }
     }
     else
@@ -384,7 +386,7 @@ void KLDebugger::setASMRelations( QList< KLSourceCodeToASMRelation > rlist )
         for ( unsigned int i=0; i < m_relationList.size(); i++ )
         {
             QString srcFN = m_relationList[i].sourceFilename();
-            if ( srcList.findIndex( srcFN ) < 0 )
+            if ( srcList.indexOf( srcFN ) < 0 )
                 srcList.append( srcFN );
         }
         m_flash.setSources( srcList );
@@ -401,13 +403,13 @@ void KLDebugger::setASMRelations( QList< KLSourceCodeToASMRelation > rlist )
                 if ( ( src.line() != testLine ) || ( src.sourceFilename() != testFN ) )
                     qDebug("???");
                 */
-                m_flash.setSourceAndLineInSource( asmI, src.line(), srcList.findIndex( src.sourceFilename() ) );
+                m_flash.setSourceAndLineInSource( asmI, src.line(), srcList.indexOf( src.sourceFilename() ) );
             }
         }
         unsigned int lenOfFlash = m_flash.flashSize();
         const KLSourceCodeToASMRelation lastSrc = m_relationList[ m_relationList.size()-1 ];
         int lastLine = lastSrc.line();
-        int srcNr = srcList.findIndex( lastSrc.sourceFilename() );
+        int srcNr = srcList.indexOf( lastSrc.sourceFilename() );
         for ( unsigned int i=lastSrc.asmCommandAddress(); i < lenOfFlash; i++ )
         {
             m_flash.setSourceAndLineInSource( i, lastLine, srcNr );
@@ -820,9 +822,9 @@ void KLDebugger::toggleBreakpoint(const KUrl &url, int line )
     if ( m_parent->project() )
     {
         KLDebuggerBreakpoint bp( url, line, seekToNextExecutableLine( url, line ) );
-        if ( m_breakpoints.findIndex( bp ) >= 0 )
+        if ( m_breakpoints.indexOf( bp ) >= 0 )
         {
-            m_breakpoints.remove( bp );
+            m_breakpoints.removeAll( bp );
             m_parent->project()->markBreakpointInDocument( url, line, false );
         }
         else

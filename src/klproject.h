@@ -140,7 +140,7 @@ public:
     double clock() const
     {
         bool ok;
-        double val = attribute( "", PRJ_CLOCKSPEED ).stripWhiteSpace().toDouble( &ok );
+        double val = attribute( "", PRJ_CLOCKSPEED ).trimmed().toDouble( &ok );
         if ( !ok ) val = 0;
         return val;
     }

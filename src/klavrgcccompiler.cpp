@@ -154,7 +154,7 @@ QString KLAVRGCCCompiler::getCompileCommandFor( const KUrl & file )
     QString retVal;
 
     // There is a difference if it is an assembler (.s) or a C file:
-    if ( file.fileName().lower().endsWith( ".s" ) )
+    if ( file.fileName().toLower().endsWith( ".s" ) )
     {
         retVal = m_project->m_settings[ PRJ_ASSEMBLER_COMMAND ];
         
@@ -163,10 +163,10 @@ QString KLAVRGCCCompiler::getCompileCommandFor( const KUrl & file )
         retVal += m_project->attribute( "-O", PRJ_COMPILER_OPT_LEVEL );
         
         // Append the clock speed if desired:
-        if ( m_project->attribute( "", PRJ_CLOCKSPEED ).stripWhiteSpace().length() > 0 )
+        if ( m_project->attribute( "", PRJ_CLOCKSPEED ).trimmed().length() > 0 )
         {
             bool ok;
-            double val = m_project->attribute( "", PRJ_CLOCKSPEED ).stripWhiteSpace().toDouble( &ok );
+            double val = m_project->attribute( "", PRJ_CLOCKSPEED ).trimmed().toDouble( &ok );
             if (ok && (m_project->conf( PRJ_COMPILER_F_CPU, FALSE_STRING ) == TRUE_STRING) )
                 retVal += QString(" -DF_CPU=%1UL").arg(val, 0, 'f', 0);
         }
@@ -183,10 +183,10 @@ QString KLAVRGCCCompiler::getCompileCommandFor( const KUrl & file )
         retVal += m_project->attribute( "-Wall", PRJ_COMPILER_WALL, true );
         retVal += m_project->attribute( "-g", PRJ_COMPILER_GDEBUG, true );
         retVal += m_project->attribute( "-O", PRJ_COMPILER_OPT_LEVEL );
-        if ( m_project->attribute( "", PRJ_CLOCKSPEED ).stripWhiteSpace().length() > 0 )
+        if ( m_project->attribute( "", PRJ_CLOCKSPEED ).trimmed().length() > 0 )
         {
             bool ok;
-            double val = m_project->attribute( "", PRJ_CLOCKSPEED ).stripWhiteSpace().toDouble( &ok );
+            double val = m_project->attribute( "", PRJ_CLOCKSPEED ).trimmed().toDouble( &ok );
             if (ok && (m_project->conf( PRJ_COMPILER_F_CPU, FALSE_STRING ) == TRUE_STRING) )
                 retVal += QString(" -DF_CPU=%1UL").arg(val, 0, 'f', 0);
         }
@@ -239,7 +239,7 @@ QString KLAVRGCCCompiler::getLinkerCommand( const QString& listOfObjectFiles )
     retVal += " -o " + m_project->getOUTFileName();
     retVal += " -Wl,-Map," + m_project->getMAPFileName();
 
-    QString buf = m_project->conf( PRJ_LINKER_FLAGS, "" ).stripWhiteSpace();
+    QString buf = m_project->conf( PRJ_LINKER_FLAGS, "" ).trimmed();
     // buf.replace( "#", "," );
     // I'm not sure about that:
     buf.replace( "#", " " );
@@ -365,11 +365,11 @@ QString KLAVRGCCCompiler::getReadDebugCommand( )
 void KLAVRGCCCompiler::parseDebugInfos( const QString & str )
 {
     QRegExp re( "/\\*\\sfile\\s(.*)\\sline\\s([0-9]*)\\saddr\\s0x([0-9a-fA-F]*)\\s*\\*/" );
-    QStringList allLines = QStringList::split( "\n", str );
+    QStringList allLines = str.split("\n");
     QList< KLSourceCodeToASMRelation > relations;
     for (unsigned int i=0; i < allLines.count(); i++)
     {
-        if ( re.search( allLines[ i ] ) >= 0 )
+        if ( re.indexIn( allLines[ i ] ) >= 0 )
         {
             bool ok1, ok2;
             // qDebug( "%s in line %s represents asm line %s", re.cap( 1 ).ascii(),
@@ -389,7 +389,7 @@ void KLAVRGCCCompiler::parseDebugInfos( const QString & str )
                                   re.cap( 3 ).toInt( &ok2, 16 ) ) );
                 if ( !(ok1 && ok2 ) )
                     qWarning( "There was a problem in the conversion of the line:\n%s\nin %s:%d",
-                            allLines[i].ascii(), __FILE__, __LINE__ );
+                            allLines[i].toLatin1(), __FILE__, __LINE__ );
             }
             // else
             //     qWarning("Could not verify %s", fn.ascii() );
@@ -401,11 +401,11 @@ void KLAVRGCCCompiler::parseDebugInfos( const QString & str )
 void KLAVRGCCCompiler::parseHexCmds( const QString & str )
 {
     QRegExp re( "\\s*([0-9a-fA-F]*):\\s*([^\\t]*)" );
-    QStringList allLines = QStringList::split( "\n", str );
+    QStringList allLines = str.split("\n");
     QList< KLASMInstruction > instr;
     for (unsigned int i=0; i < allLines.count(); i++)
     {
-        if ( re.search( allLines[ i ] ) >= 0 )
+        if ( re.indexIn( allLines[ i ] ) >= 0 )
         {
             // qDebug( "inst %s is %s", re.cap( 1 ).ascii(), re.cap( 2 ).ascii() );
             bool ok1, ok2 = true;
@@ -418,8 +418,8 @@ void KLAVRGCCCompiler::parseHexCmds( const QString & str )
                 //          allLines[ i ].ascii() );
                 continue;
             }
-            QString hex = re.cap( 2 ).stripWhiteSpace();
-            QStringList hexStrings = QStringList::split( " ", hex, false );
+            QString hex = re.cap( 2 ).trimmed();
+            QStringList hexStrings = hex.split(" ",QString::SkipEmptyParts);
             QList< unsigned int > hexAsInt;
             for ( unsigned int j=0; j<hexStrings.count(); j++ )
             {

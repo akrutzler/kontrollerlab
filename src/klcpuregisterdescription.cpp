@@ -20,7 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "klcpuregisterdescription.h"
-#include <Qt3Support>
 
 KLCPURegisterDescription::KLCPURegisterDescription( unsigned int location,
                           const QString& name, const QString& description )
@@ -64,7 +63,7 @@ KLCPURegisterDescription KLCPURegisterDescriptionList::registerDescriptionFor(un
 void KLCPURegisterDescriptionList::readFromDOMElement(QDomDocument &, QDomElement & elem, const QString& name )
 {
     clear();
-    if ( elem.nodeName().upper() == "REGISTER_DESCRIPTIONS" )
+    if ( elem.nodeName().toUpper() == "REGISTER_DESCRIPTIONS" )
     {
         QString ver = elem.attribute( "VERSION", "" );
         // if ( !ver.isEmpty() )
@@ -78,8 +77,8 @@ void KLCPURegisterDescriptionList::readFromDOMElement(QDomDocument &, QDomElemen
                 continue;
             }
             QDomElement e = n.toElement();
-            if ( ( e.nodeName().upper() == "CPU" ) &&
-                    ( e.attribute( "NAME", "" ).upper() == name.upper() ) )
+            if ( ( e.nodeName().toUpper() == "CPU" ) &&
+                    ( e.attribute( "NAME", "" ).toUpper() == name.toUpper() ) )
             {
                 QDomNode reg = e.firstChild();
                 while ( !reg.isNull() )
@@ -90,7 +89,7 @@ void KLCPURegisterDescriptionList::readFromDOMElement(QDomDocument &, QDomElemen
                         continue;
                     }
                     QDomElement regEle = reg.toElement();
-                    if ( regEle.nodeName().upper() == "REGISTER" )
+                    if ( regEle.nodeName().toUpper() == "REGISTER" )
                     {
                         QString locString = regEle.attribute( "LOC", "-1" );
                         bool ok;
@@ -102,14 +101,14 @@ void KLCPURegisterDescriptionList::readFromDOMElement(QDomDocument &, QDomElemen
                             if ( regText.contains( "," ) )
                             {
                             // There is a description
-                                regName = regText.left( regText.find( "," ) );
-                                regName = regName.stripWhiteSpace();
+                                regName = regText.left( regText.indexOf( "," ) );
+                                regName = regName.trimmed();
                                 regDesc = regText.right( regText.length() - regName.length() - 1 );
-                                regDesc = regDesc.stripWhiteSpace();
+                                regDesc = regDesc.trimmed();
                             }
                             else
                             {
-                                regName = regText.stripWhiteSpace();
+                                regName = regText.trimmed();
                             }
                             append( KLCPURegisterDescription( loc, regName, regDesc ) );
                         }

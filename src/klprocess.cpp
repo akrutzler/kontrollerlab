@@ -29,31 +29,36 @@
 KLProcess::KLProcess(QString command_, QString workingDir,
                      const QStringList& envVars,
                      QObject *parent, const char *name)
- : QObject(parent, name)
+ : QObject(parent)
 {
-    m_process = new Q3Process( this, "process_" + QString(name) );
-    QStringList cmds_, cmds;
+    setObjectName(name);
+    m_process = new QProcess(this);
+    m_process->setObjectName("process_" + QString(name));
+    QStringList cmds;
     QString command = command_;
     // Set the variable which is used to display the command in the message box:
     m_cmd = command;
     // Replace all escaped spaces with a string that can't be an argument:
     command.replace( "\\ ", KONTROLLERLAB_SPACE );
     // Split the command:
-    cmds_ = cmds_.split( " ", command, false );
-    for ( QStringList::iterator it = cmds_.begin(); it != cmds_.end(); ++it )
+    cmds = command.split(" ",QString::SkipEmptyParts);
+    for ( QStringList::iterator it = cmds.begin(); it != cmds.end(); ++it )
     {
         QString arg = *it;
         // and replace the KONTROLLERLAB_SPACE by the space again.
         arg.replace( KONTROLLERLAB_SPACE, " " );
-        cmds.append( arg );
+        m_arguments.append( arg );
     }
     m_stderr = m_stdout = "";
-    
+    m_program = m_arguments.takeFirst();
+
+/*
     for ( QStringList::iterator it = cmds.begin(); it != cmds.end(); ++it )
     {
         QString arg = *it;
         m_process->addArgument( *it );
     }
+*/
     
     if ( (!workingDir.isEmpty()) && (!workingDir.isNull()) )
         m_process->setWorkingDirectory( workingDir );
@@ -62,12 +67,12 @@ KLProcess::KLProcess(QString command_, QString workingDir,
     m_otherError = false;
     
     // qDebug( command );
-    connect( m_process, SIGNAL(readyReadStdout()),
+    connect( m_process, SIGNAL(readyReadStandardOutput()),
              this, SLOT(readFromStdOut()) );
-    connect( m_process, SIGNAL(readyReadStderr()),
+    connect( m_process, SIGNAL(readyReadStandardError()),
              this, SLOT(readFromStdErr()) );
-    connect( m_process, SIGNAL(processExited()),
-             this, SLOT(slotProcessExited()) );
+    connect( m_process, SIGNAL(finished(int,QProcess::ExitStatus)),
+             this, SLOT(slotProcessExited(int,QProcess::ExitStatus)) );
 }
 
 
@@ -75,34 +80,36 @@ KLProcess::~KLProcess()
 {
 }
 
-void KLProcess::slotProcessExited( )
+void KLProcess::slotProcessExited(int exitCode, QProcess::ExitStatus  exitStatus)
 {
+    Q_UNUSED(exitCode)
+    Q_UNUSED(exitStatus)
     emit processExited( this );
 }
 
 void KLProcess::readFromStdOut( )
 {
-    m_stdout += m_process->readStdout();
+    m_stdout += m_process->readAllStandardOutput();
 }
 
 void KLProcess::readFromStdErr( )
 {
-    m_stderr += m_process->readStderr();
+    m_stderr += m_process->readAllStandardError();
 }
 
 void KLProcess::start( )
 {
     m_otherError = false;
-    bool retVal;
+
     if ( m_envVars.count() )
-        retVal = m_process->start( &m_envVars );
+        m_process->start(m_program, m_arguments);
     else
-        retVal = m_process->start();
-    if (!retVal)
+        m_process->start(m_program, m_arguments);
+    if (!m_process->waitForStarted())
     {
         m_otherError = true;
         m_stderr = i18n("Command not found: %1").arg( m_cmd );
-        slotProcessExited();
+        slotProcessExited(1,QProcess::NormalExit);   //wrong exitcode?
     }
 }
 

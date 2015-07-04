@@ -31,15 +31,16 @@
 
 
 KLProgramFusesWidget::KLProgramFusesWidget(QWidget *parent, KLProject* project, const char *name)
-    :QDialog(parent, name), m_project( project ), ui(new Ui::KLProgramFusesWidgetBase)
+    :QDialog(parent), m_project( project ), ui(new Ui::KLProgramFusesWidgetBase)
 {
     ui->setupUi(this);
+    setObjectName(name);
     m_fuses = m_project->getFusesFor( m_project->cpu() );
     
     m_highByte = m_lowByte = m_extByte = m_lockByte = 0xFF;
     updateGUIFromData();
     
-    ui->cbCPU->insertStringList( m_project->cpus() );
+    ui->cbCPU->addItems( m_project->cpus() );
 }
 
 void KLProgramFusesWidget::slotClose()
@@ -131,8 +132,8 @@ void KLProgramFusesWidget::updateGUIFromData()
     ui->cbHigh6->setText( m_fuses.highNames()[6] );
     ui->cbHigh7->setText( m_fuses.highNames()[7] );
     
-    ui->cbChecked->setPaletteForegroundColor( foregroundColor() );
-    ui->cbUnchecked->setPaletteForegroundColor( foregroundColor() );
+    //TODO ui->cbChecked->setPaletteForegroundColor( foregroundColor() );
+    //TODO ui->cbUnchecked->setPaletteForegroundColor( foregroundColor() );
     
     int mask = 0;
     for ( int i = 0; i < 8; i++ )
@@ -263,7 +264,7 @@ void KLProgramFusesWidget::showEvent( QShowEvent* )
 {
     m_fuses = m_project->getFusesFor( m_project->cpu() );
     updateGUIFromData();
-    ui->cbCPU->setCurrentText( m_project->cpu() );
+    setComboBoxText(ui->cbCPU, m_project->cpu() );
 }
 
 

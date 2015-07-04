@@ -1,184 +1,241 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0" stdsetdef="1">
-  <author></author>
-  <comment></comment>
-  <exportmacro></exportmacro>
-  <class>KLFileNewDialogBase</class>
-  <widget class="QDialog" name="KLFileNewDialogBase">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>507</width>
-        <height>320</height>
-      </rect>
-    </property>
-    <property name="windowTitle">
-      <string>New file</string>
-    </property>
-    <property name="modal">
-      <bool>true</bool>
-    </property>
+<ui version="4.0">
+ <class>KLFileNewDialogBase</class>
+ <widget class="QDialog" name="KLFileNewDialogBase">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>507</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>New file</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout">
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="tlType">
+     <property name="text">
+      <string>Type:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
     <layout class="QGridLayout">
-      <item row="0" column="0" rowspan="1" colspan="3">
-        <widget class="QLabel" name="tlType">
-          <property name="text">
-            <string>Type:</string>
-          </property>
-          <property name="wordWrap">
-            <bool>false</bool>
-          </property>
+     <item row="2" column="1">
+      <spacer name="spacer1">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>21</width>
+         <height>201</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0" rowspan="3">
+      <layout class="QGridLayout">
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="leName"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="tlName">
+         <property name="text">
+          <string>Name:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
         </widget>
-      </item>
-      <item row="1" column="0" rowspan="1" colspan="3">
-        <layout class="QGridLayout">
-          <item row="2" column="1">
-            <spacer name="spacer1">
-              <property name="sizeHint">
-                <size>
-                  <width>21</width>
-                  <height>201</height>
-                </size>
-              </property>
-              <property name="sizeType">
-                <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="orientation">
-                <enum>Qt::Vertical</enum>
-              </property>
-            </spacer>
-          </item>
-          <item row="0" column="0" rowspan="3" colspan="1">
-            <layout class="QGridLayout">
-              <item row="1" column="1">
-                <widget class="QLineEdit" name="leName"/>
-              </item>
-              <item row="0" column="0" rowspan="1" colspan="2">
-                <widget class="Q3IconView" name="klNewFile"/>
-              </item>
-              <item row="1" column="0">
-                <widget class="QLabel" name="tlName">
-                  <property name="text">
-                    <string>Name:</string>
-                  </property>
-                  <property name="wordWrap">
-                    <bool>false</bool>
-                  </property>
-                </widget>
-              </item>
-            </layout>
-          </item>
-          <item row="0" column="1">
-            <widget class="QPushButton" name="pbOK">
-              <property name="text">
-                <string>&amp;OK</string>
-              </property>
-              <property name="shortcut">
-                <string>Alt+O</string>
-              </property>
-            </widget>
-          </item>
-          <item row="1" column="1">
-            <widget class="QPushButton" name="pbCancel">
-              <property name="text">
-                <string>&amp;Cancel</string>
-              </property>
-              <property name="shortcut">
-                <string>Alt+C</string>
-              </property>
-            </widget>
-          </item>
-        </layout>
-      </item>
-      <item row="3" column="2">
-        <widget class="QPushButton" name="pbChoose">
-          <property name="text">
-            <string>Choose</string>
-          </property>
-          <property name="shortcut">
-            <string/>
-          </property>
+       </item>
+       <item row="0" column="1">
+        <widget class="QListWidget" name="klNewFile">
+         <property name="movement">
+          <enum>QListView::Static</enum>
+         </property>
+         <property name="isWrapping" stdset="0">
+          <bool>true</bool>
+         </property>
+         <property name="resizeMode">
+          <enum>QListView::Adjust</enum>
+         </property>
+         <property name="layoutMode">
+          <enum>QListView::SinglePass</enum>
+         </property>
+         <property name="spacing">
+          <number>5</number>
+         </property>
+         <property name="viewMode">
+          <enum>QListView::IconMode</enum>
+         </property>
+         <property name="modelColumn">
+          <number>0</number>
+         </property>
         </widget>
-      </item>
-      <item row="3" column="0">
-        <widget class="QLabel" name="tlFolder">
-          <property name="sizePolicy">
-            <sizepolicy>
-              <hsizetype>0</hsizetype>
-              <vsizetype>5</vsizetype>
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-            </sizepolicy>
-          </property>
-          <property name="text">
-            <string>Directory:</string>
-          </property>
-          <property name="wordWrap">
-            <bool>false</bool>
-          </property>
-        </widget>
-      </item>
-      <item row="3" column="1">
-        <widget class="QLabel" name="tlDirectory">
-          <property name="sizePolicy">
-            <sizepolicy>
-              <hsizetype>3</hsizetype>
-              <vsizetype>5</vsizetype>
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-            </sizepolicy>
-          </property>
-          <property name="font">
-            <font>
-              <bold>true</bold>
-            </font>
-          </property>
-          <property name="text">
-            <string>project root</string>
-          </property>
-          <property name="wordWrap">
-            <bool>false</bool>
-          </property>
-        </widget>
-      </item>
-      <item row="2" column="0" rowspan="1" colspan="3">
-        <widget class="Line" name="line1">
-          <property name="frameShape">
-            <enum>QFrame::HLine</enum>
-          </property>
-          <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
-          </property>
-        </widget>
-      </item>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pbOK">
+       <property name="text">
+        <string>&amp;OK</string>
+       </property>
+       <property name="shortcut">
+        <string>Alt+O</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pbCancel">
+       <property name="text">
+        <string>&amp;Cancel</string>
+       </property>
+       <property name="shortcut">
+        <string>Alt+C</string>
+       </property>
+      </widget>
+     </item>
     </layout>
-  </widget>
-  <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <connections>
-    <connection>
-      <sender>pbOK</sender>
-      <signal>clicked()</signal>
-      <receiver>KLFileNewDialogBase</receiver>
-      <slot>slotOK()</slot>
-    </connection>
-    <connection>
-      <sender>pbCancel</sender>
-      <signal>clicked()</signal>
-      <receiver>KLFileNewDialogBase</receiver>
-      <slot>slotCancel()</slot>
-    </connection>
-    <connection>
-      <sender>leName</sender>
-      <signal>textChanged(QString)</signal>
-      <receiver>KLFileNewDialogBase</receiver>
-      <slot>slotFileNameChanged(QString)</slot>
-    </connection>
-    <connection>
-      <sender>pbChoose</sender>
-      <signal>clicked()</signal>
-      <receiver>KLFileNewDialogBase</receiver>
-      <slot>slotChoose()</slot>
-    </connection>
-  </connections>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="pbChoose">
+     <property name="text">
+      <string>Choose</string>
+     </property>
+     <property name="shortcut">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="tlFolder">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Directory:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLabel" name="tlDirectory">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>project root</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="Line" name="line1">
+     <property name="frameShape">
+      <enum>QFrame::HLine</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbOK</sender>
+   <signal>clicked()</signal>
+   <receiver>KLFileNewDialogBase</receiver>
+   <slot>slotOK()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCancel</sender>
+   <signal>clicked()</signal>
+   <receiver>KLFileNewDialogBase</receiver>
+   <slot>slotCancel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>KLFileNewDialogBase</receiver>
+   <slot>slotFileNameChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbChoose</sender>
+   <signal>clicked()</signal>
+   <receiver>KLFileNewDialogBase</receiver>
+   <slot>slotChoose()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

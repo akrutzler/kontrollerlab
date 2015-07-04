@@ -294,11 +294,10 @@ void KLDotMatrixWidget::slotSelectedValueChanged(Q3ListViewItem *item)
 {
     KLWizardHeaderSetting set = m_settings.getSettingFor( item->text( 0 ) );
     
-    Q3DictIterator< Q3ListViewItem > it( m_groups );
     
-    for ( ; it.current(); ++it )
+    foreach(const Q3ListViewItem *group, m_groups)
     {
-        if ( it.current() == item )
+        if ( group == item )
         {
             ui->tlValue->hide();
             ui->leValue->hide();
@@ -398,11 +397,11 @@ void KLDotMatrixWidget::updateLvValuesFrom( const KLWizardHeaderSettings & set_ 
 void KLDotMatrixWidget::updateListItem( const KLWizardHeaderSetting & set )
 {
     
-    Q3DictIterator< Q3ListViewItem > itGrp( m_groups );
+    QMap<QString, Q3ListViewItem*>::iterator itGrp = m_groups.begin();
     
-    for ( ; itGrp.current(); ++itGrp )
+    for( ; itGrp != m_groups.end(); ++itGrp )
     {
-        Q3ListViewItem *it = itGrp.current()->firstChild();
+        Q3ListViewItem *it = itGrp.value()->firstChild();
         
         while (it)
         {

@@ -22,8 +22,13 @@
 
 
 KLMemoryCellListBoxItem::KLMemoryCellListBoxItem(int adr, int val,
-                        const QString& name, Q3ListBox *listbox)
-    : Q3ListBoxItem( listbox )
+                        const QString& name, QTreeWidget *listbox)
+    : QTreeWidgetItem( listbox, QStringList() << hexToString(adr,4)
+                                              << hexToString(val,2)
+                                              << QString::number(val)
+                                              << QChar(val)
+                                              << binToString(val,8)
+                                              << name)
 {
     m_address = adr;
     m_value = val;
@@ -32,7 +37,7 @@ KLMemoryCellListBoxItem::KLMemoryCellListBoxItem(int adr, int val,
 
 
 KLMemoryCellListBoxItem::KLMemoryCellListBoxItem( const KLMemoryCellListBoxItem & copyMe )
-    : Q3ListBoxItem( copyMe.listBox() )
+    : QTreeWidgetItem( copyMe.treeWidget() )
 {
     m_address = copyMe.address();
     m_value = copyMe.value();
@@ -45,10 +50,12 @@ KLMemoryCellListBoxItem::~KLMemoryCellListBoxItem()
 }
 
 
+
 /**
  * This routine paints the current list box item.
  * @param p The painter to use.
  */
+/*
 void KLMemoryCellListBoxItem::paint( QPainter * p )
 {
     int left = 2;
@@ -102,14 +109,15 @@ void KLMemoryCellListBoxItem::paint( QPainter * p )
     p->drawText( startName,
                  p->fontMetrics().ascent(), m_name );
 }
+*/
 
-
-int KLMemoryCellListBoxItem::height( const Q3ListBox * lb ) const
+/*
+int KLMemoryCellListBoxItem::height(const QTreeWidget *lb ) const
 {
     return lb->fontMetrics().height();
 }
 
-int KLMemoryCellListBoxItem::width( const Q3ListBox * lb ) const
+int KLMemoryCellListBoxItem::width(const QTreeWidget *lb ) const
 {
     int wid = 2;
     wid += 10 + lb->fontMetrics().width( hexToString( 0, 4 ) );
@@ -119,7 +127,7 @@ int KLMemoryCellListBoxItem::width( const Q3ListBox * lb ) const
     wid += lb->fontMetrics().width( binToString(m_value, 8) );
     return wid;
 }
-
+*/
 QString KLMemoryCellListBoxItem::hexToString( int val, int field ) const
 {
     QString retVal, buffer = "";

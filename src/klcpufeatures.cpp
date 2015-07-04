@@ -24,8 +24,6 @@
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <qfile.h>
-#include <Qt3Support>
-
 
 #define TRUE_STRING "TRUE"
 #define FALSE_STRING "FALSE"
@@ -54,7 +52,7 @@ KLCPUFeatures::KLCPUFeatures( QDomDocument & document, QDomElement & parent )
 {
     for (QDomNode n = parent.firstChild(); !n.isNull(); n = n.nextSibling() )
     {
-        if ( parent.nodeName().upper() == "FEATURE_SET" )
+        if ( parent.nodeName().toUpper() == "FEATURE_SET" )
         {
             if ( !n.isElement() )
                 continue;
@@ -180,7 +178,7 @@ void KLCPUFeaturesList::readFromDOMElement( QDomDocument & document, QDomElement
     for (QDomNode n = parent.firstChild(); !n.isNull(); n = n.nextSibling() )
     {
         // qDebug( "n.nodeName() = %s", n.nodeName().ascii() );
-        if ( n.nodeName().upper() == "FEATURE_SET" )
+        if ( n.nodeName().toUpper() == "FEATURE_SET" )
         {
             if ( !n.isElement() )
                 continue;
@@ -238,38 +236,38 @@ void KLCPUFeatures::parseSettings(const QString & name, const QString & value)
 {
     // qDebug( "parse %s : %s", name.ascii(), value.ascii() );
     bool ok = true;
-    if ( name.upper() == "NAME" ) m_name = value;
-    else if ( name.upper() == "ARCH" ) m_arch = value;
-    else if ( name.upper() == "MMCU_FLAG" ) m_mmcuFlag = value;
-    else if ( name.upper() == "MAX_CLOCK_SPEED_HZ" ) m_maxClockSpeedHz = value.toUInt( &ok );
-    else if ( name.upper() == "INTERNAL_RAM_SIZE" ) m_internalRAMSize = value.toUInt( &ok );
-    else if ( name.upper() == "EEPROM_SIZE" ) m_EEPROMSize = value.toUInt( & ok );
-    else if ( name.upper() == "MAX_EXTERNAL_RAM_SIZE" ) m_maxExternalRAMSize = value.toUInt( &ok );
-    else if ( name.upper() == "FLASH_EEPROM_SIZE" ) m_flashEEPROMSize = value.toUInt( &ok );
-    else if ( name.upper() == "ALLOWS_EXTERNAL_RAM" ) m_allowsExternalRAM = value.upper() == TRUE_STRING;
-    else if ( name.upper() == "MAX_IO_PINS" ) m_maxIOPins = value.toUInt( &ok );
-    else if ( name.upper() == "MIN_VCC" ) m_minVCC = value.toDouble( &ok );
-    else if ( name.upper() == "MAX_VCC" ) m_maxVCC = value.toDouble( &ok );
-    else if ( name.upper() == "BIT_16_TIMERS" ) m_16BitTimers = value.toUInt( &ok );
-    else if ( name.upper() == "BIT_8_TIMERS" ) m_8BitTimers = value.toUInt( &ok );
-    else if ( name.upper() == "PWM_CHANNELS" ) m_PWM_channels = value.toUInt( &ok );
-    else if ( name.upper() == "RTC" ) m_RTC = value == TRUE_STRING;
-    else if ( name.upper() == "SPI" ) m_SPI = value == TRUE_STRING;
-    else if ( name.upper() == "UARTS" ) m_UARTs = value.toUInt( &ok );
-    else if ( name.upper() == "TWI" ) m_TWI = value == TRUE_STRING;
-    else if ( name.upper() == "ISP" ) m_ISP = value == TRUE_STRING;
-    else if ( name.upper() == "AD_CHANNELS" ) m_ADChannels = value.toUInt( &ok );
-    else if ( name.upper() == "ANALOG_COMPARATORS" ) m_analogComparators = value == TRUE_STRING;
-    else if ( name.upper() == "BROWN_OUT_DETECT" ) m_brownOutDetect = value == TRUE_STRING;
-    else if ( name.upper() == "WATCHDOG" ) m_watchdog = value == TRUE_STRING;
-    else if ( name.upper() == "ON_CHIP_OSCILLATOR" ) m_onChipOscillator = value == TRUE_STRING;
-    else if ( name.upper() == "HARDWARE_MULTIPLIER" ) m_hardwareMultiplier = value == TRUE_STRING;
-    else if ( name.upper() == "INTERRUPTS" ) m_interrupts = value.toUInt( &ok );
-    else if ( name.upper() == "EXTERNAL_INTERRUPTS" ) m_externalInterrupts = value.toUInt( &ok );
-    else if ( name.upper() == "SELF_PROGRAM_MEMORY" ) m_selfProgramMemory = value == TRUE_STRING;
-    else if ( name.upper() == "PACKAGES" ) m_packages = value;
+    if ( name.toUpper() == "NAME" ) m_name = value;
+    else if ( name.toUpper() == "ARCH" ) m_arch = value;
+    else if ( name.toUpper() == "MMCU_FLAG" ) m_mmcuFlag = value;
+    else if ( name.toUpper() == "MAX_CLOCK_SPEED_HZ" ) m_maxClockSpeedHz = value.toUInt( &ok );
+    else if ( name.toUpper() == "INTERNAL_RAM_SIZE" ) m_internalRAMSize = value.toUInt( &ok );
+    else if ( name.toUpper() == "EEPROM_SIZE" ) m_EEPROMSize = value.toUInt( & ok );
+    else if ( name.toUpper() == "MAX_EXTERNAL_RAM_SIZE" ) m_maxExternalRAMSize = value.toUInt( &ok );
+    else if ( name.toUpper() == "FLASH_EEPROM_SIZE" ) m_flashEEPROMSize = value.toUInt( &ok );
+    else if ( name.toUpper() == "ALLOWS_EXTERNAL_RAM" ) m_allowsExternalRAM = value.toUpper() == TRUE_STRING;
+    else if ( name.toUpper() == "MAX_IO_PINS" ) m_maxIOPins = value.toUInt( &ok );
+    else if ( name.toUpper() == "MIN_VCC" ) m_minVCC = value.toDouble( &ok );
+    else if ( name.toUpper() == "MAX_VCC" ) m_maxVCC = value.toDouble( &ok );
+    else if ( name.toUpper() == "BIT_16_TIMERS" ) m_16BitTimers = value.toUInt( &ok );
+    else if ( name.toUpper() == "BIT_8_TIMERS" ) m_8BitTimers = value.toUInt( &ok );
+    else if ( name.toUpper() == "PWM_CHANNELS" ) m_PWM_channels = value.toUInt( &ok );
+    else if ( name.toUpper() == "RTC" ) m_RTC = value == TRUE_STRING;
+    else if ( name.toUpper() == "SPI" ) m_SPI = value == TRUE_STRING;
+    else if ( name.toUpper() == "UARTS" ) m_UARTs = value.toUInt( &ok );
+    else if ( name.toUpper() == "TWI" ) m_TWI = value == TRUE_STRING;
+    else if ( name.toUpper() == "ISP" ) m_ISP = value == TRUE_STRING;
+    else if ( name.toUpper() == "AD_CHANNELS" ) m_ADChannels = value.toUInt( &ok );
+    else if ( name.toUpper() == "ANALOG_COMPARATORS" ) m_analogComparators = value == TRUE_STRING;
+    else if ( name.toUpper() == "BROWN_OUT_DETECT" ) m_brownOutDetect = value == TRUE_STRING;
+    else if ( name.toUpper() == "WATCHDOG" ) m_watchdog = value == TRUE_STRING;
+    else if ( name.toUpper() == "ON_CHIP_OSCILLATOR" ) m_onChipOscillator = value == TRUE_STRING;
+    else if ( name.toUpper() == "HARDWARE_MULTIPLIER" ) m_hardwareMultiplier = value == TRUE_STRING;
+    else if ( name.toUpper() == "INTERRUPTS" ) m_interrupts = value.toUInt( &ok );
+    else if ( name.toUpper() == "EXTERNAL_INTERRUPTS" ) m_externalInterrupts = value.toUInt( &ok );
+    else if ( name.toUpper() == "SELF_PROGRAM_MEMORY" ) m_selfProgramMemory = value == TRUE_STRING;
+    else if ( name.toUpper() == "PACKAGES" ) m_packages = value;
     if ( !ok )
-        qWarning("Problem with parsing %s = %s", name.ascii(), value.ascii());
+        qWarning("Problem with parsing %s = %s", name, value);
 }
 
 
@@ -296,7 +294,7 @@ KLCPURegisterDescriptionList KLCPUFeatures::registerDescriptions()
         QString errorMesg;
         int errorLine, errorCol;
         if ( !docConf.setContent( &qfile, false, &errorMesg, &errorLine, &errorCol ) ) {
-            qWarning( "Error in file %s: %d(%d) %s", "registers.xml", errorLine, errorCol, errorMesg.ascii() );
+            qWarning( "Error in file %s: %d(%d) %s", "registers.xml", errorLine, errorCol, errorMesg );
             qfile.close();
             return m_registerDescriptions;
         }
@@ -313,7 +311,7 @@ KLCPURegisterDescriptionList KLCPUFeatures::registerDescriptions()
 void KLCPUFeatures::readRegDefsFromDOMElement(QDomDocument &, QDomElement & elem)
 {
     m_registerDescriptions.clear();
-    if ( elem.nodeName().upper() == "REGISTER_DESCRIPTIONS" )
+    if ( elem.nodeName().toUpper() == "REGISTER_DESCRIPTIONS" )
     {
         QString ver = elem.attribute( "VERSION", "" );
         // if ( !ver.isEmpty() )
@@ -327,8 +325,8 @@ void KLCPUFeatures::readRegDefsFromDOMElement(QDomDocument &, QDomElement & elem
                 continue;
             }
             QDomElement e = n.toElement();
-            if ( ( e.nodeName().upper() == "CPU" ) &&
-                 ( e.attribute( "NAME", "" ).upper() == m_name.upper() ) )
+            if ( ( e.nodeName().toUpper() == "CPU" ) &&
+                 ( e.attribute( "NAME", "" ).toUpper() == m_name.toUpper() ) )
             {
                 QDomNode reg = e.firstChild();
                 while ( !reg.isNull() )
@@ -339,7 +337,7 @@ void KLCPUFeatures::readRegDefsFromDOMElement(QDomDocument &, QDomElement & elem
                         continue;
                     }
                     QDomElement regEle = reg.toElement();
-                    if ( regEle.nodeName().upper() == "REGISTER" )
+                    if ( regEle.nodeName().toUpper() == "REGISTER" )
                     {
                         QString locString = regEle.attribute( "LOC", "-1" );
                         bool ok;
@@ -351,14 +349,14 @@ void KLCPUFeatures::readRegDefsFromDOMElement(QDomDocument &, QDomElement & elem
                             if ( regText.contains( "," ) )
                             {
                                 // There is a description
-                                regName = regText.left( regText.find( "," ) );
-                                regName = regName.stripWhiteSpace();
+                                regName = regText.left( regText.indexOf( "," ) );
+                                regName = regName.trimmed();
                                 regDesc = regText.right( regText.length() - regName.length() - 1 );
-                                regDesc = regDesc.stripWhiteSpace();
+                                regDesc = regDesc.trimmed();
                             }
                             else
                             {
-                                regName = regText.stripWhiteSpace();
+                                regName = regText.trimmed();
                             }
                             m_registerDescriptions.append(
                                 KLCPURegisterDescription( loc, regName, regDesc ) );

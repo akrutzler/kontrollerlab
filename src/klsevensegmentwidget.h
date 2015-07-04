@@ -36,9 +36,9 @@ public:
     KLSevenSegmentWidget(QWidget *parent, const char *name, KLDocument* doc);
     ~KLSevenSegmentWidget();
 private:
-    Ui_KLSevenSegmentWidgetBase *ui;
+    Ui::KLSevenSegmentWidgetBase *ui;
 public slots:
-    virtual void slotCurrentItemChanged( Q3ListViewItem* cur );
+    virtual void slotCurrentItemChanged( QTreeWidgetItem* cur, QTreeWidgetItem* previous );
     virtual void slotBitSegmentAssocChanged();
     virtual void slotDP();
     virtual void slotG();
@@ -60,9 +60,9 @@ protected:
     QString formStr( int nr ) const;
     QPixmap generatePixmapFor( int segs );
     QList< int > generateBitmasks();
-    int getSegmentsForListItem(Q3ListViewItem *item );
+    int getSegmentsForListItem(QTreeWidgetItem *item );
     int curSegments() { return getSegmentsForListItem( ui->lvSegments->currentItem() ); }
-    void setListItemForSegments( Q3ListViewItem* item, int segs );
+    void setListItemForSegments( QTreeWidgetItem* item, int segs );
     void changeCurrentListItem();
     QList < int > readBitSegmentAssignmentFromRadios();
     void setRadiosFromBitSegmentAssignment( QList < int > assign );

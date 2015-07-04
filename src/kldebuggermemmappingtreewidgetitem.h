@@ -19,50 +19,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KLDOTMATRIXWIDGET_H
-#define KLDOTMATRIXWIDGET_H
+#ifndef KLDEBUGGERMEMMAPPINGLISTVIEWITEM_H
+#define KLDEBUGGERMEMMAPPINGLISTVIEWITEM_H
 
-#include "ui_kldotmatrixdisplaywizardbase.h"
-#include "klwizardheadersettings.h"
-#include <qvalidator.h>
+#include <QTreeWidgetItem>
+#include "kldebuggermemorymapping.h"
 
+/**
+This class displays a list view item for the memory mapping and stores the according instance of KLDebuggerMemoryMapping.
 
-class KLEditDotsWidget;
-
-#define WIZARD_HEADER_FILE "dm_lcd.h"
-#define WIZARD_SOURCE_FILE "dm_lcd.c"
-
-
-class KLDocument;
-class KLProject;
-class KontrollerLab;
-
-
-class KLDotMatrixWidget: public QDialog {
-Q_OBJECT
+	@author Martin Strasser <strasser@kontrollerlab.org>
+*/
+class KLDebuggerMemMappingTreeWidgetItem : public QTreeWidgetItem
+{
 public:
-    KLDotMatrixWidget(KontrollerLab *parent, const char *name, KLProject* prj, KLDocument* doc);
-private:
-    Ui_KLDotMatrixDisplayWizardBase *ui;
-public slots:
-    virtual void slotOK();
-    virtual void slotCancel();
-    void slotSelectedValueChanged(Q3ListViewItem * item);
-    virtual void slotAddHD44780Lib(bool val);
-    virtual void slotChangeValue(int val);
-    virtual void slotChangeValue(const QString& val);
+    KLDebuggerMemMappingTreeWidgetItem(QTreeWidget* lv, unsigned int from, unsigned int to);
+
+    ~KLDebuggerMemMappingTreeWidgetItem();
+
+    void setMapping(const KLDebuggerMemoryMapping& theValue)
+    { m_mapping = theValue; }
+    KLDebuggerMemoryMapping mapping() const
+    { return m_mapping; }
+
+    void setFrom( unsigned int from );
+    unsigned int from() const { return m_mapping.from(); }
+    void setTo( unsigned int to );
+    unsigned int to() const { return m_mapping.to(); }
 protected:
-    void updateListItem( const KLWizardHeaderSetting& set );
-    void updateLvValuesFrom( const KLWizardHeaderSettings& set );
-    KLDocument* m_document;
-    KLDocument* m_header, *m_source;
-    KLProject* m_project;
-    KontrollerLab *m_parent;
-    KLWizardHeaderSettings m_settings;
-    QGridLayout* m_frmGridLayout;
-    KLEditDotsWidget* m_editDots;
-    QMap<QString,Q3ListViewItem*> m_groups;
-    QRegExpValidator m_validator;
+    KLDebuggerMemoryMapping m_mapping;
+
+private:
+    bool operator<(const QTreeWidgetItem &other) const;
 };
 
 #endif

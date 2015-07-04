@@ -45,9 +45,9 @@ KLProjectManagerWidget::KLProjectManagerWidget(KLProject* project, QWidget *pare
     setProjectName( project->name() );
     m_projectManagerPopup = new KMenu( "projectManagerPopup", this);
     KIconLoader kico;
-    m_projectManagerPopup->insertItem( kico.loadIcon( "quickopen-file", KIconLoader::Toolbar ), i18n("Create new view"),
+    m_projectManagerPopup->addAction( kico.loadIcon( "quickopen-file", KIconLoader::Toolbar ), i18n("Create new view"),
                                        this, SLOT( slotCreateNewView() ) );
-    m_projectManagerPopup->insertItem( kico.loadIcon( "edit-delete", KIconLoader::Toolbar ), i18n("Remove from project"),
+    m_projectManagerPopup->addAction( kico.loadIcon( "edit-delete", KIconLoader::Toolbar ), i18n("Remove from project"),
                                        this, SLOT( slotTrash() ) );
 
     ui->tbConfigure->setIcon(kico.loadIcon("configure", KIconLoader::Toolbar));

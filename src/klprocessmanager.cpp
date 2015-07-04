@@ -25,8 +25,9 @@
 
 
 KLProcessManager::KLProcessManager(KontrollerLab *parent, const char *name)
-    : QObject((QObject*)parent, name)
+    : QObject((QObject*)parent)
 {
+    setObjectName(name);
     m_parent = parent;
     m_dontAbortQueueOnError = false;
     m_currentlyRunningProc = 0L;
@@ -46,7 +47,7 @@ void KLProcessManager::processExited( KLProcess * who )
     if ( (who->exitStatus() != 0) && (!m_dontAbortQueueOnError) )
         m_procs.clear();
     else
-        m_procs.remove( who );
+        m_procs.removeAll( who );
 
     if ( m_procs.count() > 0)
     {

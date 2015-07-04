@@ -35,7 +35,7 @@ KLScope::KLScope( QWidget* parent, const QString& name, int top, int bottom,
                      m_graphColor( graphColor )
 {
     repaintBaseErasePixmap( QSize( 100, 100 ) );
-    setErasePixmap( m_erasePixmap );
+    //TODO setErasePixmap( m_erasePixmap );
     m_greatest = top;
     m_lowest = bottom;
 }
@@ -142,7 +142,7 @@ void KLScope::updateDisplay( )
         return;
     QPixmap pix( m_erasePixmap );
     drawData( pix );
-    setErasePixmap( pix );
+    //TODO setErasePixmap( pix );
 }
 
 

@@ -97,7 +97,7 @@ signals:
 protected:
     bool isHexDigit( unsigned char ch );
     unsigned char hexToUChar( unsigned char ch );
-    virtual void customEvent( QCustomEvent* ev );
+    virtual void customEvent( QEvent* ev );
     virtual void paintEvent( QPaintEvent* ev );
 
     static QString asciiToHEX( const KLCharVector& inp );

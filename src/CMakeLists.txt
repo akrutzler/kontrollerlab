@@ -3,11 +3,6 @@ project(kontrollerlab)
 find_package(KDE4 REQUIRED)
 include_directories(${KDE4_INCLUDES})
 
-#For qt3support libs -> maybe there is another solution??
-find_package( Qt4 REQUIRED )
-set( QT_USE_QT3SUPPORT TRUE )
-include( ${QT_USE_FILE} )
- 
 set(kontrollerlab_SRCS 
 	   klasminstruction.cpp 
            klavrcpu.cpp 
@@ -23,16 +18,16 @@ set(kontrollerlab_SRCS
            kldebugger.cpp 
            kldebuggerbreakpoint.cpp 
            kldebuggerconfigwidget.cpp 
-           kldebuggermemmappinglistviewitem.cpp 
+           kldebuggermemmappingtreewidgetitem.cpp
            kldebuggermemorymapping.cpp 
            kldocument.cpp 
            kldocumentview.cpp 
-           kldotmatrixcharacterwizard.cpp 
-           kldotmatrixwidget.cpp 
-           kleditdotswidget.cpp 
+           #kldotmatrixcharacterwizard.cpp
+           #kldotmatrixwidget.cpp
+           #kleditdotswidget.cpp
            klfilenewdialog.cpp 
            klhistogram.cpp 
-           klmemorycelllistboxitem.cpp 
+           klmemorycelllistboxitem.cpp
            klmemoryviewwidget.cpp 
            klprocess.cpp 
            klprocesshandler.cpp 
@@ -59,8 +54,8 @@ set(kontrollerlab_SRCS
 )
 kde4_add_ui_files(kontrollerlab_SRCS
 	 kldebuggerconfigwidgetbase.ui 
-         kldotmatrixcharacterwizardbase.ui 
-         kldotmatrixdisplaywizardbase.ui 
+         #kldotmatrixcharacterwizardbase.ui
+         #kldotmatrixdisplaywizardbase.ui
          klfilenewdialogbase.ui 
          klmemoryview.ui 
          klprogramfuseswidgetbase.ui 
@@ -75,7 +70,7 @@ kde4_add_ui_files(kontrollerlab_SRCS
 include_directories("${PROJECT_SOURCE_DIR}")
  
 kde4_add_executable(kontrollerlab ${kontrollerlab_SRCS})
-target_link_libraries(kontrollerlab ${KDE4_KDEUI_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KPART_LIBS} ${QT_LIBRARIES})
+target_link_libraries(kontrollerlab ${KDE4_KDEUI_LIBS} ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KPART_LIBS})
 
 install(TARGETS kontrollerlab DESTINATION ${BIN_INSTALL_DIR})
 

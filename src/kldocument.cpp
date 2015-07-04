@@ -239,7 +239,7 @@ void KLDocument::setWindowTitleOfAllViews( const QString cap )
 
 void KLDocument::unregisterKLDocumentView( KLDocumentView * view )
 {
-    m_registeredViews.remove( view );
+    m_registeredViews.removeAll( view );
     if ( view == m_lastActiveView )
         m_lastActiveView = 0L;
     setWindowTitleOfAllViews( name() );
@@ -342,17 +342,17 @@ void KLDocument::updateModified( )
 KLDocumentType KLDocument::typeForName( const QString& name )
 {
     KLDocumentType type_;
-    if ( name.lower().endsWith( ".c" ) )
+    if ( name.toLower().endsWith( ".c" ) )
         type_ = KLDocType_Source;
-    else if ( name.lower().endsWith( ".cc" ) )
+    else if ( name.toLower().endsWith( ".cc" ) )
         type_ = KLDocType_Source;
-    else if ( name.lower().endsWith( ".s" ) )
+    else if ( name.toLower().endsWith( ".s" ) )
         type_ = KLDocType_Source;
-    else if ( name.lower().endsWith( ".cpp" ) )
+    else if ( name.toLower().endsWith( ".cpp" ) )
         type_ = KLDocType_Source;
-    else if ( name.lower().endsWith( ".h" ) )
+    else if ( name.toLower().endsWith( ".h" ) )
         type_ = KLDocType_Header;
-    else if ( name.lower().endsWith( ".txt" ) )
+    else if ( name.toLower().endsWith( ".txt" ) )
         type_ = KLDocType_Note;
     else
         type_ = KLDocType_NoType;

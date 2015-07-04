@@ -21,7 +21,7 @@
 #define KLMEMORYCELLLISTBOXITEM_H
 
 
-#include <q3listbox.h>
+#include <QTreeWidget>
 
 
 /**
@@ -29,25 +29,41 @@ This is the class for a single list box item storing a memory cell.
 
 	@author Martin Strasser <strasser  a t  cadmaniac  d o t  org>
 */
-class KLMemoryCellListBoxItem : public Q3ListBoxItem
+class KLMemoryCellListBoxItem : public QTreeWidgetItem
 {
 public:
     KLMemoryCellListBoxItem(int adr, int val,
-                            const QString& name, Q3ListBox * listbox = 0);
+                            const QString& name, QTreeWidget *listbox = 0);
     KLMemoryCellListBoxItem( const KLMemoryCellListBoxItem& copyMe );
     ~KLMemoryCellListBoxItem();
 
     void setDescription( const QString& tip );
     QString description() const { return m_description; }
-    void paint( QPainter * p );
-    int height ( const Q3ListBox * lb ) const;
-    int width ( const Q3ListBox * lb ) const;
+    //void paint( QPainter * p );
+    //int height ( const QTreeWidget * lb ) const;
+    //int width ( const QTreeWidget * lb ) const;
 
-    void setValue(const int& theValue) { m_value = theValue; }
+    void setValue(const int& theValue)
+    {
+        if(m_value == theValue)
+            return;
+
+        m_value = theValue;
+        setText(1,hexToString(theValue,2));
+        setText(2,QString::number(theValue));
+        //setText(3,QChar(theValue));
+        setText(4,binToString(theValue,8));
+    }
     int value() const { return m_value; }
     void setAddress(const int& theValue) { m_address = theValue; }
     int address() const { return m_address; }
-    void setName(const QString& theValue) { m_name = theValue; }
+    void setName(const QString& theValue)
+    {
+        if(m_name == theValue)
+            return;
+        m_name = theValue;
+        setText(5,theValue);
+    }
     QString name() const { return m_name; }
 
 protected:

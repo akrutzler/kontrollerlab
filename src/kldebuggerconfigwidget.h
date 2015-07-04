@@ -50,7 +50,7 @@ public slots:
     virtual void slotAdd();
     virtual void slotSetDefault();
     virtual void copyMonitorFilesDone(KIO::Job *, const KUrl &, const KUrl &, time_t, bool , bool);
-    virtual void slotSelectedMappingChanged( Q3ListViewItem* item );
+    virtual void slotSelectedMappingChanged(QTreeWidgetItem *current , QTreeWidgetItem *previous);
     virtual void slotToChanged( int val );
     virtual void slotFromChanged( int val );
     virtual void slotRemove();

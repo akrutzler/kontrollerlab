@@ -24,7 +24,7 @@
 
 
 #include <qobject.h>
-#include <q3process.h>
+#include <qprocess.h>
 
 class KLProcessHandler;
 
@@ -43,7 +43,7 @@ public:
 
     ~KLProcess();
 
-    int exitStatus() { return m_otherError ? 1 : m_process->exitStatus(); }
+    int exitStatus() { return m_otherError ? 1 : m_process->exitCode(); }
     void start();
     void kill();
     void setCallBack( KLProcessHandler* cb ) { m_callback = cb; }
@@ -53,7 +53,7 @@ public:
     QString cmd() const { return m_cmd; }
 
 public slots:
-    void slotProcessExited();
+    void slotProcessExited(int exitCode, QProcess::ExitStatus exitStatus);
     void readFromStdOut();
     void readFromStdErr();
 
@@ -67,7 +67,9 @@ protected:
     QString m_stdout;
     QString m_stderr;
     QString m_cmd;
-    Q3Process* m_process;
+    QString m_program;
+    QProcess* m_process;
+    QStringList m_arguments;
     QStringList m_envVars;
     KLProcessHandler* m_callback;
 };

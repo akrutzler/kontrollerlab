@@ -24,7 +24,6 @@
 
 #include "ui_kldotmatrixcharacterwizardbase.h"
 #include "kleditdotswidget.h"
-#include <q3listview.h>
 #include <qpixmap.h>
 
 class KLProject;

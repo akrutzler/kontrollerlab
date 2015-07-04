@@ -32,11 +32,30 @@
 #define WIZARD_END   "// END OF WIZARD CODE"
 
 KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KLDocument* doc)
-    :QDialog(parent, name), ui(new Ui_KLSevenSegmentWidgetBase)
+    :QDialog(parent), ui(new Ui::KLSevenSegmentWidgetBase)
 {
     ui->setupUi(this);
+    setObjectName(name);
 
     fillSegmentList();
+
+    connect(ui->tbA, SIGNAL(toggled(bool)), this, SLOT(slotA()));
+    connect(ui->tbB, SIGNAL(toggled(bool)), this, SLOT(slotB()));
+    connect(ui->tbC, SIGNAL(toggled(bool)), this, SLOT(slotC()));
+    connect(ui->tbD, SIGNAL(toggled(bool)), this, SLOT(slotD()));
+    connect(ui->tbE, SIGNAL(toggled(bool)), this, SLOT(slotE()));
+    connect(ui->tbF, SIGNAL(toggled(bool)), this, SLOT(slotF()));
+    connect(ui->tbG, SIGNAL(toggled(bool)), this, SLOT(slotG()));
+    connect(ui->tbDP, SIGNAL(toggled(bool)), this, SLOT(slotDP()));
+    connect(ui->pbAdd, SIGNAL(clicked()), this, SLOT(slotAdd()));
+    connect(ui->pbRemove, SIGNAL(clicked()), this, SLOT(slotRemove()));
+    connect(ui->pbUp, SIGNAL(clicked()), this, SLOT(slotUp()));
+    connect(ui->pbDown, SIGNAL(clicked()), this, SLOT(slotDown()));
+    connect(ui->pbOK, SIGNAL(clicked()), this, SLOT(slotOK()));
+    connect(ui->pbCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
+
+    connect(ui->lvSegments,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+            this,SLOT(slotCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
 
     QList< QRadioButton*> helper;
     helper.append( ui->rbA0 );
@@ -118,6 +137,7 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
     helper.append( ui->rbDP6 );
     helper.append( ui->rbDP7 );
     m_radios.append( helper );
+
     helper.clear();
     m_document = doc;
     m_dontReactOnToolButtons=false;
@@ -136,9 +156,9 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
             while ( m_startLine >= 0 )
             {
                 if ( m_startLine != curLine )
-                    if (m_document->kateDoc()->line( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
+                    if (m_document->kateDoc()->line( m_startLine ).toUpper().trimmed().startsWith( WIZARD_END ))
                         break;
-                if (!m_document->kateDoc()->line( m_startLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
+                if (!m_document->kateDoc()->line( m_startLine ).toUpper().trimmed().startsWith( WIZARD_START ))
                     m_startLine--;
                 else
                 {
@@ -149,9 +169,9 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
             while ( m_stopLine < (int) m_document->kateDoc()->lines() )
             {
                 if ( m_stopLine != curLine )
-                    if (m_document->kateDoc()->line( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_START ))
+                    if (m_document->kateDoc()->line( m_stopLine ).toUpper().trimmed().startsWith( WIZARD_START ))
                         break;
-                if (!m_document->kateDoc()->line( m_stopLine ).upper().stripWhiteSpace().startsWith( WIZARD_END ))
+                if (!m_document->kateDoc()->line( m_stopLine ).toUpper().trimmed().startsWith( WIZARD_END ))
                     m_stopLine++;
                 else
                 {
@@ -194,10 +214,10 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
         while ( curLine < m_stopLine )
         {
             curLine++;
-            if ( m_document->kateDoc()->line( curLine ).upper().stripWhiteSpace().startsWith( "// WIZARD SEVEN_SEGMENT_WIZARD" ) )
+            if ( m_document->kateDoc()->line( curLine ).toUpper().trimmed().startsWith( "// WIZARD SEVEN_SEGMENT_WIZARD" ) )
             {
-                QString bitAssignmentString = m_document->kateDoc()->line( curLine ).upper().stripWhiteSpace();
-                QStringList slist = QStringList::split( " ", bitAssignmentString );
+                QString bitAssignmentString = m_document->kateDoc()->line( curLine ).toUpper().trimmed();
+                QStringList slist = bitAssignmentString.split(" ");
                 bitAssignmentString = slist[3];
                 for (int i=0; i<8; i++)
                 {
@@ -217,25 +237,25 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
             QString current = m_document->kateDoc()->line( curLine );
             if ( current.contains( "=" ) )
             {
-                ws = current.left( current.find("=")+1 ).length() -
-                        current.left( current.find("=")+1 ).stripWhiteSpace().length();
+                ws = current.left( current.indexOf("=")+1 ).length() -
+                        current.left( current.indexOf("=")+1 ).trimmed().length();
                 m_whiteSpace = current.left( ws );
             }
-            allLinesBelow += current.stripWhiteSpace();
+            allLinesBelow += current.trimmed();
             curLine++;
         }
-        QString theName = allLinesBelow.mid( 0, allLinesBelow.find( "=" ) ).stripWhiteSpace();
-        theName = theName.right( theName.length() - theName.findRev( " " ) );
+        QString theName = allLinesBelow.mid( 0, allLinesBelow.indexOf( "=" ) ).trimmed();
+        theName = theName.right( theName.length() - theName.lastIndexOf( " " ) );
         theName = theName.replace("[", "").replace("]", "");
-        ui->leArrayName->setText( theName.stripWhiteSpace() );
-        allLinesBelow = allLinesBelow.mid( allLinesBelow.find( "{" )+1,
-                                           allLinesBelow.findRev( "}" ) - allLinesBelow.find( "{" ) - 1 );
+        ui->leArrayName->setText( theName.trimmed() );
+        allLinesBelow = allLinesBelow.mid( allLinesBelow.indexOf( "{" )+1,
+                                           allLinesBelow.lastIndexOf( "}" ) - allLinesBelow.indexOf( "{" ) - 1 );
         allLinesBelow = allLinesBelow.replace( ",", " " );
-        QStringList list = QStringList::split(" ", allLinesBelow, false);
+        QStringList list = allLinesBelow.split(" ",QString::SkipEmptyParts);
         QList< int > segs, sortedSegs;
         for ( QStringList::Iterator it=list.begin(); it != list.end(); ++it )
         {
-            if ( (*it).upper().startsWith("0X") )
+            if ( (*it).toUpper().startsWith("0X") )
             {
                 int addMe = (*it).right((*it).length()-2).toInt(&ok, 16);
                 if (!ok)
@@ -263,14 +283,14 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
         if ( sortedSegs.size() > 0 )
         {
             ui->lvSegments->clear();
-            Q3ListViewItem *item;
+            QTreeWidgetItem *item;
             for ( unsigned int i=0; i<sortedSegs.size(); i++ )
             {
-                item = new Q3ListViewItem(ui->lvSegments, formStr( i ) );
+                item = new QTreeWidgetItem(ui->lvSegments,QStringList() << formStr( i ) );
                 for ( int j=0; j<8; j++ )
                     item->setText( j+1, (1<<j)&sortedSegs[i] ? "1": "0" );
-                item->setPixmap( 0, generatePixmapFor( getSegmentsForListItem( item ) ) );
-                ui->lvSegments->insertItem( item );
+                item->setIcon( 0, generatePixmapFor( getSegmentsForListItem( item ) ) );
+                ui->lvSegments->addTopLevelItem( item );
             }
         }
     }
@@ -278,15 +298,17 @@ KLSevenSegmentWidget::KLSevenSegmentWidget(QWidget *parent, const char *name, KL
     m_prohibitRecursion=true;
     setRadiosFromBitSegmentAssignment( m_segmentIsBit );
     m_prohibitRecursion=false;
-    ui->lvSegments->setSelected( ui->lvSegments->firstChild(), true );
-    slotCurrentItemChanged( ui->lvSegments->firstChild() );
+
     
-    Q3ListViewItem * myChild = ui->lvSegments->firstChild();
-    while( myChild ) {
-        myChild->setPixmap( 0, generatePixmapFor( getSegmentsForListItem( myChild ) ) );
-        myChild = myChild->nextSibling();
+    QTreeWidgetItemIterator it(ui->lvSegments);
+    slotCurrentItemChanged( *it, NULL );
+
+    while( *it ) {
+        (*it)->setIcon( 0, generatePixmapFor( getSegmentsForListItem( *it ) ) );
+        it++;
     }
-    ui->lvSegments->setSorting(0);
+    ui->lvSegments->setSortingEnabled(false);
+
 }
 
 void KLSevenSegmentWidget::slotBitSegmentAssocChanged()
@@ -350,56 +372,56 @@ void KLSevenSegmentWidget::slotBitSegmentAssocChanged()
 
 void KLSevenSegmentWidget::slotDP()
 {
-    ui->tbDP->setPalette( ui->tbDP->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbDP->setPalette( ui->tbDP->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
 
 void KLSevenSegmentWidget::slotG()
 {
-    ui->tbG->setPalette( ui->tbG->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbG->setPalette( ui->tbG->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
 
 void KLSevenSegmentWidget::slotF()
 {
-    ui->tbF->setPalette( ui->tbF->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbF->setPalette( ui->tbF->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
 
 void KLSevenSegmentWidget::slotE()
 {
-    ui->tbE->setPalette( ui->tbE->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbE->setPalette( ui->tbE->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
 
 void KLSevenSegmentWidget::slotD()
 {
-    ui->tbD->setPalette( ui->tbD->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbD->setPalette( ui->tbD->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
 
 void KLSevenSegmentWidget::slotC()
 {
-    ui->tbC->setPalette( ui->tbC->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbC->setPalette( ui->tbC->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
 
 void KLSevenSegmentWidget::slotB()
 {
-    ui->tbB->setPalette( ui->tbB->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbB->setPalette( ui->tbB->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
 
 void KLSevenSegmentWidget::slotA()
 {
-    ui->tbA->setPalette( ui->tbA->isOn() ? QPalette( Qt::red, Qt::red ) : palette() );
+    ui->tbA->setPalette( ui->tbA->isChecked() ? QPalette( Qt::red, Qt::red ) : palette() );
     changeCurrentListItem();
 }
 
@@ -451,7 +473,7 @@ void KLSevenSegmentWidget::slotOK()
         if (m_document->lastActiveView()->view())
             line=m_document->lastActiveView()->view()->cursorPosition().line();
     QStringList lines;
-    lines = lines.split( "\n", out );
+    lines = out.split("\n");
     if ( underReedit() )
     {
         for ( int curLine=m_stopLine; curLine >= m_startLine; curLine-- )
@@ -469,107 +491,55 @@ void KLSevenSegmentWidget::slotOK()
 
 void KLSevenSegmentWidget::slotDown()
 {
-    Q3ListViewItem *next,*item=ui->lvSegments->currentItem();
-    bool ok;
-    
-    next = item->nextSibling();
-    if (!next)
-        return;
-    ui->lvSegments->takeItem( next );
-    ui->lvSegments->takeItem( item );
-    item->setText( 0, formStr( item->text( 0 ).mid(2,2).toInt( &ok, 16 )+1) );
-    next->setText( 0, formStr( next->text( 0 ).mid(2,2).toInt( &ok, 16 )-1) );
-    ui->lvSegments->insertItem( next );
-    ui->lvSegments->insertItem( item );
-    ui->lvSegments->setCurrentItem( item );
+    QTreeWidget *tree = ui->lvSegments;
+    int row  = tree->currentIndex().row();
+    if (row < tree->topLevelItemCount()-1)
+    {
+        QTreeWidgetItem* child = tree->takeTopLevelItem(row);
+        tree->insertTopLevelItem(row+1, child);
+        tree->setCurrentItem(child);
+    }
 }
 
 
 void KLSevenSegmentWidget::slotUp()
 {
-    Q3ListViewItem *prev,*item=ui->lvSegments->currentItem();
-    bool ok;
-    
-    prev=ui->lvSegments->firstChild();
-    if ( prev == item )
-        return;
-    while(prev->nextSibling()!=item)
-        prev=prev->nextSibling();
-    ui->lvSegments->takeItem( prev );
-    ui->lvSegments->takeItem( item );
-    item->setText( 0, formStr( item->text( 0 ).mid(2,2).toInt( &ok, 16 )-1 ) );
-    prev->setText( 0, formStr( prev->text( 0 ).mid(2,2).toInt( &ok, 16 )+1 ) );
-    ui->lvSegments->insertItem( prev );
-    ui->lvSegments->insertItem( item );
-    ui->lvSegments->setCurrentItem( item );
+    QTreeWidget *tree = ui->lvSegments;
+    int row  = tree->currentIndex().row();
+    if (row > 0)
+    {
+        QTreeWidgetItem* child = tree->takeTopLevelItem(row);
+        tree->insertTopLevelItem(row-1, child);
+        tree->setCurrentItem(child);
+    }
 }
 
 
 void KLSevenSegmentWidget::slotRemove()
 {
-    if (ui->lvSegments->childCount() == 1)
+    if (ui->lvSegments->topLevelItemCount() == 1)
         return;
-    ui->lvSegments->takeItem( ui->lvSegments->currentItem() );
-    ui->lvSegments->setSelected( ui->lvSegments->currentItem(), true );
+    ui->lvSegments->takeTopLevelItem( ui->lvSegments->currentIndex().row() );
 }
 
 
 void KLSevenSegmentWidget::slotAdd()
 {
-    Q3ListViewItem *item=ui->lvSegments->currentItem();
-    if (ui->lvSegments->childCount() > 255)
+    QTreeWidget *tree = ui->lvSegments;
+    QTreeWidgetItem *item=ui->lvSegments->currentItem();
+    if (tree->topLevelItemCount() > 255)
         return;
-    while(item->nextSibling())
-        item=item->nextSibling();
-    item = new Q3ListViewItem(ui->lvSegments, formStr( ui->lvSegments->childCount() ), "0", "0", "0", "0", "0", "0", "0");
+
+    item = new QTreeWidgetItem(tree, QStringList() << formStr( tree->topLevelItemCount() ) << "0" << "0" << "0" << "0" << "0" << "0" << "0");
     item->setText( 9, "0" );
-    item->setPixmap( 0, generatePixmapFor( getSegmentsForListItem( item ) ) );
-    ui->lvSegments->insertItem( item );
-    ui->lvSegments->setSelected( item, true );
+    item->setIcon( 0, generatePixmapFor( getSegmentsForListItem( item ) ) );
+    tree->addTopLevelItem( item );
+    tree->setCurrentItem(item);
 }
 
 void KLSevenSegmentWidget::fillSegmentList()
 {
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "Item", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "A", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "B", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "C", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "D", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "E", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "F", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "G", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->addColumn(QApplication::translate("KLSevenSegmentWidgetBase", "DP", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setClickEnabled(false, ui->lvSegments->header()->count() - 1);
-    ui->lvSegments->header()->setResizeEnabled(true, ui->lvSegments->header()->count() - 1);
-
-    ui->lvSegments->header()->setLabel(0, QApplication::translate("KLSevenSegmentWidgetBase", "Item", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(1, QApplication::translate("KLSevenSegmentWidgetBase", "A", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(2, QApplication::translate("KLSevenSegmentWidgetBase", "B", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(3, QApplication::translate("KLSevenSegmentWidgetBase", "C", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(4, QApplication::translate("KLSevenSegmentWidgetBase", "D", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(5, QApplication::translate("KLSevenSegmentWidgetBase", "E", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(6, QApplication::translate("KLSevenSegmentWidgetBase", "F", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(7, QApplication::translate("KLSevenSegmentWidgetBase", "G", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->header()->setLabel(8, QApplication::translate("KLSevenSegmentWidgetBase", "DP", 0, QApplication::UnicodeUTF8));
-    ui->lvSegments->clear();
-
-    Q3ListViewItem *__item = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item = new QTreeWidgetItem(ui->lvSegments);
     __item->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x00", 0, QApplication::UnicodeUTF8));
     __item->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -580,7 +550,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
     __item->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item1 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item1 = new QTreeWidgetItem(ui->lvSegments);
     __item1->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x01", 0, QApplication::UnicodeUTF8));
     __item1->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
     __item1->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -591,7 +561,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item1->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
     __item1->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item2 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item2 = new QTreeWidgetItem(ui->lvSegments);
     __item2->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x02", 0, QApplication::UnicodeUTF8));
     __item2->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item2->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -602,7 +572,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item2->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item2->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item3 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item3 = new QTreeWidgetItem(ui->lvSegments);
     __item3->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x03", 0, QApplication::UnicodeUTF8));
     __item3->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item3->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -613,7 +583,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item3->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item3->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item4 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item4 = new QTreeWidgetItem(ui->lvSegments);
     __item4->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x04", 0, QApplication::UnicodeUTF8));
     __item4->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
     __item4->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -624,7 +594,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item4->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item4->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item5 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item5 = new QTreeWidgetItem(ui->lvSegments);
     __item5->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x05", 0, QApplication::UnicodeUTF8));
     __item5->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item5->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
@@ -635,7 +605,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item5->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item5->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item6 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item6 = new QTreeWidgetItem(ui->lvSegments);
     __item6->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x06", 0, QApplication::UnicodeUTF8));
     __item6->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item6->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
@@ -646,7 +616,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item6->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item6->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item7 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item7 = new QTreeWidgetItem(ui->lvSegments);
     __item7->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x07", 0, QApplication::UnicodeUTF8));
     __item7->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item7->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -657,7 +627,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item7->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
     __item7->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item8 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item8 = new QTreeWidgetItem(ui->lvSegments);
     __item8->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x08", 0, QApplication::UnicodeUTF8));
     __item8->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item8->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -668,7 +638,7 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item8->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item8->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
 
-    Q3ListViewItem *__item9 = new Q3ListViewItem(ui->lvSegments);
+    QTreeWidgetItem *__item9 = new QTreeWidgetItem(ui->lvSegments);
     __item9->setText(0, QApplication::translate("KLSevenSegmentWidgetBase", "0x09", 0, QApplication::UnicodeUTF8));
     __item9->setText(1, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item9->setText(2, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
@@ -678,21 +648,24 @@ void KLSevenSegmentWidget::fillSegmentList()
     __item9->setText(6, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item9->setText(7, QApplication::translate("KLSevenSegmentWidgetBase", "1", 0, QApplication::UnicodeUTF8));
     __item9->setText(8, QApplication::translate("KLSevenSegmentWidgetBase", "0", 0, QApplication::UnicodeUTF8));
+
+    ui->lvSegments->setColumnWidth(0,65);
 }
 
-void KLSevenSegmentWidget::slotCurrentItemChanged(Q3ListViewItem *cur )
+void KLSevenSegmentWidget::slotCurrentItemChanged(QTreeWidgetItem *cur , QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous)
     int segs = getSegmentsForListItem( cur );
 
     m_dontReactOnToolButtons=true;
-    ui->tbA->setOn(segs&0x01);
-    ui->tbB->setOn(segs&0x02);
-    ui->tbC->setOn(segs&0x04);
-    ui->tbD->setOn(segs&0x08);
-    ui->tbE->setOn(segs&0x10);
-    ui->tbF->setOn(segs&0x20);
-    ui->tbG->setOn(segs&0x40);
-    ui->tbDP->setOn(segs&0x80);
+    ui->tbA->setChecked(segs&0x01);
+    ui->tbB->setChecked(segs&0x02);
+    ui->tbC->setChecked(segs&0x04);
+    ui->tbD->setChecked(segs&0x08);
+    ui->tbE->setChecked(segs&0x10);
+    ui->tbF->setChecked(segs&0x20);
+    ui->tbG->setChecked(segs&0x40);
+    ui->tbDP->setChecked(segs&0x80);
     m_dontReactOnToolButtons=false;
 }
 
@@ -747,24 +720,24 @@ void KLSevenSegmentWidget::changeCurrentListItem()
     if (m_dontReactOnToolButtons)
         return;
     int bits = 0;
-    if ( ui->tbA->isOn() )
+    if ( ui->tbA->isChecked() )
         bits |= 0x01;
-    if ( ui->tbB->isOn() )
+    if ( ui->tbB->isChecked() )
         bits |= 0x02;
-    if ( ui->tbC->isOn() )
+    if ( ui->tbC->isChecked() )
         bits |= 0x04;
-    if ( ui->tbD->isOn() )
+    if ( ui->tbD->isChecked() )
         bits |= 0x08;
-    if ( ui->tbE->isOn() )
+    if ( ui->tbE->isChecked() )
         bits |= 0x10;
-    if ( ui->tbF->isOn() )
+    if ( ui->tbF->isChecked() )
         bits |= 0x20;
-    if ( ui->tbG->isOn() )
+    if ( ui->tbG->isChecked() )
         bits |= 0x40;
-    if ( ui->tbDP->isOn() )
+    if ( ui->tbDP->isChecked() )
         bits |= 0x80;
-    Q3ListViewItem *item = ui->lvSegments->currentItem();
-    item->setPixmap( 0, generatePixmapFor( bits ) );
+    QTreeWidgetItem *item = ui->lvSegments->currentItem();
+    item->setIcon( 0, generatePixmapFor( bits ) );
     setListItemForSegments( item, bits );
 }
 
@@ -772,7 +745,7 @@ QPixmap KLSevenSegmentWidget::generatePixmapFor( int segs )
 {
     int vsize=14, hsize=7;
     QPixmap retVal(hsize+2,vsize);
-    retVal.fill( ui->lvSegments->backgroundColor() );
+    retVal.fill( ui->lvSegments->palette().color(QWidget::backgroundRole()) );
     QPainter paint(&retVal);
     paint.setPen( Qt::red );
     if (segs&0x01)
@@ -794,7 +767,7 @@ QPixmap KLSevenSegmentWidget::generatePixmapFor( int segs )
     return retVal;
 }
 
-int KLSevenSegmentWidget::getSegmentsForListItem( Q3ListViewItem* item )
+int KLSevenSegmentWidget::getSegmentsForListItem(QTreeWidgetItem *item )
 {
     int retVal=0;
     for (int i=0; i<8; i++)
@@ -806,7 +779,7 @@ int KLSevenSegmentWidget::getSegmentsForListItem( Q3ListViewItem* item )
 }
 
 
-void KLSevenSegmentWidget::setListItemForSegments(Q3ListViewItem *item, int segs )
+void KLSevenSegmentWidget::setListItemForSegments(QTreeWidgetItem *item, int segs )
 {
     for (int i=0; i<8; i++)
     {
@@ -827,12 +800,12 @@ QList< int > KLSevenSegmentWidget::generateBitmasks( )
 {
     QList< int > retVal;
     int current;
-    Q3ListViewItem *item=ui->lvSegments->firstChild();
+    QTreeWidgetItemIterator item(ui->lvSegments);
     
-    while(item)
+    while(*item)
     {
         current=0;
-        int segList = getSegmentsForListItem( item );
+        int segList = getSegmentsForListItem( *item );
         for (int i=0; i<8; i++)
         {
             if ( segList&(1<<i) )
@@ -841,7 +814,7 @@ QList< int > KLSevenSegmentWidget::generateBitmasks( )
             }
         }
         retVal.append( current );
-        item=item->nextSibling();
+        item++;
     }
     return retVal;
 }

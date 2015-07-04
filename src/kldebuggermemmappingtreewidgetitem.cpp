@@ -19,50 +19,42 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KLDOTMATRIXWIDGET_H
-#define KLDOTMATRIXWIDGET_H
-
-#include "ui_kldotmatrixdisplaywizardbase.h"
-#include "klwizardheadersettings.h"
-#include <qvalidator.h>
+#include "kldebuggermemmappingtreewidgetitem.h"
 
 
-class KLEditDotsWidget;
 
-#define WIZARD_HEADER_FILE "dm_lcd.h"
-#define WIZARD_SOURCE_FILE "dm_lcd.c"
-
-
-class KLDocument;
-class KLProject;
-class KontrollerLab;
+KLDebuggerMemMappingTreeWidgetItem::KLDebuggerMemMappingTreeWidgetItem(QTreeWidget *lv, unsigned int from, unsigned int to )
+ : QTreeWidgetItem( lv, QStringList() << QString("0x%1").arg( from, 0, 16) << QString("0x%1").arg( to, 0, 16) ),
+ m_mapping( from, to )
+{
+}
 
 
-class KLDotMatrixWidget: public QDialog {
-Q_OBJECT
-public:
-    KLDotMatrixWidget(KontrollerLab *parent, const char *name, KLProject* prj, KLDocument* doc);
-private:
-    Ui_KLDotMatrixDisplayWizardBase *ui;
-public slots:
-    virtual void slotOK();
-    virtual void slotCancel();
-    void slotSelectedValueChanged(Q3ListViewItem * item);
-    virtual void slotAddHD44780Lib(bool val);
-    virtual void slotChangeValue(int val);
-    virtual void slotChangeValue(const QString& val);
-protected:
-    void updateListItem( const KLWizardHeaderSetting& set );
-    void updateLvValuesFrom( const KLWizardHeaderSettings& set );
-    KLDocument* m_document;
-    KLDocument* m_header, *m_source;
-    KLProject* m_project;
-    KontrollerLab *m_parent;
-    KLWizardHeaderSettings m_settings;
-    QGridLayout* m_frmGridLayout;
-    KLEditDotsWidget* m_editDots;
-    QMap<QString,Q3ListViewItem*> m_groups;
-    QRegExpValidator m_validator;
-};
+KLDebuggerMemMappingTreeWidgetItem::~KLDebuggerMemMappingTreeWidgetItem()
+{
+}
 
-#endif
+void KLDebuggerMemMappingTreeWidgetItem::setFrom( unsigned int from )
+{
+    m_mapping.setFrom( from );
+    setText( 0, QString("0x%1").arg( from, 0, 16) );
+}
+
+
+void KLDebuggerMemMappingTreeWidgetItem::setTo( unsigned int to )
+{
+    m_mapping.setTo( to );
+    setText( 1, QString("0x%1").arg( to, 0, 16) );
+}
+
+bool KLDebuggerMemMappingTreeWidgetItem::operator<(const QTreeWidgetItem &other) const
+{
+    const KLDebuggerMemMappingTreeWidgetItem* mem = dynamic_cast< const KLDebuggerMemMappingTreeWidgetItem* >( &other );
+    if ( !mem )
+    {
+        return QTreeWidgetItem::operator <(other);
+    }
+    return m_mapping < mem->mapping();
+}
+
+

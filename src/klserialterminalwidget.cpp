@@ -33,21 +33,23 @@
 #include "klscope.h"
 #include "klhistogram.h"
 #include <kconfiggroup.h>
+#include <QScrollBar>
 
 
 KLSerialTerminalWidget::KLSerialTerminalWidget(KontrollerLab *parent, const char *name)
-    :QDialog(parent, name),
+    :QDialog(parent),
       ui(new Ui::KLSerialTerminalWidgetBase)
 {
     ui->setupUi(this);
+    setObjectName(name);
     m_parent = parent;
     m_programmerBusy = false;
     m_terminalInICDMode = false;
     m_wasOpenedBeforeProgramming = false;
     m_serialPort = new KLSerialPort;
     
-    QHBoxLayout *lay = new QHBoxLayout( ui->frmScopeHisto, 2 );
-    lay->setAutoAdd( true );
+    QHBoxLayout *lay = new QHBoxLayout( ui->frmScopeHisto );
+    //TODO lay->setAutoAdd( true );
     m_scope = new KLScope( ui->frmScopeHisto, "scope", 128, -127, true, false );
     m_histogram = new KLHistogram( ui->frmScopeHisto, "histogram", 128, -127, true, false );
     
@@ -99,7 +101,7 @@ KLSerialTerminalWidget::KLSerialTerminalWidget(KontrollerLab *parent, const char
     m_baudConsts[ curBRate ] = B115200;
     m_baudRates.append( curBRate );
 
-    ui->cbBaud->insertStringList( m_baudRates );
+    ui->cbBaud->addItems( m_baudRates );
     
     QStringList ports;
     ports.append( "/dev/ttyS0" );
@@ -108,12 +110,12 @@ KLSerialTerminalWidget::KLSerialTerminalWidget(KontrollerLab *parent, const char
     ports.append( "/dev/ttyS3" );
     ports.append( "/dev/ttyUSB0" );
 
-    ui->cbDevice->insertStringList( ports );
+    ui->cbDevice->addItems( ports );
     
     KIconLoader ico;
-    ui->tbOpenClose->setIconSet( ico.loadIcon( "network-disconnect", KIconLoader::Panel ) );
+    ui->tbOpenClose->setIcon( ico.loadIcon( "network-disconnect", KIconLoader::Panel ) );
     
-    ui->tbClear->setIconSet( ico.loadIcon( "edit-clear-list", KIconLoader::Panel ) );
+    ui->tbClear->setIcon( ico.loadIcon( "edit-clear-list", KIconLoader::Panel ) );
     
     m_listener = 0L;
     m_displayIsHEX = false;
@@ -126,11 +128,11 @@ void KLSerialTerminalWidget::slotSend()
 {
     if ( terminalInNormalMode() )
     {
-        const QString outData = ui->teSendData->text();
-        const QString outData_lower = outData.lower();
+        const QString outData = ui->teSendData->toPlainText();
+        const QString outData_lower = outData.toLower();
         std::vector< unsigned char > data;
 
-        unsigned int i = 0;
+        int i = 0;
 
         while ( i < outData.length() )
         {
@@ -139,21 +141,21 @@ void KLSerialTerminalWidget::slotSend()
             unsigned char hexVal = 0;
 
             if ( outData.at( i ) == QChar('#') && ( i+1 < outData.length() )
-                 && isHexDigit( (unsigned char) outData.at( i+1 ).latin1() ) )
+                 && isHexDigit( (unsigned char) outData.at( i+1 ).toLatin1() ) )
             {
                 // This is in fact a hex value!
                 isHex = true;
-                hexVal = hexToUChar( (unsigned char) outData_lower.at( i+1 ).latin1() );
+                hexVal = hexToUChar( (unsigned char) outData_lower.at( i+1 ).toLatin1() );
                 lenOfThisChar = 2;
-                if ( ( i+2 < outData.length() ) && isHexDigit( (unsigned char) outData.at( i+2 ).latin1() ) )
+                if ( ( i+2 < outData.length() ) && isHexDigit( (unsigned char) outData.at( i+2 ).toLatin1() ) )
                 {
                     // qDebug( "Val is %d", hexToUChar( (unsigned char) outData_lower.at( i+2 ).latin1() ) );
-                    hexVal = (hexVal * 16) + hexToUChar( (unsigned char) outData_lower.at( i+2 ).latin1() );
+                    hexVal = (hexVal * 16) + hexToUChar( (unsigned char) outData_lower.at( i+2 ).toLatin1() );
                     lenOfThisChar = 3;
                 }
             }
             if ( !isHex )
-                data.push_back( (unsigned char) outData.at( i ).latin1() );
+                data.push_back( (unsigned char) outData.at( i ).toLatin1() );
             else
                 data.push_back( hexVal );
             i += lenOfThisChar;
@@ -193,7 +195,7 @@ void KLSerialTerminalWidget::slotReceived( const KLCharVector& what_ )
     if ( terminalInNormalMode() )
     {
         KLCharVector what = what_;
-        if ( ( ui->cbShowAs->currentItem() == HEX_ENTRY ) || ( ui->cbShowAs->currentItem() == ASCII_ENTRY ) )
+        if ( ( ui->cbShowAs->currentIndex() == HEX_ENTRY ) || ( ui->cbShowAs->currentIndex() == ASCII_ENTRY ) )
         {
             for ( unsigned int i=0; i < what.size(); i++ )
                 m_receiveBuffer.push_back( what[ i ] );
@@ -207,20 +209,21 @@ void KLSerialTerminalWidget::slotReceived( const KLCharVector& what_ )
                 m_receiveBuffer = buffer;
             }
             QString whatString = convertCharVectorToAscii( m_receiveBuffer );
-            if ( ui->cbShowAs->currentItem() == HEX_ENTRY )
+            if ( ui->cbShowAs->currentIndex() == HEX_ENTRY )
                 whatString = asciiToHEX( what );
-            if ( (!hasBeenCut) && ui->teReceiveData->text().endsWith("\n") )
+            if ( (!hasBeenCut) && ui->teReceiveData->toPlainText().endsWith("\n") )
             {
                 ui->teReceiveData->append( whatString );
             }
             else
             {
-                if ( ui->cbShowAs->currentItem() == HEX_ENTRY )
+                if ( ui->cbShowAs->currentIndex() == HEX_ENTRY )
                     ui->teReceiveData->setText( asciiToHEX( m_receiveBuffer ) );
                 else
                     ui->teReceiveData->setText( whatString );
             }
-            ui->teReceiveData->scrollToBottom();
+            QScrollBar  *sb = ui->teReceiveData->verticalScrollBar();
+            sb->setValue(sb->maximum());
         }
         else
         {
@@ -270,7 +273,7 @@ void KLSerialTerminalWidget::slotOpenClose()
     // Check again if it is open now:
     if ( m_serialPort->isOpen() )
     {
-        ui->tbOpenClose->setIconSet( ico.loadIcon( "network-connect", KIconLoader::Panel ) );
+        ui->tbOpenClose->setIcon( ico.loadIcon( "network-connect", KIconLoader::Panel ) );
         ui->cbDevice->setEnabled(false);
         ui->cbBaud->setEnabled(false);
         ui->pbSend->setEnabled(true);
@@ -281,7 +284,7 @@ void KLSerialTerminalWidget::slotOpenClose()
     }
     else
     {
-        ui->tbOpenClose->setIconSet( ico.loadIcon( "network-disconnect", KIconLoader::Panel ) );
+        ui->tbOpenClose->setIcon( ico.loadIcon( "network-disconnect", KIconLoader::Panel ) );
         ui->cbDevice->setEnabled(true);
         ui->cbBaud->setEnabled(true);
         ui->pbSend->setEnabled(false);
@@ -396,7 +399,8 @@ void KLSerialTerminalWidget::slotCloseICD( )
     }
 }
 
-void KLSerialTerminalWidget::customEvent( QCustomEvent * )
+
+void KLSerialTerminalWidget::customEvent( QEvent * )
 {
     if (m_listener)
         slotReceived( m_listener->fetchOutData() );
@@ -434,20 +438,20 @@ void KLSerialTerminalWidget::readProperties( KSharedConfig::Ptr config )
     {
         for ( int i=0; i < ui->cbDevice->count(); i++ )
         {
-            if ( ui->cbDevice->text( i ) == serDev )
+            if ( ui->cbDevice->itemText( i ) == serDev )
             {
                 exists = true;
                 break;
             }
         }
         if ( !exists )
-            ui->cbDevice->insertItem( serDev );
-        ui->cbDevice->setCurrentText( serDev );
+            ui->cbDevice->addItem( serDev );
+        setComboBoxText(ui->cbDevice, serDev );
     }
     QString serBaud = map[ CONFIG_SERIAL_BAUD ];
     if ( (!serBaud.isEmpty()) && (!serBaud.isNull()) )
     {
-        ui->cbBaud->setCurrentText( serBaud );
+        setComboBoxText(ui->cbBaud, serBaud );
     }
 }
 
@@ -456,7 +460,7 @@ QStringList KLSerialTerminalWidget::ports( ) const
     QStringList retVal;
     
     for ( int i=0; i < ui->cbDevice->count(); i++ )
-        retVal.append( ui->cbDevice->text( i ) );
+        retVal.append( ui->cbDevice->itemText( i ) );
     return retVal;
 }
 

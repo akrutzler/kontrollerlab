@@ -40,11 +40,11 @@ public:
     int ramEnd() const { return m_ramEnd; }
 
 private:
-    Ui_KLMemoryViewWidgetBase *ui;
+    Ui::KLMemoryViewWidgetBase *ui;
 
 public slots:
     virtual void slotCPUNameChanged( const QString& newName );
-    virtual void slotCurrentItemChanged( Q3ListBoxItem* item );
+    virtual void slotCurrentItemChanged( QTreeWidgetItem* current, QTreeWidgetItem* previous );
     virtual void slotSelectionChanged();
     virtual void slotUpdateEveryChanged( int value );
     virtual void slotUpdateEnable( bool value );

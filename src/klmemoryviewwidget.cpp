@@ -33,10 +33,11 @@
 #include "kldocumentview.h"
 
 KLMemoryViewWidget::KLMemoryViewWidget(KontrollerLab *parent, const char *name)
-    :QDialog(parent,name), m_updateTimer( this, "timer" ),
+    :QDialog(parent),
     ui(new Ui::KLMemoryViewWidgetBase())
 {
     ui->setupUi(this);
+    setObjectName(name);
     m_parent = parent;
     m_nextUpdateIn=0;
     m_enableAutomaticGUIUpdates = true;
@@ -45,7 +46,8 @@ KLMemoryViewWidget::KLMemoryViewWidget(KontrollerLab *parent, const char *name)
     // By default, don't allow a memory cell to be set.
     allowSetMemoryCell( true );
     connect( &m_updateTimer, SIGNAL(timeout()), this, SLOT(timeoutOfTimer()) );
-    connect( ui->lbMemory, SIGNAL(currentChanged(Q3ListBoxItem*)), this, SLOT(slotCurrentItemChanged(Q3ListBoxItem*)));
+    connect( ui->lbMemory, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+             this, SLOT(slotCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
 
     connect(ui->pbRefresh, SIGNAL(clicked()), this, SLOT(slotUpdate()));
     connect(ui->cbUpdateRegularly, SIGNAL(toggled(bool)), this, SLOT(slotUpdateEnable(bool)));
@@ -72,6 +74,8 @@ KLMemoryViewWidget::KLMemoryViewWidget(KontrollerLab *parent, const char *name)
 
     ui->kisHex->setValidator(new QRegExpValidator(QRegExp("0x[0-9a-fA-F]{1,4}")));
     ui->kisHex->setBase(16);
+
+    m_updateTimer.setSingleShot(true);
 }
 
 void KLMemoryViewWidget::slotSelectionChanged()
@@ -81,7 +85,7 @@ void KLMemoryViewWidget::slotSelectionChanged()
 
 void KLMemoryViewWidget::slotUpdateEveryChanged( int value )
 {
-    m_updateTimer.changeInterval( value );
+    m_updateTimer.setInterval( value );
 }
 
 
@@ -90,7 +94,7 @@ void KLMemoryViewWidget::slotUpdateEnable( bool value )
     if (value)
     {
         // Single shot only!
-        m_updateTimer.start( ui->tniUpdateRegularly->value(), TRUE );
+        m_updateTimer.start(ui->tniUpdateRegularly->value());
     }
     else
     {
@@ -147,7 +151,7 @@ void KLMemoryViewWidget::slotNameChanged( const QString& )
 void KLMemoryViewWidget::slotUpdate()
 {
     KLMemoryCellListBoxItem* item =
-            dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->item( ui->lbMemory->currentItem() ) );
+            dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->currentItem() );
 
     // Fix for crash bug: When item is 0 because no element was selected,
     // simply do nothing instead of violating the segment:
@@ -161,13 +165,13 @@ void KLMemoryViewWidget::slotUpdate()
 void KLMemoryViewWidget::slotSetMemoryCell()
 {
     KLMemoryCellListBoxItem* item =
-            dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->item( ui->lbMemory->currentItem() ) );
+            dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->currentItem() );
 
     if (item)
     {
         item->setValue( ui->kisDec->value() );
         item->setName( ui->leName->text() );
-        ui->lbMemory->updateContents();
+        //!ui->lbMemory->update(ui->lbMemory->indexFromItem(item));
         emit( memoryCellSet( item->address(), item->value() ) );
     }
 }
@@ -203,10 +207,10 @@ void KLMemoryViewWidget::setGUIValueTo(int value)
         ui->leChar->setText( QChar( value ) );
 }
 
-void KLMemoryViewWidget::slotCurrentItemChanged(Q3ListBoxItem *item_ )
+void KLMemoryViewWidget::slotCurrentItemChanged(QTreeWidgetItem *current , QTreeWidgetItem *previous)
 {
     KLMemoryCellListBoxItem* item =
-            dynamic_cast<KLMemoryCellListBoxItem*>( item_ );
+            dynamic_cast<KLMemoryCellListBoxItem*>( current );
 
     if (item)
     {
@@ -229,21 +233,21 @@ void KLMemoryViewWidget::allowSetMemoryCell( bool value )
 void KLMemoryViewWidget::slotMemoryReadCompleted( unsigned int adr, unsigned char val )
 {
     KLMemoryCellListBoxItem* item =
-            dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->item( adr ) );
+            dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->topLevelItem(adr) );
 
     if (item)
     {
         item->setValue( val );
-        ui->lbMemory->repaint( ui->lbMemory->itemRect( item ) );
+        ui->lbMemory->repaint( );
     }
     if ( m_nextUpdateIn > 0 )
         m_nextUpdateIn--;
     if ( (m_nextUpdateIn == 0) && m_enableAutomaticGUIUpdates )
     {
-        ui->lbMemory->updateContents();
+        //ui->lbMemory->updateContents();
         if ( ui->cbUpdateRegularly->isChecked() )
             // Single shot only!
-            m_updateTimer.start( ui->tniUpdateRegularly->value(), TRUE );
+            m_updateTimer.start(ui->tniUpdateRegularly->value());
     }
 }
 
@@ -256,27 +260,28 @@ void KLMemoryViewWidget::timeoutOfTimer( )
 
     for ( unsigned int i=0; i < (unsigned int) m_ramEnd; i++ )
     {
+        /*
         if ( ui->lbMemory->isSelected( i ) )
         {
             // qDebug("req %d", i);
             m_parent->debugger()->readMemoryCell( i );
             m_nextUpdateIn++;
-        }
+        }*/
     }
 }
 
 void KLMemoryViewWidget::updateGUI( )
 {
-    ui->lbMemory->updateContents();
+    ui->lbMemory->reset();
 }
 
 
 void KLMemoryViewWidget::setAllValuesToZero( )
 {
-    for ( unsigned int i=0; i < ui->lbMemory->count(); i++ )
+    for ( unsigned int i=0; i < ui->lbMemory->topLevelItemCount(); i++ )
     {
         KLMemoryCellListBoxItem* item =
-                dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->item( i ) );
+                dynamic_cast<KLMemoryCellListBoxItem*>( ui->lbMemory->topLevelItem( i ) );
         item->setValue( 0 );
     }
 }
@@ -288,13 +293,13 @@ void KLMemoryViewWidget::setRamEnd( const int & theValue )
         unsigned int i;
         for (i=m_ramEnd; i<32; i++)
         {
-            ui->lbMemory->insertItem( new KLMemoryCellListBoxItem( i, 0,
+            ui->lbMemory->addTopLevelItem( new KLMemoryCellListBoxItem( i, 0,
                                   QString("r%1").arg(i) ) );
         }
         m_ramEnd = theValue;
         for (; i<(unsigned int)m_ramEnd; i++)
         {
-            ui->lbMemory->insertItem( new KLMemoryCellListBoxItem( i, 0, "" ) );
+            ui->lbMemory->addTopLevelItem( new KLMemoryCellListBoxItem( i, 0, "" ) );
         }
     }
     else
@@ -304,12 +309,12 @@ void KLMemoryViewWidget::setRamEnd( const int & theValue )
         unsigned int i;
         for (i=0; i<32; i++)
         {
-            ui->lbMemory->insertItem( new KLMemoryCellListBoxItem( i, 0,
+            ui->lbMemory->addTopLevelItem( new KLMemoryCellListBoxItem( i, 0,
                                 QString("r%1").arg(i) ) );
         }
         for (; i<(unsigned int)m_ramEnd; i++)
         {
-            ui->lbMemory->insertItem( new KLMemoryCellListBoxItem( i, 0, "" ) );
+            ui->lbMemory->addTopLevelItem( new KLMemoryCellListBoxItem( i, 0, "" ) );
         }
     }
 }
@@ -329,7 +334,7 @@ void KLMemoryViewWidget::slotCPUNameChanged(const QString &)
         {
             KLMemoryCellListBoxItem *lbItem =
                     dynamic_cast<KLMemoryCellListBoxItem*> (
-                    ui->lbMemory->item( (*it).location() ) );
+                    ui->lbMemory->topLevelItem( (*it).location() ) );
             lbItem->setName( "" );
             lbItem->setDescription( "" );
         }
@@ -339,12 +344,12 @@ void KLMemoryViewWidget::slotCPUNameChanged(const QString &)
         {
             KLMemoryCellListBoxItem *lbItem =
                     dynamic_cast<KLMemoryCellListBoxItem*> (
-                        ui->lbMemory->item( (*it).location() ) );
+                        ui->lbMemory->topLevelItem( (*it).location() ) );
             lbItem->setName( (*it).name() );
             lbItem->setDescription( (*it).description() );
         }
         m_currentlyDisplayedRdl = rdl;
-        ui->lbMemory->triggerUpdate( true );
+        //ui->lbMemory->triggerUpdate( true );
         ui->tlDescription->setText("");
     }
 }

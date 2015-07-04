@@ -26,7 +26,6 @@
 #include <kapplication.h>
 #include <qclipboard.h>
 #include <klocale.h>
-#include <q3pointarray.h>
 #include <QMouseEvent>
 
 
@@ -92,7 +91,7 @@ void KLHistogram::updateDisplay( )
                 max = buffer[j];
         }
     }
-    Q3PointArray pa( width*2 );
+    QPolygon pa( width*2 );
     unsigned int cnt = 0;
     unsigned int yBottom = height;
     unsigned int bottomMargin = 15, topMargin = 20;
@@ -120,7 +119,7 @@ void KLHistogram::updateDisplay( )
         }
     }
     QPainter painter( &pix );
-    painter.drawLineSegments( pa, 0, cnt/2 );
+    painter.drawPolyline(pa);
 
     if ( m_currentMouseX > 0 && m_currentMouseX < (int) width )
     {
@@ -140,7 +139,7 @@ void KLHistogram::updateDisplay( )
                 .arg( buffer[ m_currentMouseX ] );
         QRect bRectOrig = fontMetrics().boundingRect( text );
         QRect bRect( bRectOrig );
-        bRect.addCoords( -5, -5, 5, 5 );
+        bRect.setCoords( -5, -5, 5, 5 );
         bRect.moveCenter( QPoint( m_currentMouseX, mouseY - triSize * 3 - bRect.height() / 2 ) );
         if (bRect.right() >= (int) width)
             bRect.moveCenter( bRect.center() - QPoint(bRect.right() - width + 1, 0) );
@@ -150,7 +149,10 @@ void KLHistogram::updateDisplay( )
         painter.drawText( bRect.left() + (bRect.width() - bRectOrig.width()) / 2,
                           bRect.bottom() + (bRectOrig.height() - bRect.height()) / 2 - fontMetrics().descent(), text );
     }
-    setErasePixmap( pix );
+
+    QPalette palette;
+    palette.setBrush(backgroundRole(), QBrush(pix));
+    setPalette(palette);
 }
 
 void KLHistogram::mapping( int val, unsigned int & from, unsigned int & to, unsigned int width )

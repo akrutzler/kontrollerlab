@@ -26,7 +26,6 @@
 #include "kldocumentview.h"
 #include <qlineedit.h>
 #include <kurl.h>
-#include <q3iconview.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -45,19 +44,20 @@
  * @param name The name of the dialog.
  */
 KLFileNewDialog::KLFileNewDialog(KontrollerLab *parent, KLProject* project, const char *name)
-    :QDialog(parent, name), ui(new Ui_KLFileNewDialogBase)
+    :QDialog(parent), ui(new Ui::KLFileNewDialogBase)
 {
     ui->setupUi(this);
+    setObjectName(name);
     m_parent = parent;
     m_project = project;
     //TODO:  QListView::setViewMode(QListView::IconMode)
     KIconLoader *iconLoader = KIconLoader::global();
 
-    m_cSource = new Q3IconViewItem( ui->klNewFile, i18n("C source"), iconLoader->loadMimeTypeIcon( "text/x-csrc",KIconLoader::Desktop, KIconLoader::SizeLarge ));
-    m_asmSource = new Q3IconViewItem( ui->klNewFile, i18n("ASM source"), iconLoader->loadMimeTypeIcon( "text/x-hex",KIconLoader::Desktop, KIconLoader::SizeLarge ));
-    m_cHeader = new Q3IconViewItem( ui->klNewFile, i18n("C header"), iconLoader->loadMimeTypeIcon( "text/x-chdr",KIconLoader::Desktop, KIconLoader::SizeLarge ));
-    m_txt = new Q3IconViewItem( ui->klNewFile, i18n("Text"), iconLoader->loadMimeTypeIcon( "text/plain",KIconLoader::Desktop, KIconLoader::SizeLarge ));
-    m_other = new Q3IconViewItem( ui->klNewFile, i18n("Other"), iconLoader->loadMimeTypeIcon( "all/all",KIconLoader::Desktop, KIconLoader::SizeLarge ));
+    m_cSource =     new QListWidgetItem(iconLoader->loadMimeTypeIcon( "text/x-csrc",KIconLoader::Desktop, KIconLoader::SizeLarge), i18n("C source"), ui->klNewFile);
+    m_asmSource =   new QListWidgetItem(iconLoader->loadMimeTypeIcon( "text/x-hex",KIconLoader::Desktop, KIconLoader::SizeLarge ), i18n("ASM source"), ui->klNewFile);
+    m_cHeader =     new QListWidgetItem(iconLoader->loadMimeTypeIcon( "text/x-chdr",KIconLoader::Desktop, KIconLoader::SizeLarge ),i18n("C header"), ui->klNewFile);
+    m_txt =         new QListWidgetItem(iconLoader->loadMimeTypeIcon( "text/plain",KIconLoader::Desktop, KIconLoader::SizeLarge ),i18n("Text"), ui->klNewFile);
+    m_other =       new QListWidgetItem(iconLoader->loadMimeTypeIcon( "all/all",KIconLoader::Desktop, KIconLoader::SizeLarge ), i18n("Other"), ui->klNewFile);
     if (m_project)
         m_targetDirectory = m_project->projectBaseURL();
     ui->tlDirectory->setText( PROJECT_ROOT_STRING );
@@ -91,19 +91,19 @@ void KLFileNewDialog::slotOK()
 
     if ( ui->klNewFile->currentItem() == m_cSource )
     {
-        fname = fname.lower().endsWith(".c") ? fname : fname + ".c";
+        fname = fname.toLower().endsWith(".c") ? fname : fname + ".c";
     }
     else if ( ui->klNewFile->currentItem() == m_asmSource )
     {
-        fname = fname.lower().endsWith(".s") ? fname : fname + ".s";
+        fname = fname.toLower().endsWith(".s") ? fname : fname + ".s";
     }
     else if ( ui->klNewFile->currentItem() == m_cHeader )
     {
-        fname = fname.lower().endsWith(".h") ? fname : fname + ".h";
+        fname = fname.toLower().endsWith(".h") ? fname : fname + ".h";
     }
     else if ( ui->klNewFile->currentItem() == m_txt )
     {
-        fname = fname.lower().endsWith(".txt") ? fname : fname + ".txt";
+        fname = fname.toLower().endsWith(".txt") ? fname : fname + ".txt";
     }
 
     newFileURL.addPath( fname );

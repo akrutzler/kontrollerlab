@@ -26,8 +26,9 @@
 
 
 KLAVRRAM::KLAVRRAM(KLDebugger *parent, const char *name)
-    : QObject(parent, name), m_ram( DEBUGGER_RAM_SIZE, 0 )
+    : QObject(parent), m_ram( DEBUGGER_RAM_SIZE, 0 )
 {
+    setObjectName(name);
     m_parent = parent;
 
 
@@ -52,7 +53,7 @@ unsigned int KLAVRRAM::readRAM( const QString& name )
     if ( nameExists( name ) )
         return readRAM( m_nameToLocationMap[ name ] );
     else
-        qWarning( "READ: There is no RAM location %s.", name.ascii() );
+        qWarning( "READ: There is no RAM location %s.", name );
     return 0;
 }
 
@@ -69,7 +70,7 @@ void KLAVRRAM::writeRAM( const QString& name, unsigned char value )
     if ( nameExists( name ) )
         writeRAM( m_nameToLocationMap[ name ], value );
     else
-        qWarning( "WRITE: There is no RAM location %s.", name.ascii() );
+        qWarning( "WRITE: There is no RAM location %s.", name );
 }
 
 bool KLAVRRAM::nameExists( const QString& name )

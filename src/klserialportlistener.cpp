@@ -81,8 +81,7 @@ void KLSerialPortListener::dataReceived( const KLCharVector & data )
 {
     for ( unsigned int i=0; i < data.size(); i++ )
         m_outData.push_back( data[i] );
-    qApp->postEvent( (QObject*) m_parent, new QCustomEvent(QEvent::User+55) );
-    // qApp->postEvent( (QObject*) m_parent, new QPaintEvent( QRect(), false ) );
+    qApp->postEvent( (QObject*) m_parent, new QEvent(QEvent::User) );       //TODO event type +55
 }
 
 

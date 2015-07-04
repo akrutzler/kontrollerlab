@@ -82,7 +82,7 @@ KLProject::KLProject( KontrollerLab* parent )
         QString errorMesg;
         int errorLine, errorCol;
         if ( !docConf.setContent( &qfile, false, &errorMesg, &errorLine, &errorCol ) ) {
-            qWarning( "Error in file %s: %d(%d) %s", "config", errorLine, errorCol, errorMesg.ascii() );
+            qWarning( "Error in file %s: %d(%d) %s", "config", errorLine, errorCol, errorMesg );
             qfile.close();
             return;
         }
@@ -165,7 +165,7 @@ void KLProject::removeDocument( KLDocument * doc )
 {
     if ( m_documents.indexOf( doc ) >= 0 )
     {
-        m_documents.remove( doc );
+        m_documents.removeAll( doc );
         m_unsaved=true;
         update();
     }
@@ -346,16 +346,16 @@ void KLProject::registerProjectManager( KLProjectManagerWidget * prMan )
     if ( m_projectManagerWidgets.indexOf( prMan ) < 0 )
         m_projectManagerWidgets.append( prMan );
     else
-        qWarning(i18n("Tried to append a project manager twice: %s.").ascii(), prMan->name());
+        qWarning() << i18n("Tried to append a project manager twice: %s.").arg(prMan->objectName());
 }
 
 
 void KLProject::unregisterProjectManager( KLProjectManagerWidget * prMan )
 {
     if ( m_projectManagerWidgets.indexOf( prMan ) >= 0 )
-        m_projectManagerWidgets.remove( prMan );
+        m_projectManagerWidgets.removeAll( prMan );
     else
-        qWarning(i18n("Tried to remove a project manager twice: %s"), prMan->name());
+        qWarning() << i18n("Tried to remove a project manager twice: %s").arg(prMan->objectName());
 }
 
 KLCPUFeatures KLProject::cpuFeaturesFor( const QString & cpu )
@@ -433,7 +433,7 @@ QString KLProject::attributeLinkerSection( const QString & attr,
 QString KLProject::getObjectFileNameFor( const KUrl & file )
 {
     QString oFileName = getHierarchyName( file );
-    oFileName = oFileName.left( oFileName.find( "." ) ) + ".o";
+    oFileName = oFileName.left( oFileName.indexOf( "." ) ) + ".o";
     return oFileName;
 }
 
@@ -459,7 +459,7 @@ QString KLProject::conf( const QString & confKey, const QString & defval ) const
 QString KLProject::getOUTFileName( )
 {
     QString buf = conf( PRJ_HEX_FILE, "project.hex" );
-    buf = buf.left( buf.find( "." ) ) + ".out";
+    buf = buf.left( buf.indexOf( "." ) ) + ".out";
     return buf;
 }
 
@@ -526,8 +526,8 @@ void KLProject::fromQMapToDOM( QDomDocument & document, QDomElement & parent,
     QMap<QString, QString>::Iterator it;
     for (it=map.begin(); it!=map.end(); ++it)
     {
-        QDomElement elem = document.createElement( it.key().upper() );
-        elem.setAttribute( "VALUE", it.data() );
+        QDomElement elem = document.createElement( it.key().toUpper() );
+        elem.setAttribute( "VALUE", it.value() );
         parent.appendChild( elem );
     }
 }
@@ -542,8 +542,8 @@ QMap< QString, QString > KLProject::fromDOMToQMap( QDomDocument &, QDomElement &
         QDomElement e = n.toElement(); // try to convert the node to an element.
         if( !e.isNull() )
         {
-            retVal[ e.tagName().upper() ] = e.attribute( "VALUE", "" );
-            // qDebug("retVal[ %s ] = %s", e.tagName().upper().ascii(), retVal[ e.tagName().upper() ].ascii() );
+            retVal[ e.tagName().toUpper() ] = e.attribute( "VALUE", "" );
+            // qDebug("retVal[ %s ] = %s", e.tagName().toUpper().ascii(), retVal[ e.tagName().toUpper() ].ascii() );
         }
         n = n.nextSibling();
     }
@@ -568,13 +568,13 @@ void KLProject::save( const KUrl & url )
 
         if ( finfo.exists() )
             file.remove();
-        file.open( IO_ReadWrite );
+        file.open( QIODevice::ReadWrite );
         QString xml = doc.toString( 2 );
         QByteArray ba;
-        ba.setRawData( xml.ascii(), xml.length() );
+        ba.setRawData( xml.toLatin1(), xml.length() );
         QTextStream stream( &file );
         stream << xml;
-        ba.resetRawData( xml.ascii(), xml.length() );
+        ba.clear();
         file.close();
         saveAllDocs();
         m_unsaved=false;
@@ -594,12 +594,12 @@ void KLProject::open( const KUrl & url )
         localfilename = url.path();
     else if (!KIO::NetAccess::download(url, localfilename, (QWidget*)parent()))
     {
-        qWarning( "Download failed: %s", fname.ascii() );
+        qWarning() << "Download failed:" << fname;
         return;
     }
     
     QFile qfile (localfilename);
-    if (qfile.open(IO_ReadOnly))
+    if (qfile.open(QIODevice::ReadOnly))
     {
         QDomDocument doc("KontrollerLab");
 
@@ -609,7 +609,7 @@ void KLProject::open( const KUrl & url )
         QString errorMesg;
         int errorLine, errorCol;
         if ( !doc.setContent( &qfile, false, &errorMesg, &errorLine, &errorCol ) ) {
-            qWarning( "Error in file %s: %d(%d) %s", fname.ascii(), errorLine, errorCol, errorMesg.ascii() );
+            qWarning( "Error in file %s: %d(%d) %s", fname, errorLine, errorCol, errorMesg );
             qfile.close();
             return;
         }
@@ -633,20 +633,20 @@ void KLProject::readFromDOMElement( QDomDocument & doc, QDomElement & element )
         QDomElement e = n.toElement(); // try to convert the node to an element.
         if( !e.isNull() )
         {
-            if ( e.tagName().lower() == "settings" )
+            if ( e.tagName().toLower() == "settings" )
             {
                 setSettings( fromDOMToQMap( doc, e ) );
                 // qDebug( "m_settings[CPU]=%s", m_settings[PRJ_CPU].ascii() );
             }
-            else if ( e.tagName().lower() == "debugger_settings" )
+            else if ( e.tagName().toLower() == "debugger_settings" )
             {
                 m_debuggerSettings = fromDOMToQMap( doc, e );
             }
-            else if ( e.tagName().lower() == "programmerconfig" )
+            else if ( e.tagName().toLower() == "programmerconfig" )
             {
                 m_parent->setProgrammerConfig( fromDOMToQMap( doc, e ) );
             }
-            else if ( e.tagName().lower() == "files" )
+            else if ( e.tagName().toLower() == "files" )
             {
                 QStringList fileShown;
                 KLDocumentView* firstview=0L;
@@ -690,7 +690,7 @@ void KLProject::readFromDOMElement( QDomDocument & doc, QDomElement & element )
                             {
                                 QString viewListStr = *showIt;
                                 QStringList viewList;
-                                viewList = viewList.split(",", viewListStr, FALSE);
+                                viewList = viewListStr.split(",",QString::SkipEmptyParts);
                                 for (unsigned int i=0; i+4<viewList.size(); i+=5)
                                 {
                                     KLDocumentView* view = new KLDocumentView( docu, m_parent );
@@ -754,7 +754,7 @@ void KLProject::readFromDOMElement( QDomDocument & doc, QDomElement & element )
                             docu->open( openURL );
                             addDocument( docu );
                             // qDebug("showIt %s", (*showIt).ascii() );
-                            if ( (*showIt).upper() == TRUE_STRING )
+                            if ( (*showIt).toUpper() == TRUE_STRING )
                             {
                                 KLDocumentView* view = new KLDocumentView( docu, m_parent );
                                 if (!firstview)
@@ -787,7 +787,7 @@ QStringList KLProject::fromDOMToQStringList( QDomDocument &, QDomElement & eleme
         QDomElement e = n.toElement(); // try to convert the node to an element.
         if( !e.isNull() )
         {
-            if ( e.tagName().upper() == tag.upper() )
+            if ( e.tagName().toUpper() == tag.toUpper() )
             {
                 retVal.append( e.attribute( "NAME", "" ) );
                 attribs.append( e.attribute( attribName, attribDefValue ) );
@@ -834,7 +834,7 @@ void KLProject::close( )
 
 int KLProject::cpuIndex( ) const
 {
-    return m_cpus.findIndex( cpu() );
+    return m_cpus.indexOf( cpu() );
 }
 
 int KLProject::getHexFileSize( )
@@ -913,7 +913,7 @@ KLCPUFuses KLProject::getFusesFor( const QString & name )
     QList< KLCPUFuses >::iterator it;
     for ( it = m_cpuFuses.begin(); it != m_cpuFuses.end(); ++it )
     {
-        if ( (*it).mcuName().upper() == name.upper() )
+        if ( (*it).mcuName().toUpper() == name.toUpper() )
         {
             retVal = (*it);
             break;

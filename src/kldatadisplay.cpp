@@ -26,9 +26,10 @@
 KLDataDisplay::KLDataDisplay( QWidget * parent, const QString & name,
                               bool mode8Bit, bool bigEndian,
                               const vector< int >& data )
-    : QWidget( parent, name ), m_8BitMode( mode8Bit ), m_bigEndian( bigEndian ),
+    : QWidget( parent ), m_8BitMode( mode8Bit ), m_bigEndian( bigEndian ),
       m_data( data )
 {
+    setObjectName(name);
     m_maxDataLength = 8192;
 }
 

@@ -38,10 +38,11 @@
 
 
 KLProjectConfigWidget::KLProjectConfigWidget(KLProject* project, QWidget *parent, const char *name)
-    :QDialog(parent, name), m_validator(QRegExp("0x[0-9a-fA-F]{1,4}"), this, "reValidator"),
-      ui(new Ui_KLProjectConfigWidgetBase)
+    :QDialog(parent), m_validator(QRegExp("0x[0-9a-fA-F]{1,4}"), this),
+      ui(new Ui::KLProjectConfigWidgetBase)
 {
     ui->setupUi(this);
+    setObjectName(name);
     m_project = project;
     m_projectManagerInConfigWidget =
             new KLProjectManagerWidget( project, ui->tab_common, "managerInConfig" );
@@ -49,12 +50,9 @@ KLProjectConfigWidget::KLProjectConfigWidget(KLProject* project, QWidget *parent
     ui->layProjectManager->addWidget( m_projectManagerInConfigWidget );
     ui->cbCPU->clear();
     // Add all the CPUs:
-    ui->cbCPU->insertStringList( project->cpus() );
+    ui->cbCPU->addItems( project->cpus() );
     // Update the project files list:
     project->update();
-    // Add linker flags columns
-    ui->lvLinkerFlags->addColumn(i18n("Purpose"));
-    ui->lvLinkerFlags->addColumn(i18n("Flags"));
     // Fill the linker flags list:
     m_possibleLinkerFlags["-Wl,-lm"] = i18n("Link with math library");
     m_possibleLinkerFlags["-Wl,-lprintf"] = i18n("Link with printf library");
@@ -63,11 +61,13 @@ KLProjectConfigWidget::KLProjectConfigWidget(KLProject* project, QWidget *parent
     QStringList keys = m_possibleLinkerFlags.keys();
     keys.sort();
 
+    int cnt = 0;
     for ( QStringList::iterator it = keys.begin(); it != keys.end(); ++it )
     {
-        Q3CheckListItem* cur = new Q3CheckListItem( ui->lvLinkerFlags, m_possibleLinkerFlags[*it], Q3CheckListItem::CheckBox );
-        cur->setText( 1, *it );
-        m_linkerFlagsCBs.append( cur );
+        ui->lwLinkerFlags->insertRow(cnt);
+        ui->lwLinkerFlags->setCellWidget(cnt,0,new QCheckBox(m_possibleLinkerFlags[*it]));
+        ui->lwLinkerFlags->setItem(cnt++,1,new QTableWidgetItem(*it));
+        //m_linkerFlagsCBs.append( cur );
     }
     updateGUIFromSettings();
     updateCPUInfo( ui->cbCPU->currentText() );
@@ -133,7 +133,7 @@ void KLProjectConfigWidget::slotSetDefault()
     for ( it = m_settings.begin(); it != m_settings.end(); ++it )
     {
         // qDebug("%s = %s", it.key().ascii(), it.data().ascii() );
-        group.writeEntry( it.key(), it.data() );
+        group.writeEntry( it.key(), it.value() );
     }
     group.sync();
 }
@@ -179,7 +179,7 @@ void KLProjectConfigWidget::updateSettingsFromGUI( )
     retVal[ PRJ_COMPILER_WALL ] = ui->cbAll->isChecked() ? TRUE_STRING : FALSE_STRING;
     retVal[ PRJ_COMPILER_GDEBUG ] = ui->cbGDebug->isChecked() ? TRUE_STRING : FALSE_STRING;
     retVal[ PRJ_COMPILER_F_CPU ] = ui->cbFCPU->isChecked() ? TRUE_STRING : FALSE_STRING;
-    retVal[ PRJ_COMPILER_OPT_LEVEL ] = ui->cbOptimizationLevel->currentText().left(1).lower();
+    retVal[ PRJ_COMPILER_OPT_LEVEL ] = ui->cbOptimizationLevel->currentText().left(1).toLower();
     retVal[ PRJ_LINKER_COMMAND ] = ui->leLinkerCommand->text();
     retVal[ PRJ_OBJCOPY_COMMAND ] = ui->leObjectCopyCommand->text();
     if ( ui->cbStartOfText->isChecked() )
@@ -195,13 +195,15 @@ void KLProjectConfigWidget::updateSettingsFromGUI( )
     retVal[ PRJ_ASSEMBLER_COMMAND ] = ui->leAssemblerCommand->text();
     
     QString allFlags;
-    foreach ( Q3CheckListItem* it, m_linkerFlagsCBs )
+
+    for (int row = 0; row < ui->lwLinkerFlags->rowCount(); row++)
     {
-        if ( it->state() == Q3CheckListItem::On )
-        {
-            allFlags += it->text( 1 ) + "#";
-        }
+        QCheckBox *cb = (QCheckBox*)ui->lwLinkerFlags->cellWidget(row,0);
+        if(cb && cb->isChecked())
+            allFlags += ui->lwLinkerFlags->item(row,1)->text() + "#";
+
     }
+
     if ( allFlags.length() > 0 )
         allFlags = allFlags.left( allFlags.length()-1 );
     // qDebug("allFlags is %s", allFlags.ascii());
@@ -224,8 +226,8 @@ void KLProjectConfigWidget::updateGUIFromSettings()
     bool ok;
 
     for (int i=0; i<ui->cbCPU->count(); i++)
-        if ( ui->cbCPU->text( i ) == conf( PRJ_CPU, "AT90S8515" ) )
-            ui->cbCPU->setCurrentItem( i );
+        if ( ui->cbCPU->itemText( i ) == conf( PRJ_CPU, "AT90S8515" ) )
+            ui->cbCPU->setCurrentIndex( i );
     ui->kdsClock->setValue( (int) conf( PRJ_CLOCKSPEED, "4000000" ).toDouble( &ok ) );
     
     ui->cbExternalRAM->setChecked( conf( PRJ_EXTERNAL_RAM, "unspec" ) != "unspec" );
@@ -240,10 +242,10 @@ void KLProjectConfigWidget::updateGUIFromSettings()
     ui->cbFCPU->setChecked( conf( PRJ_COMPILER_F_CPU, FALSE_STRING ) == TRUE_STRING );
     ui->cbAll->setChecked( conf( PRJ_COMPILER_WALL, FALSE_STRING ) == TRUE_STRING );
     ui->cbGDebug->setChecked( conf( PRJ_COMPILER_GDEBUG, FALSE_STRING ) == TRUE_STRING );
-    QString optVal = conf( PRJ_COMPILER_OPT_LEVEL, "0" ).lower();
+    QString optVal = conf( PRJ_COMPILER_OPT_LEVEL, "0" ).toLower();
     for ( int i=0; i < ui->cbOptimizationLevel->count(); i++ )
-        if ( ui->cbOptimizationLevel->text( i ).left(1) == optVal )
-            ui->cbOptimizationLevel->setCurrentItem( i );
+        if ( ui->cbOptimizationLevel->itemText( i ).left(1) == optVal )
+            ui->cbOptimizationLevel->setCurrentIndex( i );
 
     ui->leLinkerCommand->setText( conf( PRJ_LINKER_COMMAND, "avr-gcc" ) );
     ui->leObjectCopyCommand->setText( conf( PRJ_OBJCOPY_COMMAND, "avr-objcopy" ) );
@@ -270,19 +272,17 @@ void KLProjectConfigWidget::updateGUIFromSettings()
     
     ui->leAssemblerCommand->setText( conf( PRJ_ASSEMBLER_COMMAND, "avr-gcc" ) );
     
-    QStringList allFlags = QStringList::split( "#", conf( PRJ_LINKER_FLAGS, "" ) );
+    QStringList allFlags = conf( PRJ_LINKER_FLAGS, "" ).split("#");
     // qDebug("allFlags is %s", allFlags.join("!!").ascii());
-    QStringList::iterator it;
-    for ( it = allFlags.begin(); it != allFlags.end(); ++it )
+
+    foreach (const QString flag, allFlags)
     {
         // qDebug("searching: %s", (*it).ascii() );
-        foreach ( Q3CheckListItem* it2 , m_linkerFlagsCBs )
+        for (int row = 0; row < ui->lwLinkerFlags->rowCount(); row++)
         {
-            if ( it2->text( 1 ).stripWhiteSpace() == (*it).stripWhiteSpace() )
-            {
-                // qDebug( "Found" );
-                it2->setState( Q3CheckListItem::On );
-            }
+            QCheckBox *cb = (QCheckBox*)ui->lwLinkerFlags->cellWidget(row,0);
+            if(cb && ui->lwLinkerFlags->item(row,1)->text() == flag.trimmed())
+                cb->setChecked(true);
         }
     }
     

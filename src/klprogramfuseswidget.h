@@ -33,7 +33,7 @@ Q_OBJECT
 public:
     KLProgramFusesWidget(QWidget *parent, KLProject* project, const char *name = 0);
 private:
-    Ui_KLProgramFusesWidgetBase *ui;
+    Ui::KLProgramFusesWidgetBase *ui;
 public slots:
     virtual void slotClose();
     virtual void slotWrite();

@@ -38,9 +38,10 @@
 
 
 KLProgrammerConfigWidget::KLProgrammerConfigWidget(KontrollerLab *parent, const char *name)
-    :QDialog(parent, name), ui(new Ui::KLProgrammerConfigWidgetBase)
+    :QDialog(parent), ui(new Ui::KLProgrammerConfigWidgetBase)
 {
     ui->setupUi(this);
+    setObjectName(name);
 
     connect(ui->cbAVRDUDESpecifyBitClock,SIGNAL(toggled(bool)),ui->cbBitClockPeriodUS,SLOT(setEnabled(bool)));
     connect(ui->cbAVRDUDEOverrideBaudRate, SIGNAL(toggled(bool)), ui->cbBAUDRate, SLOT(setEnabled(bool)));
@@ -62,32 +63,32 @@ KLProgrammerConfigWidget::KLProgrammerConfigWidget(KontrollerLab *parent, const 
 
     QStringList list = uisp->programmerTypesKeyList();
     for ( unsigned int i = 0; i < list.count(); i++ )
-        ui->cbUISPProgrammer->insertItem( uisp->getProgrammerTypeGUIStringFor( list[i] ) );
+        ui->cbUISPProgrammer->addItem( uisp->getProgrammerTypeGUIStringFor( list[i] ) );
 
     list = avrdude->programmerTypesKeyList();
     for ( unsigned int i = 0; i < list.count(); i++ )
-        ui->cbAVRDUDEProgrammerType->insertItem( avrdude->getProgrammerTypeGUIStringFor( list[i] ) );
+        ui->cbAVRDUDEProgrammerType->addItem( avrdude->getProgrammerTypeGUIStringFor( list[i] ) );
 
     list = uisp->parallelPortsKeyList();
     for ( unsigned int i = 0; i < list.count(); i++ )
     {
-        ui->cbUISPParallelPort->insertItem( uisp->getParallelPortGUIStringFor( list[i] ) );
+        ui->cbUISPParallelPort->addItem( uisp->getParallelPortGUIStringFor( list[i] ) );
     }
     list = avrdude->parallelPortsKeyList();
     for ( unsigned int i = 0; i < list.count(); i++ )
     {
-        ui->cbAVRDUDEConnectionPort->insertItem( avrdude->getParallelPortGUIStringFor( list[i] ) );
+        ui->cbAVRDUDEConnectionPort->addItem( avrdude->getParallelPortGUIStringFor( list[i] ) );
     }
 
     list = uisp->serialPortsKeyList();
     for ( unsigned int i = 0; i < list.count(); i++ )
     {
-        ui->cbUISPSerialPort->insertItem( uisp->getSerialPortGUIStringFor( list[i] ) );
+        ui->cbUISPSerialPort->addItem( uisp->getSerialPortGUIStringFor( list[i] ) );
     }
     list = avrdude->serialPortsKeyList();
     for ( unsigned int i = 0; i < list.count(); i++ )
     {
-        ui->cbAVRDUDEConnectionPort->insertItem( avrdude->getSerialPortGUIStringFor( list[i] ) );
+        ui->cbAVRDUDEConnectionPort->addItem( avrdude->getSerialPortGUIStringFor( list[i] ) );
     }
 
     m_configuration = m_parent->programmerConfig();
@@ -152,9 +153,9 @@ void KLProgrammerConfigWidget::updateGUIFromConfig( )
     bool ok;
     
     // Get the unique shell args for the user visible strings:
-    ui->cbUISPProgrammer->setCurrentText( uisp->getProgrammerTypeGUIStringFor( config( UISP_PROGRAMMER_TYPE ) ) );
-    ui->cbUISPParallelPort->setCurrentText( uisp->getParallelPortGUIStringFor( config( UISP_PARALLEL_PORT ) ) );
-    ui->cbUISPSerialPort->setCurrentText( uisp->getSerialPortGUIStringFor( config( UISP_SERIAL_PORT ) ) );
+    setComboBoxText(ui->cbUISPProgrammer, uisp->getProgrammerTypeGUIStringFor( config( UISP_PROGRAMMER_TYPE ) ));
+    setComboBoxText(ui->cbUISPParallelPort, uisp->getParallelPortGUIStringFor( config( UISP_PARALLEL_PORT ) ) );
+    setComboBoxText(ui->cbUISPSerialPort, uisp->getSerialPortGUIStringFor( config( UISP_SERIAL_PORT ) ) );
     
     ui->cbSpecifyPart->setChecked( config( UISP_SPECIFY_PART ) == TRUE_STRING );
     ui->cbNoDataPolling->setChecked( config( UISP_PARALLEL_NO_DATA_POLLING ) == TRUE_STRING );
@@ -165,7 +166,7 @@ void KLProgrammerConfigWidget::updateGUIFromConfig( )
     ui->sbUISPFlashMaxWriteDelay->setValue( config( UISP_PARALLEL_FLASH_MAX_WRITE_DELAY ).toDouble( &ok ) );
     ui->sbUISPEEPROMMaxWriteDelay->setValue( config( UISP_PARALLEL_EEPROM_MAX_WRITE_DELAY ).toDouble( &ok ) );
     ui->sbUISPResetHighTime->setValue( config( UISP_PARALLEL_RESET_HIGH_TIME ).toDouble( &ok ) );
-    ui->cbUISPSerialSpeed->setCurrentText( config( UISP_SERIAL_SPEED, "9600" ) );
+    setComboBoxText(ui->cbUISPSerialSpeed, config( UISP_SERIAL_SPEED, "9600" ) );
     ui->cbUISPUseHighVoltage->setChecked( config( UISP_STK500_USE_HIGH_VOLTAGE ) == TRUE_STRING );
     ui->sbUISPARef->setValue( config( UISP_STK500_AREF_VOLTAGE ).toDouble( &ok ) );
     ui->sbUISPVtarget->setValue( config( UISP_STK500_VTARGET_VOLTAGE ).toDouble( &ok ) );
@@ -184,15 +185,15 @@ void KLProgrammerConfigWidget::updateGUIFromConfig( )
     ui->cbAVRDUDECountErases->setChecked( config( AVRDUDE_COUNT_ERASE, "_unset_" ) == TRUE_STRING );
     
     if ( ui->cbAVRDUDEOverrideBaudRate->isChecked() )
-        ui->cbBAUDRate->setCurrentText( config( AVRDUDE_OVERRIDE_BAUD_RATE, "9600" ) );
+        setComboBoxText(ui->cbBAUDRate, config( AVRDUDE_OVERRIDE_BAUD_RATE, "9600" ) );
     if ( ui->cbAVRDUDESpecifyBitClock->isChecked() )
         ui->cbBitClockPeriodUS->setValue( config( AVRDUDE_SPECIFY_BIT_CLOCK, "5.0" ).toDouble( &ok ) );
     if ( ui->cbAVRDUDESpecifyProgrammerType->isChecked() )
-        ui->cbAVRDUDEProgrammerType->setCurrentText(
-                    avrdude->getProgrammerTypeGUIStringFor( config( AVRDUDE_PROGRAMMER_TYPE, "" ) ) );
+        setComboBoxText(ui->cbAVRDUDEProgrammerType,
+                        avrdude->getProgrammerTypeGUIStringFor( config( AVRDUDE_PROGRAMMER_TYPE, "" ) ) );
     if ( ui->cbAVRDUDESpecifyConnectionPort->isChecked() )
-        ui->cbAVRDUDEConnectionPort->setCurrentText(
-                    avrdude->getPortGUIStringFor( config( AVRDUDE_CONNECTION_PORT, "" ) ) );
+        setComboBoxText(ui->cbAVRDUDEConnectionPort,
+                        avrdude->getPortGUIStringFor( config( AVRDUDE_CONNECTION_PORT, "" ) ) );
     if ( ui->cbAVRDUDESpecifyExternalConfigFile->isChecked() )
         ui->kurlExternalConfigFile->setUrl( config( AVRDUDE_EXTERNAL_CONFIG_FILE, "" ) );
 }
@@ -231,7 +232,7 @@ void KLProgrammerConfigWidget::slotSetDefault( )
 
         for ( it = m_configuration.begin(); it != m_configuration.end(); ++it )
         {
-            group.writeEntry( it.key(), it.data() );
+            group.writeEntry( it.key(), it.value() );
         }
         group.sync();
     }
@@ -358,7 +359,7 @@ void KLProgrammerConfigWidget::slotSetEraseCounter()
 
 void KLProgrammerConfigWidget::backannotateSTK500( const QString & stdout )
 {
-    QStringList list = QStringList::split( "\n", stdout );
+    QStringList list = stdout.split("\n");
 
     bool ok;
 
@@ -369,12 +370,12 @@ void KLProgrammerConfigWidget::backannotateSTK500( const QString & stdout )
     for ( QStringList::iterator it = list.begin();
           it != list.end(); ++it )
     {
-        QString line = (*it).upper();
-        if ( reARef.search( line ) != -1 )
+        QString line = (*it).toUpper();
+        if ( reARef.indexIn( line ) != -1 )
             ui->sbUISPARef->setValue( reARef.cap( 1 ).toDouble( &ok ) );
-        if ( reVSup.search( line ) != -1 )
+        if ( reVSup.indexIn( line ) != -1 )
             ui->sbUISPVtarget->setValue( reVSup.cap( 1 ).toDouble( &ok ) );
-        if ( reClk.search( line ) != -1 )
+        if ( reClk.indexIn( line ) != -1 )
             ui->sbOscillatorFrequency->setValue( reClk.cap( 1 ).toDouble( &ok ) );
     }
 }

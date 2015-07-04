@@ -60,11 +60,67 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
-    <widget class="Q3GroupBox" name="gbMemoryCell" native="true">
-     <property name="title" stdset="0">
-      <string>Memory cell 0x0</string>
+   <item row="1" column="0">
+    <widget class="QLabel" name="tlDescription">
+     <property name="text">
+      <string/>
      </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QTreeWidget" name="lbMemory">
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="itemsExpandable">
+      <bool>false</bool>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>false</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>60</number>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Hex</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Dec</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Char</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Bin</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QGroupBox" name="gbMemoryCell">
      <layout class="QGridLayout">
       <item row="1" column="0" colspan="2">
        <widget class="Line" name="line1">
@@ -522,19 +578,6 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="tlDescription">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="Q3ListBox" name="lbMemory" native="true"/>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -543,16 +586,6 @@
    <class>KLSpinBoxWidget</class>
    <extends>QSpinBox</extends>
    <header location="global">klspinboxwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QWidget</extends>
-   <header>q3groupbox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Q3ListBox</class>
-   <extends>QWidget</extends>
-   <header>q3listbox.h</header>
   </customwidget>
  </customwidgets>
  <includes>

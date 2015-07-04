@@ -39,29 +39,42 @@
 #include <kconfiggroup.h>
 
 #include "kldebuggermemorymapping.h"
-#include "kldebuggermemmappinglistviewitem.h"
+#include "kldebuggermemmappingtreewidgetitem.h"
 
 #include "kldocumentview.h"
 
 
 KLDebuggerConfigWidget::KLDebuggerConfigWidget(KontrollerLab *parent, const char *name)
-    :QDialog(parent,name), ui(new Ui::KLDebuggerConfigWidgetBase)
+    :QDialog(parent), ui(new Ui::KLDebuggerConfigWidgetBase)
 {
     ui->setupUi(this);
-
-    ui->lvMappings->addColumn(i18n("From"));
-    ui->lvMappings->addColumn(i18n("To"));
+    setObjectName(name);
+    ui->lvMappings->setSortingEnabled(true);
+    ui->lvMappings->sortByColumn(0,Qt::AscendingOrder);
 
     m_noCallback = false;
     m_parent = parent;
     if (m_parent)
     {
-        ui->cbBAUD->insertStringList( m_parent->serialTerminalWidget()->baudRates() );
-        ui->cbPort->insertStringList( m_parent->serialTerminalWidget()->ports() );
+        ui->cbBAUD->addItems( m_parent->serialTerminalWidget()->baudRates() );
+        ui->cbPort->addItems( m_parent->serialTerminalWidget()->ports() );
         KLMemoryViewWidget* memView = m_parent->memoryViewWidget();
         ui->sbMemoryViewByteCount->setValue( memView->ramEnd() );
     }
 
+    connect(ui->pbOK, SIGNAL(clicked()), this, SLOT(slotOK()));
+    connect(ui->pbCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
+    connect(ui->pbCheckState, SIGNAL(clicked()), this, SLOT(slotCheckState()));
+    connect(ui->pbBuildAndDownload, SIGNAL(clicked()), this, SLOT(slotBuildAndDownload()));
+    connect(ui->pbDefault, SIGNAL(clicked()), this, SLOT(slotSetDefault()));
+
+    connect(ui->cbBAUD,SIGNAL(currentIndexChanged(QString)),this,SLOT(slotBAUDRateChanged(QString)));
+    connect(ui->sbUBRR,SIGNAL(valueChanged(int)),this,SLOT(slotUBRRChanged(int)));
+    connect(ui->pbAdd,SIGNAL(clicked()),this,SLOT(slotAdd()));
+    connect(ui->pbRemove,SIGNAL(clicked()),this,SLOT(slotRemove()));
+    connect(ui->sbFrom,SIGNAL(valueChanged(int)),this,SLOT(slotFromChanged(int)));
+    connect(ui->sbTo,SIGNAL(valueChanged(int)),this,SLOT(slotToChanged(int)));
+    connect(ui->lvMappings,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT(slotSelectedMappingChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     updateGUIFromSettings();
 }
 
@@ -155,7 +168,7 @@ void KLDebuggerConfigWidget::slotOK()
         for ( QMap<QString, QString>::iterator it = comp.begin();
               it != comp.end(); ++it )
         {
-            if ( it.data() != m_settings[ it.key() ] )
+            if ( it.value() != m_settings[ it.key() ] )
             {
                 changed = true;
                 break;
@@ -187,7 +200,7 @@ void KLDebuggerConfigWidget::slotSetDefault( )
     for ( it = m_settings.begin(); it != m_settings.end(); ++it )
     {
         // qDebug("%s = %s", it.key().ascii(), it.data().ascii() );
-        group.writeEntry( it.key(), it.data() );
+        group.writeEntry( it.key(), it.value() );
     }
     group.sync();
 }
@@ -218,8 +231,8 @@ void KLDebuggerConfigWidget::updateSettingsFromGUI( )
 void KLDebuggerConfigWidget::updateGUIFromSettings( )
 {
     ui->leObjdump->setText( conf( DEBUGGER_OBJDUMP_COMMAND , "avr-objdump" ) );
-    ui->cbPort->setCurrentText( conf( DEBUGGER_COM_PORT, "/dev/ttyS0" ) );
-    ui->cbBAUD->setCurrentText( conf( DEBUGGER_COM_BAUD, "19200" ) );
+    setComboBoxText(ui->cbPort, conf( DEBUGGER_COM_PORT, "/dev/ttyS0" ) );
+    setComboBoxText(ui->cbBAUD, conf( DEBUGGER_COM_BAUD, "19200" ) );
     bool ok;
     unsigned int ubrr = conf( DEBUGGER_COM_UBRR, "" ).toInt( &ok );
     if ( ok )
@@ -228,14 +241,14 @@ void KLDebuggerConfigWidget::updateGUIFromSettings( )
     ui->sbInterruptCount->setValue( conf( DEBUGGER_INTERRUPT_COUNT, "0" ).toInt( &ok ) );
     ui->sbMemoryViewByteCount->setValue( conf( DEBUGGER_MEMORY_VIEW_BYTECOUNT, "0" ).toInt( &ok ) );
 
-    Q3ListView *lv = ui->lvMappings;
+    QTreeWidget *lv = ui->lvMappings;
     lv->clear();
     QString mappings = m_settings[ DEBUGGER_MAPPINGS ];
     KLDebuggerMemoryMappingList lst;
     lst.fromString( mappings );
     foreach ( const KLDebuggerMemoryMapping it , lst )
     {
-        lv->insertItem( new KLDebuggerMemMappingListViewItem( lv, it.from(), it.to() ) );
+        lv->addTopLevelItem( new KLDebuggerMemMappingTreeWidgetItem( lv, it.from(), it.to() ) );
     }
 }
 
@@ -266,15 +279,8 @@ QString KLDebuggerConfigWidget::conf( const QString & confKey, const QString & d
 
 void KLDebuggerConfigWidget::slotAdd( )
 {
-    Q3ListView *lv = ui->lvMappings;
-    lv->insertItem( new KLDebuggerMemMappingListViewItem( lv, ui->sbFrom->value(), ui->sbTo->value() ) );
-
-    /*
-    lv->insertItem( new Q3ListViewItem( lv,
-                    "0x" + QString::number( ui->sbFrom->value(), 16 ),
-                    "0x" + QString::number( ui->sbTo->value(), 16 ) ) );
-    */
-
+    QTreeWidget *lv = ui->lvMappings;
+    lv->addTopLevelItem( new KLDebuggerMemMappingTreeWidgetItem( lv, ui->sbFrom->value(), ui->sbTo->value() ) );
 }
 
 
@@ -284,7 +290,7 @@ void KLDebuggerConfigWidget::copyMonitorFilesDone(KIO::Job *, const KUrl &from, 
         return;
     if ( !m_parent->project() )
         return;
-    m_buildUrlList.remove( from );
+    m_buildUrlList.removeAll( from );
     if ( m_buildUrlList.count() > 0 )
         return;
     QStringList list;
@@ -297,8 +303,8 @@ void KLDebuggerConfigWidget::slotToChanged( int val )
 {
     if (m_noCallback)
         return;
-    Q3ListView *lv = ui->lvMappings;
-    KLDebuggerMemMappingListViewItem *sel = dynamic_cast< KLDebuggerMemMappingListViewItem* >( lv->selectedItem() );
+    QTreeWidget *lv = ui->lvMappings;
+    KLDebuggerMemMappingTreeWidgetItem *sel = dynamic_cast< KLDebuggerMemMappingTreeWidgetItem* >( lv->currentItem() );
     if (sel)
     {
         if ( ( (int) sel->to() ) != val )
@@ -315,8 +321,8 @@ void KLDebuggerConfigWidget::slotFromChanged( int val )
 {
     if (m_noCallback)
         return;
-    Q3ListView *lv = ui->lvMappings;
-    KLDebuggerMemMappingListViewItem *sel = dynamic_cast< KLDebuggerMemMappingListViewItem* >( lv->selectedItem() );
+    QTreeWidget *lv = ui->lvMappings;
+    KLDebuggerMemMappingTreeWidgetItem *sel = dynamic_cast< KLDebuggerMemMappingTreeWidgetItem* >( lv->currentItem() );
     if (sel)
     {
         if ( ( (int ) sel->from() ) != val )
@@ -328,10 +334,11 @@ void KLDebuggerConfigWidget::slotFromChanged( int val )
         ui->sbTo->setValue( val );
 }
 
-void KLDebuggerConfigWidget::slotSelectedMappingChanged( Q3ListViewItem* item )
+void KLDebuggerConfigWidget::slotSelectedMappingChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    Q_UNUSED(previous)
     m_noCallback = true;
-    KLDebuggerMemMappingListViewItem *sel = dynamic_cast< KLDebuggerMemMappingListViewItem* >( item );
+    KLDebuggerMemMappingTreeWidgetItem *sel = dynamic_cast< KLDebuggerMemMappingTreeWidgetItem* >( current );
     if (!sel)
         return;
     if ( ui->sbTo->value() != ( (int) sel->to() ) )
@@ -345,31 +352,27 @@ void KLDebuggerConfigWidget::slotSelectedMappingChanged( Q3ListViewItem* item )
 KLDebuggerMemoryMappingList KLDebuggerConfigWidget::mappingList( )
 {
     KLDebuggerMemoryMappingList lst;
-    Q3ListView *lv = ui->lvMappings;
-    Q3ListViewItem* it = lv->firstChild();
-    for ( ; it; it = it->nextSibling() )
+    QTreeWidgetItemIterator it(ui->lvMappings);
+    while (*it)
     {
-        KLDebuggerMemMappingListViewItem* map = dynamic_cast< KLDebuggerMemMappingListViewItem* >( it );
+        KLDebuggerMemMappingTreeWidgetItem* map = dynamic_cast< KLDebuggerMemMappingTreeWidgetItem* >( *it );
         if ( !map )
             continue;
         lst.append( map->mapping() );
+        it++;
     }
     return lst;
 }
 
 void KLDebuggerConfigWidget::slotRemove()
 {
-    Q3ListView *lv = ui->lvMappings;
-    if ( !lv->selectedItem() )
-    {
-        return;
-    }
-    KLDebuggerMemMappingListViewItem* map = dynamic_cast< KLDebuggerMemMappingListViewItem* >( lv->selectedItem() );
+    QTreeWidget *lv = ui->lvMappings;
+    KLDebuggerMemMappingTreeWidgetItem* map = dynamic_cast< KLDebuggerMemMappingTreeWidgetItem* >( lv->currentItem() );
     if ( !map )
     {
         return;
     }
-    lv->removeItem( map );
+    delete lv->takeTopLevelItem( lv->indexOfTopLevelItem(map) );
 }
 
 

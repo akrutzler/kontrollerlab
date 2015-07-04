@@ -34,7 +34,6 @@
 #include <ktexteditor/view.h>
 #include "klprocessmanager.h"
 #include <kate/kate.h>
-#include <Q3ListBox>
 #include <kparts/mainwindow.h>
 #include <ksharedconfig.h>
 #include <kmenubar.h>
@@ -49,7 +48,8 @@ class KXMLGUIClient;
 class KLProcess;
 class KLProgrammerConfigWidget;
 class KLProgrammerInterface;
-class Q3ListBoxItem;
+class QListWidget;
+class QListWidgetItem;
 class KMenu;
 class KLDocument;
 class KLDocumentView;
@@ -161,10 +161,10 @@ public slots:
     void slotDebugConfigureICD();
     void slotDebugToggleBreakpoint();
     // Message box:
-    void rightButtonClickedOnMsgBox( Q3ListBoxItem*, const QPoint& );
+    void rightButtonClickedOnMsgBox(const QPoint& );
     void clearMessages();
     void slotMessageBox( int exitVal, const QString& msg );
-    void slotMessageBoxDblClicked( Q3ListBoxItem * item );
+    void slotMessageBoxDblClicked( QListWidgetItem * item );
     
     void slotNewViewForDocument();
     void slotHideShowMessageBox();
@@ -282,7 +282,7 @@ protected:
     class KLDotMatrixCharacterWizard* m_dotMatrixCharacterWizardWidget;
     class KLProject* m_project;
     class KLDebugger* m_debugger;
-    Q3ListBox* m_msgBox;
+    QListWidget* m_msgBox;
     QDockWidget* m_tvaMsg, *m_tvaProjectManager, *m_tvaSerialTerminal, *m_tvaMemoryView;
     KParts::PartManager* m_partManager;
     KXMLGUIClient* m_kateGuiClientAdded;
@@ -301,5 +301,16 @@ protected:
     bool m_doNotOpenProjectFromSession;
     KLDebuggerConfigWidget* m_debuggerConfigWidget;
 };
+
+
+/**
+ * @brief from QT3SUPPORT
+ * @param cb
+ * @param text
+ */
+
+#include <QComboBox>
+
+void setComboBoxText(QComboBox * cb, const QString &text);
 
 #endif // _KONTROLLERLAB_H_

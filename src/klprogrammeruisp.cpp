@@ -225,8 +225,8 @@ QString KLProgrammerUISP::formBaseCommand( ) const
     QString cmd = m_configuration[ PROGRAMMER_COMMAND ];
     cmd += attribute( "-dprog=", UISP_PROGRAMMER_TYPE );
     if ( m_configuration[ UISP_SPECIFY_PART ] == TRUE_STRING )
-        cmd += " -dpart=" + m_project->currentCpuFeatures().name().upper();
-    if ( m_serialProgrammer.findIndex( attribute( "", UISP_PROGRAMMER_TYPE ).stripWhiteSpace() ) >= 0 )
+        cmd += " -dpart=" + m_project->currentCpuFeatures().name().toUpper();
+    if ( m_serialProgrammer.indexOf( attribute( "", UISP_PROGRAMMER_TYPE ).trimmed() ) >= 0 )
     {
         cmd += attribute( "-dserial=", UISP_SERIAL_PORT );
         cmd += attribute( "-dspeed=", UISP_SERIAL_SPEED );
@@ -271,17 +271,17 @@ QMap< QString, QString > KLProgrammerUISP::parseFuses( const QString & stdout )
 
     QStringList lines;
     QStringList::iterator it;
-    lines = lines.split( "\n", stdout );
+    lines = stdout.split("\n");
     for (it = lines.begin(); it != lines.end(); ++it)
     {
-        QString line = (*it).lower();
-        if ( reLow.search( line.lower() ) != -1 )
+        QString line = (*it).toLower();
+        if ( reLow.indexIn( line.toLower() ) != -1 )
             retVal[ FUSE_L ] = reLow.cap( 1 );
-        if ( reHigh.search( line.lower() ) != -1 )
+        if ( reHigh.indexIn( line.toLower() ) != -1 )
             retVal[ FUSE_H ] = reHigh.cap( 1 );
-        if ( reLock.search( line.lower() ) != -1 )
+        if ( reLock.indexIn( line.toLower() ) != -1 )
             retVal[ FUSE_LOCK ] = reLock.cap( 1 );
-        if ( reExt.search( line.lower() ) != -1 )
+        if ( reExt.indexIn( line.toLower() ) != -1 )
             retVal[ FUSE_E ] = reExt.cap( 1 );
     }
     return retVal;

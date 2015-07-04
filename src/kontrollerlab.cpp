@@ -28,6 +28,7 @@
 #include <klocale.h>
 
 #include <QActionGroup>
+#include <QListWidget>
 
 #include <kparts/partmanager.h>
 #include <kparts/part.h>
@@ -58,8 +59,8 @@
 #include "klfilenewdialog.h"
 
 #include "klsevensegmentwidget.h"
-#include "kldotmatrixwidget.h"
-#include "kldotmatrixcharacterwizard.h"
+//#include "kldotmatrixwidget.h"
+//#include "kldotmatrixcharacterwizard.h"
 
 #include "klmemoryviewwidget.h"
 #include "kldebugger.h"
@@ -135,12 +136,12 @@ KontrollerLab::KontrollerLab( bool doNotOpenProjectFromSession )
     
     m_msgBoxPopup = new KMenu("msgBoxPopup", this);
     KIconLoader kico;
-    m_msgBoxPopup->insertItem( kico.loadIcon( "clear_left", KIconLoader::Toolbar ), i18n("Clear messages"), this, SLOT( clearMessages() ) );
+    m_msgBoxPopup->addAction( kico.loadIcon( "clear_left", KIconLoader::Toolbar ), i18n("Clear messages"), this, SLOT( clearMessages() ) );
     
     connect(m_partManager, SIGNAL(activePartChanged(KParts::Part * )),this, SLOT(slotActivePartChanged(KParts::Part * )));
 
-    connect(m_msgBox, SIGNAL(doubleClicked(Q3ListBoxItem *)), this, SLOT(slotMessageBoxDblClicked(Q3ListBoxItem *)));
-    connect(m_msgBox, SIGNAL(rightButtonPressed( Q3ListBoxItem*, const QPoint& )),this,SLOT( rightButtonClickedOnMsgBox( Q3ListBoxItem*, const QPoint& ) ) );
+    connect(m_msgBox, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(slotMessageBoxDblClicked(QListWidgetItem *)));
+    connect(m_msgBox, SIGNAL(customContextMenuRequested(const QPoint&)),this,SLOT( rightButtonClickedOnMsgBox(const QPoint&) ) );
 
     //hideViewTaskBar();
     m_configProgrammerWidget = new KLProgrammerConfigWidget( this, "programmerConfigWdg" );
@@ -362,13 +363,15 @@ void KontrollerLab::createActions()
 
 void KontrollerLab::createDocks()
 {
-    m_msgBox = new Q3ListBox(this, "msgBox");
+    m_msgBox = new QListWidget(this);
+    m_msgBox->setObjectName("msgBox");
+    m_msgBox->setContextMenuPolicy(Qt::CustomContextMenu);
     // m_msgBox->setReadOnly( true );
     m_msgBox->setWindowTitle(i18n("Messages"));
     m_tvaMsg = new QDockWidget(tr("Messages"), this);
     m_tvaMsg->setWidget(m_msgBox);
     addDockWidget( Qt::BottomDockWidgetArea, m_tvaMsg );
-    m_tvaMsg->setName("messageBox");
+    m_tvaMsg->setObjectName("messageBox");
 
     // Add the dock window for the project manager
     m_tvaProjectManager = new QDockWidget(i18n("Project Manager"), this);
@@ -769,11 +772,11 @@ void KontrollerLab::slotMessageBox( int, const QString & msg )
 {
     m_tvaMsg->show();
     m_hideShowMessageBox->setChecked( true );
-    QStringList list = QStringList::split( "\n", msg );
-    m_msgBox->insertStringList( list );
-    m_msgBox->setCurrentItem( m_msgBox->count() - 1 );
-    m_msgBox->ensureCurrentVisible();
-    m_msgBox->setCurrentItem( -1 );
+    QStringList list = msg.split("\n");
+    m_msgBox->addItems( list );
+    //m_msgBox->setCurrentItem( m_msgBox->count() - 1 );
+    //m_msgBox->ensureCurrentVisible();
+    //m_msgBox->setCurrentItem( -1 );
 }
 
 void KontrollerLab::clearMessages( )
@@ -781,7 +784,7 @@ void KontrollerLab::clearMessages( )
     m_msgBox->clear();
 }
 
-void KontrollerLab::slotMessageBoxDblClicked( Q3ListBoxItem * item )
+void KontrollerLab::slotMessageBoxDblClicked(QListWidgetItem *item )
 {
     qDebug() << item->text();
     // Find a file name in this line:
@@ -795,7 +798,7 @@ void KontrollerLab::slotMessageBoxDblClicked( Q3ListBoxItem * item )
         // qDebug(fname.ascii());
         QRegExp re(fname+"\\s*:\\s*([0-9]*)");
 
-        if ( re.search( item->text() ) >= 0 )
+        if ( re.indexIn( item->text() ) >= 0 )
         {
             // qDebug( re.cap( 1 ).ascii() );
             bool ok;
@@ -870,9 +873,9 @@ void KontrollerLab::configureShortcuts( )
     qDebug("KLayoutLab::configureShortcuts not implemented yet.");
 }
 
-void KontrollerLab::rightButtonClickedOnMsgBox( Q3ListBoxItem *, const QPoint & pos )
+void KontrollerLab::rightButtonClickedOnMsgBox(const QPoint & pos )
 {
-    m_msgBoxPopup->popup( pos );
+    m_msgBoxPopup->popup(m_msgBox->mapToGlobal(pos));
 }
 
 void KontrollerLab::docIsChanged( KTextEditor::Document* )
@@ -1083,6 +1086,7 @@ void KontrollerLab::backannotateSTK500( const QString & stdout )
 
 void KontrollerLab::slotDotMatrixWizard( )
 {
+    /*
     KLDocument* doc = m_project->activeDocument();
     if (!doc)
     {
@@ -1096,10 +1100,12 @@ void KontrollerLab::slotDotMatrixWizard( )
         delete m_dotMatrixWizardWidget;
     m_dotMatrixWizardWidget = new KLDotMatrixWidget(this, "dotmatrixwizard", m_project, doc);
     m_dotMatrixWizardWidget->show();
+    */
 }
 
 void KontrollerLab::slotDotMatrixCharacterWizard( )
 {
+    /*
     KLDocument* doc = m_project->activeDocument();
     if (!doc || !doc->lastActiveView())
     {
@@ -1113,6 +1119,7 @@ void KontrollerLab::slotDotMatrixCharacterWizard( )
         delete m_dotMatrixCharacterWizardWidget;
     m_dotMatrixCharacterWizardWidget = new KLDotMatrixCharacterWizard(this, "dotmatrixwizard", m_project, doc);
     m_dotMatrixCharacterWizardWidget->show();
+    */
 }
 
 
@@ -1307,3 +1314,15 @@ void KontrollerLab::slotNewViewForDocument()
 }
 
 
+
+
+void setComboBoxText(QComboBox *cb, const QString &text)
+{
+    int i = cb->findText(text);
+    if (i != -1)
+        cb->setCurrentIndex(i);
+    else if (cb->isEditable())
+        cb->setEditText(text);
+    else
+        cb->setItemText(cb->currentIndex(), text);
+}

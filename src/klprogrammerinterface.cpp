@@ -139,7 +139,7 @@ QString KLProgrammerInterface::getProgrammerTypeFor( const QString & val ) const
     QMap<QString, QString> buffer(m_programmerTypes);
     for ( it = buffer.begin(); it != buffer.end(); ++it )
     {
-        if ( it.data() == val )
+        if ( it.value() == val )
             return it.key();
     }
     return "";
@@ -152,7 +152,7 @@ QString KLProgrammerInterface::getParallelPortFor( const QString & val ) const
     QMap<QString, QString> buffer(m_parallelPorts);
     for ( it = buffer.begin(); it != buffer.end(); ++it )
     {
-        if ( it.data() == val )
+        if ( it.value() == val )
             return it.key();
     }
     return "";
@@ -165,7 +165,7 @@ QString KLProgrammerInterface::getSerialPortFor( const QString & val ) const
     QMap<QString, QString> buffer(m_serialPorts);
     for ( it = buffer.begin(); it != buffer.end(); ++it )
     {
-        if ( it.data() == val )
+        if ( it.value() == val )
             return it.key();
     }
     return "";

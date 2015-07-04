@@ -35,13 +35,7 @@
       </attribute>
       <layout class="QGridLayout">
        <item row="0" column="0">
-        <widget class="Q3ButtonGroup" name="buttonGroup1" native="true">
-         <property name="lineWidth" stdset="0">
-          <number>0</number>
-         </property>
-         <property name="title" stdset="0">
-          <string/>
-         </property>
+        <widget class="QGroupBox" name="buttonGroup1">
          <layout class="QGridLayout">
           <item row="1" column="0" rowspan="2">
            <spacer name="spacer7">
@@ -138,12 +132,41 @@ See &lt;a href=&quot;http://savannah.nongnu.org/projects/uisp/&quot;&gt;http://s
             </item>
            </layout>
           </item>
+          <item row="3" column="2">
+           <spacer name="spacer8">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>60</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QLabel" name="textLabel4">
+            <property name="text">
+             <string>Currently, there are two different programming frontends which can be used with KontrollerLab:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignVCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1" colspan="2">
            <layout class="QVBoxLayout">
             <item>
              <widget class="QRadioButton" name="rbAVRDUDE">
               <property name="text">
-               <string>AVRDUDE</string>
+               <string>AV&amp;RDUDE</string>
               </property>
               <property name="shortcut">
                <string/>
@@ -213,35 +236,6 @@ See &lt;a href=&quot;http://savannah.nongnu.org/projects/avrdude/&quot;&gt;http:
              </layout>
             </item>
            </layout>
-          </item>
-          <item row="0" column="0" colspan="3">
-           <widget class="QLabel" name="textLabel4">
-            <property name="text">
-             <string>Currently, there are two different programming frontends which can be used with KontrollerLab:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignVCenter</set>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <spacer name="spacer8">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>60</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>
@@ -823,7 +817,7 @@ See &lt;a href=&quot;http://savannah.nongnu.org/projects/avrdude/&quot;&gt;http:
         </widget>
        </item>
        <item row="5" column="2" colspan="2">
-        <widget class="KUrlRequester" name="kurlExternalConfigFile" native="true">
+        <widget class="KUrlRequester" name="kurlExternalConfigFile">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -967,11 +961,6 @@ See &lt;a href=&quot;http://savannah.nongnu.org/projects/avrdude/&quot;&gt;http:
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3ButtonGroup</class>
-   <extends>QWidget</extends>
-   <header>q3buttongroup.h</header>
-  </customwidget>
   <customwidget>
    <class>KUrlRequester</class>
    <extends>QWidget</extends>

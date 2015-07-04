@@ -23,7 +23,6 @@
 #define KLFILENEWDIALOG_H
 
 #include "ui_klfilenewdialogbase.h"
-#include <q3iconview.h>
 #include <kurl.h>
 class KontrollerLab;
 class KLProject;
@@ -34,7 +33,7 @@ Q_OBJECT
 public:
     KLFileNewDialog(KontrollerLab *parent, KLProject* project, const char *name = 0);
 private:
-    Ui_KLFileNewDialogBase *ui;
+    Ui::KLFileNewDialogBase *ui;
 public slots:
     virtual void slotCancel();
     virtual void slotOK();
@@ -44,7 +43,7 @@ protected:
     KontrollerLab *m_parent;
     KLProject* m_project;
     KUrl m_targetDirectory;
-    Q3IconViewItem *m_cSource, *m_asmSource, *m_cHeader, *m_txt, *m_other;
+    QListWidgetItem *m_cSource, *m_asmSource, *m_cHeader, *m_txt, *m_other;
 };
 
 #endif

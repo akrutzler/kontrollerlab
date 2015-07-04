@@ -79,11 +79,11 @@ KLWizardHeaderSetting::KLWizardHeaderSetting( const QString& grpName, const QStr
 
 void KLWizardHeaderSetting::setValue( const QString & val_ )
 {
-    QString val = val_.stripWhiteSpace();
+    QString val = val_.trimmed();
     if ( (m_type == IntType) || (m_type == StringListType) )
     {
         bool ok;
-        if ( val.upper().startsWith( "0X" ) )
+        if ( val.toUpper().startsWith( "0X" ) )
         {
             m_intValue = val.toInt( &ok, 16 );
         }
@@ -96,7 +96,7 @@ void KLWizardHeaderSetting::setValue( const QString & val_ )
             m_intValue = val.toInt( &ok, 10 );
         }
         if ( !ok )
-            qWarning( "Error while reading value for %s: \"%s\"", m_defName.ascii(), val.ascii() );
+            qWarning( "Error while reading value for %s: \"%s\"", m_defName, val );
     }
     else if ( m_type == StringType )
     {
